@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API</title>
+</head>
+<body>
+    <h1>Test API</h1>
+    <button id="testApiBtn">Test API</button>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById('testApiBtn').addEventListener('click', async () => {
+            const url = 'https://boring-wiles.202-92-7-204.plesk.page/api/Vehicle/getNumberSeatAvaiable/292';
+            const responseContainer = document.getElementById('response');
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies
+                    headers: {
+                        'Cookie': '.AspNetCore.CfDJ8ENWFa38Yj5EujJAputLhEOIcyvttG1%2Fu7OAoyOLqSQE0sPvF8Vyfr54Y7RBeItnvoBjZTu3xKMwHCbsUo1AnlLj2LHHxl1C%2Ftiwao41%2Box7bShDOyAcsCtfAac1pT%2BVaAzyMb%2FHXRl%2FADQ1yiz4BrrOheyaUeVH1Of7kZqPAyF2'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                responseContainer.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseContainer.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
