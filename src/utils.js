@@ -22,3 +22,13 @@ export const getProfileFromLS = () => {
   const result = localStorage.getItem('profile')
   return result ? JSON.parse(result) : null
 }
+
+export const getTripDetailId = (array, startPoint, endPoint) => {
+  for (let i = 0; i < array.length; i++) {
+    const trip = array[i];
+    if (trip.pointStartDetails === startPoint && trip.pointEndDetails === endPoint) {
+      return trip.id;
+    }
+  }
+  return null; // Or you can throw an error if no match is found
+}

@@ -1,7 +1,10 @@
 import { message } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../stores/hooks";
+import { useEffect} from "react";
+import { checkLoginToken, getTripDetailId } from "../../../../utils";
+import axios from "axios";
 
 export default function OptionTrip({ data }) {
   const startPointArr = useAppSelector((state) => state.trips?.startPointArr);
@@ -10,13 +13,40 @@ export default function OptionTrip({ data }) {
   const quantity = localStorage.getItem("quantity");
   const navigate = useNavigate();
 
+  const [listTrip, setListTrip] = useState([]);
+  //const [tripDetailId, setTripDetailId] = useState();
+
+  const handelFetchDataTipDetails = async () => {
+    try {
+      const  data2  = await axios.get(
+        "https://boring-wiles.202-92-7-204.plesk.page/api/TripDetails/tripId?TripId=" +
+          data?.id,
+        {
+          headers: {
+            Authorization: "Bearer " + checkLoginToken(),
+          },
+        }
+      );
+   setListTrip(data2.data);
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error.message);
+    }
+
+  };
+  useEffect(() => {
+    handelFetchDataTipDetails();
+  }, []);
+
   const handleTransaction = () => {
     if (countSeat === 0 || quantity > countSeat) {
       return message.error("Không còn chỗ trống cho chuyến xe này!");
     }
     localStorage.setItem("priceTrip", data?.listVehicle[0]?.price);
-    navigate("/bookingconfirmation/" + data.id);
+    const tripDetailId = getTripDetailId(listTrip, localStorage.getItem("startPoint"), localStorage.getItem("endPoint"))
+    localStorage.setItem("tripId", data?.id);
+    navigate(`/bookingconfirmation/${tripDetailId}`);
   };
+
   return (
     <>
       <div

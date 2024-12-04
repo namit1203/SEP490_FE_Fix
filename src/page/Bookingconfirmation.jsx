@@ -38,15 +38,16 @@ const Bookingconfirmation = () => {
   const handelFetchDataTipDetails = async () => {
     const { data } = await axios.get(
       "https://boring-wiles.202-92-7-204.plesk.page/api/TripDetails/tripId?TripId=" +
-        id,
+        localStorage.getItem("tripId"),
       {
         headers: {
           Authorization: "Bearer " + checkLoginToken(),
         },
       }
     );
-    console.log("promotionId", data);
+   // console.log("promotionId", data);
     setPromotionId(data);
+   // console.log(promotionId)
   };
   useEffect(() => {
     handelFetchData();
