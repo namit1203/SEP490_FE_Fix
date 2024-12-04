@@ -85,7 +85,7 @@ export default function MyOrder() {
 
   return (
     <>
-      <p className="text-xl font-bold">Đơn hàng của tôi</p>
+      <p className="text-xl font-bold">Đơn hàng của tôi:</p>
       <Table
         dataSource={data}
         columns={columns}
