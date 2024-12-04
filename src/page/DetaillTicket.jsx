@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd";
 import { checkLoginToken } from "../utils";
-
+import Header from "./Header";
 const DetaillTicket = () => {
   const { id } = useParams(); // Get the ticket ID from the route
   const [ticket, setTicket] = useState(null);
@@ -52,7 +52,7 @@ const DetaillTicket = () => {
     ticket.typeOfPayment === 1 ? "Đã thanh toán" : "Chưa thanh toán";
 
   return (
-    <div style={{ backgroundColor: "#1365af", padding: "15px 5px 15px" }}>
+    <div style={{ padding: "15px 5px 15px" }}>
       <div
         style={{
           maxWidth: 600,
@@ -71,7 +71,7 @@ const DetaillTicket = () => {
           >
             <div
               style={{
-                border: "1px solid #1e62a3",
+                border: "1px solid #fd8017",
                 borderRadius: 5,
                 width: "100%",
               }}
@@ -80,7 +80,7 @@ const DetaillTicket = () => {
                 style={{
                   borderTopLeftRadius: 5,
                   borderTopRightRadius: 5,
-                  backgroundColor: "#1d65b1",
+                  backgroundColor: "#fd8017",
                   width: "100%",
                 }}
               >
@@ -90,8 +90,7 @@ const DetaillTicket = () => {
                       <td style={{ width: "100%" }}>
                         <div style={{ float: "left", padding: 5 }}>
                           <img
-                            src="https://static.vexere.com/images/logo.jpg"
-                            alt="vexere.com"
+                            src="https://i.imgur.com/qLCRwkv.png"
                             height="40px"
                           />
                         </div>
@@ -119,7 +118,7 @@ const DetaillTicket = () => {
                   <h3
                     style={{
                       fontSize: "1.7em",
-                      color: "#1e62a3",
+                      color: "#fd8017",
                       textAlign: "center",
                       margin: "10px 0",
                     }}
@@ -188,7 +187,7 @@ const DetaillTicket = () => {
                           style={{
                             width: "35%",
                             padding: "10px 5px",
-                            color: "#1e62a3",
+                            color: "#fd8017",
                           }}
                         >
                           Tổng tiền:
@@ -217,7 +216,7 @@ const DetaillTicket = () => {
               </div>
               <div
                 style={{
-                  backgroundColor: "#1d65b1",
+                  backgroundColor: "#fd8017",
                   color: "#ffffff",
                   lineHeight: 24,
                   padding: "5px 15px",
@@ -229,17 +228,7 @@ const DetaillTicket = () => {
                 <table style={{ width: "100%" }}>
                   <tbody>
                     <tr>
-                      <td style={{ width: "100%", color: "#fff" }}>
-                        <div style={{ float: "left" }}>
-                          <span>Hotline: 1900 969681</span>
-                        </div>
-                        <div style={{ float: "right" }}>
-                          <span>
-                            E-Ticket - Vexere.com (
-                            {new Date().toLocaleString()})
-                          </span>
-                        </div>
-                      </td>
+  
                     </tr>
                   </tbody>
                 </table>
