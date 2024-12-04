@@ -92,7 +92,7 @@ const RewardPoints = () => {
           className="mt-4 bg-gray-500 text-white px-3 py-1 rounded"
           onClick={() => setShowHistory(true)}
         >
-          Lịch sử cộng điểm
+          Lịch sử cộng điểm của bạn
         </button>
       </div>
 
