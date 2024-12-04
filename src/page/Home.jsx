@@ -270,11 +270,9 @@ const Home = () => {
                           className="AuthMethodSelect__StyledDivider-sc-1dumdyw-0 eRWLoS ant-divider ant-divider-horizontal ant-divider-with-text-center"
                           role="separator"
                         >
-                          <span className="ant-divider-inner-text">hoặc</span>
+                          <span className="ant-divider-inner-text"></span>
                         </div>
-                        <button className="ant-btn ant-btn-primary ant-btn-lg ant-btn-block">
-                          <span>Tiếp tục với Google</span>
-                        </button>
+
                       </div>
                       <div className="core__Box-sc-1c81tsc-0 bbPuqJ">
                         Bạn {checkTab == "login" ? "chưa" : "Đã"} có tài khoản?
@@ -290,6 +288,17 @@ const Home = () => {
                             {" "}
                             {checkTab == "login" ? "Đăng ký" : "Đăng nhập"}
                           </span>
+                        </button>
+                      </div>
+                      <div className="core__Box-sc-1c81tsc-0 bbPuqJ">
+                        Bạn Quên mật khẩu?
+                        <button
+                          onClick={() => {
+                            window.location.href = "/forgot-password"; 
+                          }}
+                          className="ant-btn ant-btn-link ant-btn-sm"
+                        >
+                        Lấy lại mật khẩu
                         </button>
                       </div>
                     </div>
