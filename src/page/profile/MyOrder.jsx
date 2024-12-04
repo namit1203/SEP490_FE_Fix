@@ -29,10 +29,10 @@ export default function MyOrder() {
       const result = await response.json();
 
       // Map API response to table's data structure
-      const formattedData = result.map((item, index) => ({
-        id: index + 1, // Sequential ID
+      const formattedData = result.map((item) => ({
+        id: item.id, // Use the actual ID from the API response
         description: item.description,
-        note: "Chờ xác nhận", // Assuming note is static as per your example
+        note: "Chờ xác nhận", // Assuming note is static
       }));
 
       setData(formattedData);
@@ -79,7 +79,7 @@ export default function MyOrder() {
   ];
 
   const handleAction = (id) => {
-    // Navigate to the ticket-detail page with the selected ID
+    // Navigate to the ticket-detail page with the selected ID from the API
     navigate(`/ticket-detail/${id}`);
   };
 

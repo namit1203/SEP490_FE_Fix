@@ -46,31 +46,8 @@ const Header = ({ setOpenLogin }) => {
 
           </li>
           <div className="fix-item">
-            <li className="Navbar2__GroupItem-sa2air-7 fnjukq menu-group-item">
-              <a
-                title="/en-US"
-                href="/en-US"
-                className="Navbar2__LinkNormalStyled-sa2air-5 chCbIo"
-              >
-                <img
-                  src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/en-flag.svg"
-                  alt="en"
-                  width={28}
-                  height={20}
-                  className="Navbar2__FlagImg-sa2air-9 cJYRKt"
-                />
-              </a>
-            </li>
-            <li className="Navbar2__GroupItem-sa2air-7 fnjukq">
-              <div className="Navbar2__ButtonHotline-sa2air-11 kWkMez">
-                <div className="material-icons-wrapper md-20 icon-phone ">
-                  <i className="material-icons-round ">phone</i>
-                </div>
-                <p className="base__Headline03-sc-1tvbuqk-15 boemqK">
-                  Hotline 24/7
-                </p>
-              </div>
-            </li>
+    
+     
             <li
               style={{ display: "flex", alignItems: "center" }}
               className="Navbar2__GroupItem-sa2air-7 fnjukq"
