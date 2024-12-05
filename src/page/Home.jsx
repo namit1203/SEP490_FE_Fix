@@ -41,55 +41,76 @@ const Home = () => {
   });
   const handelLogin = async () => {
     try {
-      if (checkTab == "login") {
-        const { data } = await axios.post(
-          "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/login",
-          dataLogin
-        );
-        if (data) {
-          message.success("Login successful");
-          localStorage.setItem("token", data);
-          const responseCheckLogin = await axios.get(
-            "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/userProfile",
-            {
-              headers: {
-                Authorization: "Bearer " + data,
-              },
-            }
-          );
-
-          console.log("responseCheckLogin", responseCheckLogin);
-
-          if (responseCheckLogin) {
-            setProfile(responseCheckLogin.data);
-            localStorage.setItem(
-              "profile",
-              JSON.stringify(responseCheckLogin.data)
+        if (checkTab === "login") {
+            // Handle Login
+            const { data } = await axios.post(
+                "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/login",
+                dataLogin
             );
-          }
-          setOpenLogin(false);
+
+            // Ensure the token exists in the new response structure
+            if (data && data.token) {
+                // Notify success
+                message.success("Login successful");
+
+                // Save token and additional details to localStorage
+                const token = data.token; // Extract token
+                localStorage.setItem("token", token);
+                localStorage.setItem("role", data.role || ""); // Save role (if provided)
+                localStorage.setItem("userName", data.userName || ""); // Save username (if provided)
+
+                // Fetch user profile
+                const responseCheckLogin = await axios.get(
+                    "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/userProfile",
+                    {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                        },
+                    }
+                );
+
+                if (responseCheckLogin && responseCheckLogin.data) {
+                    // Save user profile to state and localStorage
+                    setProfile(responseCheckLogin.data);
+                    localStorage.setItem(
+                        "profile",
+                        JSON.stringify(responseCheckLogin.data)
+                    );
+                }
+
+                // Close login modal
+                setOpenLogin(false);
+            } else {
+                // Notify failure if token is not received
+                message.error("Login failed: Token not received");
+            }
         } else {
-          message.error("Login faild");
+            // Handle Signup
+            const { data } = await axios.post(
+                "https://boring-wiles.202-92-7-204.plesk.page//api/Auth/register",
+                dataSignup
+            );
+
+            if (data) {
+                // Notify success
+                message.success("Registration successful");
+
+                // Update UI state
+                setChecktab("login");
+                setOtp(true);
+            } else {
+                // Notify failure
+                message.error("Registration failed");
+            }
         }
-        console.log(data, "dataLogin");
-      } else {
-        const { data } = await axios.post(
-          "https://boring-wiles.202-92-7-204.plesk.page//api/Auth/register",
-          dataSignup
-        );
-        if (data) {
-          message.success("successful");
-          setChecktab("login");
-          setOtp(true);
-        } else {
-          message.error("Login faild");
-        }
-        console.log(data, "dataLogin");
-      }
     } catch (error) {
-      console.log(error);
+        // Log and notify errors
+        console.error("Error during login/register process:", error);
+        message.error("An error occurred during the process");
     }
-  };
+};
+
+
   const handelCheckOtp = async () => {
     try {
       //
@@ -270,9 +291,11 @@ const Home = () => {
                           className="AuthMethodSelect__StyledDivider-sc-1dumdyw-0 eRWLoS ant-divider ant-divider-horizontal ant-divider-with-text-center"
                           role="separator"
                         >
-                          <span className="ant-divider-inner-text"></span>
+                          <span className="ant-divider-inner-text">hoặc</span>
                         </div>
-
+                        <button className="ant-btn ant-btn-primary ant-btn-lg ant-btn-block">
+                          <span>Tiếp tục với Google</span>
+                        </button>
                       </div>
                       <div className="core__Box-sc-1c81tsc-0 bbPuqJ">
                         Bạn {checkTab == "login" ? "chưa" : "Đã"} có tài khoản?
@@ -288,17 +311,6 @@ const Home = () => {
                             {" "}
                             {checkTab == "login" ? "Đăng ký" : "Đăng nhập"}
                           </span>
-                        </button>
-                      </div>
-                      <div className="core__Box-sc-1c81tsc-0 bbPuqJ">
-                        Bạn Quên mật khẩu?
-                        <button
-                          onClick={() => {
-                            window.location.href = "/forgot-password"; 
-                          }}
-                          className="ant-btn ant-btn-link ant-btn-sm"
-                        >
-                        Lấy lại mật khẩu
                         </button>
                       </div>
                     </div>
