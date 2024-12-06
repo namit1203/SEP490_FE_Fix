@@ -9,6 +9,7 @@ const DetaillTicket = () => {
   const { id } = useParams(); // Get the ticket ID from the route
   const [ticket, setTicket] = useState(null);
   const [licensePlate, setLicensePlate] = useState("");
+  const [Description, setDescription] = useState("");
 
   // Fetch ticket details
   useEffect(() => {
@@ -35,10 +36,11 @@ const DetaillTicket = () => {
             }
           );
           setLicensePlate(vehicleResponse.data.licensePlate);
+          setDescription(vehicleResponse.data.description)
         }
       } catch (error) {
         console.error("Error fetching ticket details:", error);
-        message.error("Không thể tải thông tin vé.");
+        
       }
     };
 
@@ -49,8 +51,7 @@ const DetaillTicket = () => {
     return <div>Loading...</div>;
   }
 
-  const paymentStatus =
-    ticket.typeOfPayment === 1 ? "Đã thanh toán" : "Chưa thanh toán";
+  const paymentStatus = ticket.status;
 
   return (
     <>
@@ -143,7 +144,7 @@ const DetaillTicket = () => {
                         <tr>
                           <td style={{ width: "35%", padding: 5 }}>Hãng xe:</td>
                           <td style={{ width: "65%", padding: 5 }}>
-                            <b> Limousine</b>
+                          {Description || "Đang tải..."}
                           </td>
                         </tr>
                         <tr>
