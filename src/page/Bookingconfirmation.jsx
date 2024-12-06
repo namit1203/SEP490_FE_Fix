@@ -53,53 +53,53 @@ const Bookingconfirmation = () => {
     handelFetchData();
     handelFetchDataTipDetails();
   }, []);
-  const handelBookTrip = async () => {
-    try {
-      // Retrieve bookingTime from localStorage
-      const storedBookingTime = localStorage.getItem("bookingTime");
-  
-      if (!storedBookingTime) {
-        return message.error("Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.");
-      }
-  
-      // Extract only the date (YYYY-MM-DD) from storedBookingTime
-      const bookingDate = storedBookingTime.split("T")[0];
-  
-      // Construct the new API endpoint
-      const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}&promotionCode=${checkSelectPromtion}`;
-  
-      const response = await axios.post(
-        apiUrl,
-        { note: "string", typeOfPayment: 1 },
-        {
-          headers: {
-            Authorization: "Bearer " + checkLoginToken(),
-          },
-        }
-      );
-  
-      // Generate a random code
-      const generateRandomCode = () => {
-        const randomNumbers = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit code
-        return randomNumbers.toString();
-      };
-  
-      const randomCodeGenerated = generateRandomCode();
-  
-      setTicketId(response.data.ticketId); // Save ticket ID
-      setRandomCode(randomCodeGenerated); // Save the generated random code
-  
-      // Handle payment logic
-      if (selectedPayment === "pay-on-bus") {
-        return message.success("Thanh toán thành công");
-      }
-  
-      setCheckQr(true); // Open QR code payment modal or action
-    } catch (error) {
-      console.log(error);
-      message.error("Đã xảy ra lỗi khi đặt vé");
+ const handelBookTrip = async () => {
+  try {
+    // Check if "pay-on-bus" and quantity > 1
+    if (selectedPayment === "pay-on-bus" && Number(quantity) > 1) {
+      return message.error("Đối với thanh toán tiền mặt chỉ được phép đặt 1 vé");
     }
-  };
+
+    // Retrieve bookingTime from localStorage
+    const storedBookingTime = localStorage.getItem("bookingTime");
+
+    if (!storedBookingTime) {
+      return message.error("Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.");
+    }
+
+    // Extract only the date (YYYY-MM-DD) from storedBookingTime
+    const bookingDate = storedBookingTime.split("T")[0];
+
+    // Construct the new API endpoint
+    const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}&promotionCode=${checkSelectPromtion}`;
+
+    const response = await axios.post(
+      apiUrl,
+      { note: "string", typeOfPayment: selectedPayment === "pay-on-bus" ? 2 : 1 }, // 2 for pay-on-bus
+      {
+        headers: {
+          Authorization: "Bearer " + checkLoginToken(),
+        },
+      }
+    );
+
+    // Save ticket ID
+    setTicketId(response.data.ticketId);
+
+    // Redirect to ticket detail if pay-on-bus
+    if (selectedPayment === "pay-on-bus") {
+      message.success("Thanh toán khi lên xe đã được xác nhận!");
+      return navigate(`/ticket-detail/${response.data.ticketId}`);
+    }
+
+    // For other payment methods, proceed with QR code handling
+    setCheckQr(true);
+  } catch (error) {
+    console.log(error);
+    message.error("Đã xảy ra lỗi khi đặt vé");
+  }
+};
+
   
   
   
@@ -123,15 +123,13 @@ const Bookingconfirmation = () => {
   const discounts = promotion;
   const handelTranferQr = async () => {
     try {
+      const totalAmount =
+        Number(localStorage.getItem("priceTrip")) *
+        Number(localStorage.getItem("quantity"));
+      const descriptionn = `${profile?.username}${randomCode}`;
+  
       const postPayment = await axios.post(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/Payment?amout=${
-          Number(localStorage.getItem("priceTrip")) *
-          Number(localStorage.getItem("quantity"))
-        }&description=${
-          profile?.username
-        }${randomCode}&codePayment=${randomCode}&ticketID=${ticketId}&typePayment=1&email=${
-          profile?.email
-        }`,
+        `https://boring-wiles.202-92-7-204.plesk.page/api/Payment?amout=${totalAmount}&description=${descriptionn}&codePayment=${randomCode}&ticketID=${ticketId}&typePayment=1&email=${profile?.email}`,
         null,
         {
           headers: {
@@ -139,18 +137,25 @@ const Bookingconfirmation = () => {
           },
         }
       );
+  
+      // Payment successful
       message.success("Thanh toán Thành công !");
       setTimeout(() => {
-        navigate("/ticket-detail/1");
+        navigate(`/ticket-detail/${ticketId}`); // Redirect to ticket-detail with ticketId
       }, 1500);
+  
       console.log(postPayment, "postPayment");
     } catch (error) {
-      message.error("Thanh toán thất bại !");
+      // Payment failed
+      message.error("Thanh toán thất bại, vui lòng liên hệ bộ phận hỗ trợ!");
       setTimeout(() => {
-        navigate("/");
+        navigate(`/ticket-detail/${ticketId}`, {
+          state: { error: true },
+        }); // Redirect to ticket-detail with an error state
       }, 1500);
     }
   };
+  
 
   const handlePaymentChange = (event) => {
     setSelectedPayment(event.target.value);
@@ -307,48 +312,12 @@ const Bookingconfirmation = () => {
                 An toàn & tiện lợi
               </span>
               <p className="text-gray-500 mt-2">
-                Không cần nhập thông tin. Xác nhận thanh toán tức thì, nhanh
+                Xác nhận thanh toán tức thì, nhanh
                 chóng và ít sai sót.
               </p>
-              <div className="flex mt-2">
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="MoMo logo"
-                  className="mr-2"
-                />
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="ZaloPay logo"
-                  className="mr-2"
-                />
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="ShopeePay logo"
-                  className="mr-2"
-                />
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="ViettelPay logo"
-                  className="mr-2"
-                />
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="ACB logo"
-                  className="mr-2"
-                />
-                <a href="#" className="text-blue-500">
-                  Xem tất cả
-                </a>
-              </div>
+          
             </div>
-            <div className="mb-4 bg-yellow-100 p-2 rounded">
-              <span className="text-yellow-700">
-                Chuyến đi chưa được bảo vệ
-              </span>
-              <a href="#" className="text-blue-500 ml-2">
-                Thêm bảo hiểm
-              </a>
-            </div>
+          
             <div className="mb-4">
               <input
                 type="radio"
