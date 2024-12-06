@@ -71,18 +71,25 @@ export default function SearchBooking() {
 
   const handleSearch = () => {
     if (!fromInputValue || !toInputValue || !dateTime) {
-      return message.error("Vui lòng chọn điểm xuat phat, dich va thoi gian");
+      return message.error("Vui lòng chọn điểm xuất phát, đích và thời gian");
     }
-
+  
     const currentTime = new Date();
     if (new Date(dateTime).getTime() < currentTime.getTime()) {
-      return message.error("Thoi gian khong hop le");
+      return message.error("Thời gian không hợp lệ");
     }
-
+  
+    // Dispatch Redux actions to update the global state
     dispatch(setStartPoint(fromInputValue));
     dispatch(setEndPoint(toInputValue));
     dispatch(setTime(dateTime));
+  
+    // Save the selected time into localStorage
+    localStorage.setItem("bookingTime", dateTime);
+  
+    message.success("Thông tin đã được lưu thành công");
   };
+  
   return (
     <div className="p-4 w-full">
       <div className="flex gap-4">

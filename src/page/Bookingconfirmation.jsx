@@ -55,8 +55,21 @@ const Bookingconfirmation = () => {
   }, []);
   const handelBookTrip = async () => {
     try {
+      // Retrieve bookingTime from localStorage
+      const storedBookingTime = localStorage.getItem("bookingTime");
+  
+      if (!storedBookingTime) {
+        return message.error("Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.");
+      }
+  
+      // Extract only the date (YYYY-MM-DD) from storedBookingTime
+      const bookingDate = storedBookingTime.split("T")[0];
+  
+      // Construct the new API endpoint
+      const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}&promotionCode=${checkSelectPromtion}`;
+  
       const response = await axios.post(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}?promotionCode=${checkSelectPromtion}&numberTicket=${quantity}`,
+        apiUrl,
         { note: "string", typeOfPayment: 1 },
         {
           headers: {
@@ -65,27 +78,29 @@ const Bookingconfirmation = () => {
         }
       );
   
-      // Tạo mã randomCode bằng JavaScript
+      // Generate a random code
       const generateRandomCode = () => {
-        const randomNumbers = Math.floor(100000 + Math.random() * 900000); // Tạo mã 6 chữ số
+        const randomNumbers = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit code
         return randomNumbers.toString();
       };
   
       const randomCodeGenerated = generateRandomCode();
   
-      setTicketId(response.data.ticketId);
-      setRandomCode(randomCodeGenerated);
+      setTicketId(response.data.ticketId); // Save ticket ID
+      setRandomCode(randomCodeGenerated); // Save the generated random code
   
+      // Handle payment logic
       if (selectedPayment === "pay-on-bus") {
         return message.success("Thanh toán thành công");
       }
   
-      setCheckQr(true);
+      setCheckQr(true); // Open QR code payment modal or action
     } catch (error) {
       console.log(error);
       message.error("Đã xảy ra lỗi khi đặt vé");
     }
   };
+  
   
   
   const getImgSrc = () => {
@@ -351,55 +366,8 @@ const Bookingconfirmation = () => {
                 Bạn có thể thanh toán cho tài xế khi lên xe
               </p>
             </div>
-            <div className="mb-4">
-              <input
-                type="radio"
-                id="momo"
-                name="payment"
-                value="momo"
-                className="mr-2"
-                checked={selectedPayment === "momo"}
-                onChange={handlePaymentChange}
-              />
-              <label htmlFor="momo" className="font-bold">
-                Ví MoMo
-              </label>
-              <p className="text-gray-500 mt-2">
-                Điện thoại của bạn phải được cài đặt ứng dụng MoMo
-              </p>
-              <p className="text-green-600 mt-2">
-                Giảm 20K và 60K khi nhập mã MOMOFLASH15 lần lượt cho đơn hàng từ
-                300K và 1.200K trong khung giờ Flash Sale 12h - 14h ngày
-                29/10/2024
-              </p>
-              <a href="#" className="text-blue-500">
-                Điều kiện sử dụng
-              </a>
-            </div>
-            <div className="mb-4">
-              <input
-                type="radio"
-                id="international-card"
-                name="payment"
-                value="international-card"
-                className="mr-2"
-                checked={selectedPayment === "international-card"}
-                onChange={handlePaymentChange}
-              />
-              <label htmlFor="international-card" className="font-bold">
-                Thẻ thanh toán quốc tế
-              </label>
-              <p className="text-gray-500 mt-2">Thẻ Visa, MasterCard, JCB</p>
-              <p className="text-gray-500 mt-2">
-                1/ Nhập mã VXRHDS50 hoặc VXRHDS100 tại Vexere - Giảm 50K hoặc
-                100K lần lượt cho đơn từ 250K hoặc 100K khi thanh toán bằng Thẻ
-                Tín dụng quốc tế HDSAISON.
-              </p>
-              <p className="text-gray-500 mt-2">
-                2/Nhập mã VEXEREHOME tại Vexere - Giảm 20% tối đa 60K khi thanh
-                toán bằng Thẻ tín dụng Home Credit
-              </p>
-            </div>
+
+
 
             <p className="text-gray-500 text-center mt-2">
               Bằng việc nhấn nút Thanh toán, bạn đồng ý với{" "}
@@ -408,90 +376,24 @@ const Bookingconfirmation = () => {
               </a>
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Tiện ích</h2>
-              <div className="mb-4">
-                <div className="flex items-center mb-2">
-                  <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                  <span>Bảo hiểm chuyến đi (+20.000đ/ghế)</span>
-                </div>
-                <div className="ml-6 text-gray-700">
-                  Được bồi thường lên đến 400.000đ/ghế. Cung cấp bởi{" "}
-                  <span className="font-semibold">Bảo Việt</span> &{" "}
-                  <span className="font-semibold">Saladin</span>.
-                </div>
-                <div className="border border-green-500 p-4 rounded-lg mt-2">
-                  <div className="font-semibold text-green-700 mb-2">
-                    Bảo hiểm tai nạn
-                  </div>
-                  <div className="text-gray-700 mb-2">
-                    Quyền lợi bảo hiểm lên đến 400 triệu đồng khi xảy ra tai nạn
-                  </div>
-                  <div className="font-semibold text-green-700 mb-2">
-                    Bảo hiểm hủy chuyến
-                  </div>
-                  <div className="text-gray-700 mb-2">
-                    Bồi thường 100% tiền vé nếu chuyến đi bị hủy bởi các lý do
-                    khách quan hoặc bất khả kháng về sức khỏe.
-                  </div>
-                  <div className="text-green-700">
-                    Bồi thường trực tuyến nhanh chóng, dễ dàng
-                  </div>
-                  <a href="#" className="text-blue-600 mt-2 block">
-                    Chi tiết
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                <span>Thuê xe máy tại Sa Pa</span>
-              </div>
-              <div className="ml-6 text-gray-700">
-                Vexere sẽ hỗ trợ xác nhận dịch vụ
-              </div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">
-                Thông tin chuyến đi
-              </h2>
-              {/* <div className="flex items-center mb-4">
-              <i className="fas fa-calendar-alt text-blue-600 mr-2"></i>
-              <span className="text-gray-700">T3, 29/10/2024</span>
-              <span className="ml-auto text-gray-700">1</span>
-              <a href="#" className="text-blue-600 ml-4">
-                Chi tiết
-              </a>
-            </div> */}
-              {/* <div className="flex items-center mb-4">
-              <img
-                src="https://placehold.co/50x50"
-                alt="Image of Sao Việt bus"
-                className="w-12 h-12 rounded mr-4"
-              />
-              <div>
-                <div className="font-semibold text-gray-800">Sao Việt</div>
-                <div className="text-gray-600">
-                  Limousine giường phòng 21 chỗ
-                </div>
-              </div>
-            </div> */}
-              <div className="mb-4">
-                <div className="flex items-center mb-4">
-                  <i className="fas fa-clock text-blue-500 mr-2"></i>
-                  <p className="font-bold">
-                    {localStorage.getItem("startTime")}
-                  </p>
-                  <p className="ml-2">{localStorage.getItem("startPoint")}</p>
-                </div>
-                <div className="flex items-center">
-                  <i className="fas fa-clock text-blue-500 mr-2"></i>
-                  <p className="font-bold">{localStorage.getItem("endTime")}</p>
-                  <p className="ml-2">{localStorage.getItem("endPoint")}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="grid grid-cols-1 gap-4 mt-4">
+  <div className="bg-white p-6 rounded-lg shadow">
+    <h2 className="text-xl font-semibold mb-4">Thông tin chuyến đi</h2>
+    <div className="mb-4">
+      <div className="flex items-center mb-4">
+        <i className="fas fa-clock text-blue-500 mr-2"></i>
+        <p className="font-bold">{localStorage.getItem("startTime")}</p>
+        <p className="ml-2">{localStorage.getItem("startPoint")}</p>
+      </div>
+      <div className="flex items-center">
+        <i className="fas fa-clock text-blue-500 mr-2"></i>
+        <p className="font-bold">{localStorage.getItem("endTime")}</p>
+        <p className="ml-2">{localStorage.getItem("endPoint")}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
       )}
     </div>
