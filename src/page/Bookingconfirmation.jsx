@@ -53,53 +53,61 @@ const Bookingconfirmation = () => {
     handelFetchData();
     handelFetchDataTipDetails();
   }, []);
- const handelBookTrip = async () => {
-  try {
-    // Check if "pay-on-bus" and quantity > 1
-    if (selectedPayment === "pay-on-bus" && Number(quantity) > 1) {
-      return message.error("Đối với thanh toán tiền mặt chỉ được phép đặt 1 vé");
-    }
-
-    // Retrieve bookingTime from localStorage
-    const storedBookingTime = localStorage.getItem("bookingTime");
-
-    if (!storedBookingTime) {
-      return message.error("Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.");
-    }
-
-    // Extract only the date (YYYY-MM-DD) from storedBookingTime
-    const bookingDate = storedBookingTime.split("T")[0];
-
-    // Construct the new API endpoint
-    const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}&promotionCode=${checkSelectPromtion}`;
-
-    const response = await axios.post(
-      apiUrl,
-      { note: "string", typeOfPayment: selectedPayment === "pay-on-bus" ? 2 : 1 }, // 2 for pay-on-bus
-      {
-        headers: {
-          Authorization: "Bearer " + checkLoginToken(),
-        },
+  const handelBookTrip = async () => {
+    try {
+      // Check if "pay-on-bus" and quantity > 1
+      if (selectedPayment === "pay-on-bus" && Number(quantity) > 1) {
+        return message.error("Đối với thanh toán tiền mặt chỉ được phép đặt 1 vé");
       }
-    );
-
-    // Save ticket ID
-    setTicketId(response.data.ticketId);
-
-    // Redirect to ticket detail if pay-on-bus
-    if (selectedPayment === "pay-on-bus") {
-      message.success("Thanh toán khi lên xe đã được xác nhận!");
-      return navigate(`/ticket-detail/${response.data.ticketId}`);
+  
+      // Retrieve bookingTime from localStorage
+      const storedBookingTime = localStorage.getItem("bookingTime");
+  
+      if (!storedBookingTime) {
+        return message.error("Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.");
+      }
+  
+      // Extract only the date (YYYY-MM-DD) from storedBookingTime
+      const bookingDate = storedBookingTime.split("T")[0];
+  
+      // Generate a random code
+      const generateRandomCode = () => {
+        const randomNumbers = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit code
+        return randomNumbers.toString();
+      };
+  
+      const randomCodeGenerated = generateRandomCode();
+      setRandomCode(randomCodeGenerated); // Save the generated random code
+  
+      // Construct the new API endpoint
+      const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}&promotionCode=${checkSelectPromtion}`;
+  
+      const response = await axios.post(
+        apiUrl,
+        { note: "string", typeOfPayment: 2 },
+        {
+          headers: {
+            Authorization: "Bearer " + checkLoginToken(),
+          },
+        }
+      );
+  
+      // Save ticket ID
+      setTicketId(response.data.ticketId);
+  
+      // Redirect to ticket detail if pay-on-bus
+      if (selectedPayment === "pay-on-bus") {
+        message.success("Thanh toán khi lên xe đã được xác nhận!");
+        return navigate(`/ticket-detail/${response.data.ticketId}`);
+      }
+  
+      // For other payment methods, proceed with QR code handling
+      setCheckQr(true);
+    } catch (error) {
+      console.log(error);
+      message.error("Đã xảy ra lỗi khi đặt vé");
     }
-
-    // For other payment methods, proceed with QR code handling
-    setCheckQr(true);
-  } catch (error) {
-    console.log(error);
-    message.error("Đã xảy ra lỗi khi đặt vé");
-  }
-};
-
+  };
   
   
   
