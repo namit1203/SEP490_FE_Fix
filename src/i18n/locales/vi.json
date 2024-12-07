@@ -1,0 +1,223 @@
+{
+  "accountInfo": "Thông tin tài khoản",
+  "member": "Thành viên",
+  "regular": "Thường",
+  "myOrders": "Đơn hàng của tôi",
+  "offers": "Ưu đãi của tôi",
+  "changePassword": "Đổi mật khẩu",
+  "tripReview": "Đánh giá chuyến đi",
+  "logout": "Đăng xuất",
+  
+  "header": {
+    "myOrdersLink": "Đơn hàng của tôi",
+    "findSharedRide": "Tìm xe ghép",
+    "profile": "Trang cá nhân",
+    "login": "Đăng nhập"
+  },
+
+  "home": {
+    "banner": {
+      "title": "Đặt vé xe khách trực tuyến",
+      "subtitle": "Hơn 1000+ nhà xe chất lượng cao trên toàn quốc",
+      "tabs": {
+        "bus": "Xe khách",
+        "shared": "Xe Tiện Chuyến",
+        "rental": "Thuê xe du lịch"
+      },
+      "search": {
+        "from": "Điểm đi",
+        "to": "Điểm đến",
+        "date": "Ngày đi",
+        "fromPlaceholder": "Chọn điểm đi",
+        "toPlaceholder": "Chọn điểm đến",
+        "searchButton": "Tìm chuyến xe"
+      }
+    },
+    "features": {
+      "title": "Tại sao chọn chúng tôi?",
+      "operators": {
+        "title": "1000+ Nhà xe chất lượng cao",
+        "description": "Lựa chọn đa dạng các nhà xe uy tín trên toàn quốc"
+      },
+      "booking": {
+        "title": "Đặt vé dễ dàng",
+        "description": "Đặt vé nhanh chóng, thuận tiện chỉ với vài bước"
+      },
+      "payment": {
+        "title": "Thanh toán an toàn",
+        "description": "Nhiều phương thức thanh toán, bảo mật tuyệt đối"
+      },
+      "support": {
+        "title": "Dịch vụ 24/7",
+        "description": "Hỗ trợ khách hàng mọi lúc, mọi nơi"
+      }
+    },
+    "popularRoutes": {
+      "title": "Tuyến phổ biến",
+      "subtitle": "Các tuyến được khách hàng tin tưởng lựa chọn",
+      "viewAll": "Xem tất cả",
+      "priceFrom": "Giá từ",
+      "bookButton": "Đặt vé",
+      "duration": "Thời gian",
+      "distance": "Khoảng cách"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Đăng nhập",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "forgotPassword": "Quên mật khẩu?",
+      "noAccount": "Chưa có tài khoản?",
+      "signUp": "Đăng ký",
+      "processing": "Đang xử lý...",
+      "usernameRequired": "Vui lòng nhập tên đăng nhập",
+      "passwordRequired": "Vui lòng nhập mật khẩu",
+      "success": "Đăng nhập thành công",
+      "error": "Có lỗi xảy ra, vui lòng thử lại"
+    },
+    "register": {
+      "title": "Đăng ký",
+      "email": "Email",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "submit": "Đăng ký",
+      "hasAccount": "Đã có tài khoản?",
+      "signIn": "Đăng nhập",
+      "emailRequired": "Vui lòng nhập email",
+      "usernameRequired": "Vui lòng nhập tên đăng nhập",
+      "passwordRequired": "Vui lòng nhập mật khẩu",
+      "success": "Đăng ký thành công",
+      "emailPlaceholder": "Nhập email của bạn",
+      "usernamePlaceholder": "Nhập tên đăng nhập",
+      "passwordPlaceholder": "Nhập mật khẩu"
+    },
+    "otp": {
+      "title": "Nhập mã OTP",
+      "label": "Mã OTP",
+      "placeholder": "Nhập mã OTP",
+      "submit": "Xác nhận",
+      "required": "Vui lòng nhập mã OTP",
+      "success": "Xác thực thành công",
+      "error": "Mã OTP không chính xác"
+    },
+    "validation": {
+      "required": "Vui lòng nhập thông tin này",
+      "invalidEmail": "Email không hợp lệ",
+      "processing": "Đang xử lý..."
+    }
+  },
+
+  "convenient": {
+    "title": "Đặt Chuyến Đi Tiện Chuyến",
+    "service": {
+      "label": "Chọn Loại Dịch Vụ",
+      "shared": "Xe Ghép",
+      "private": "Xe Riêng"
+    },
+    "form": {
+      "startPoint": "Điểm Đi",
+      "endPoint": "Điểm Đến",
+      "time": "Thời Gian Khởi Hành",
+      "phone": "Số Điện Thoại",
+      "searchButton": "Kiểm Tra Giá",
+      "bookButton": "Đặt Ngay"
+    },
+    "price": {
+      "original": "Giá Gốc",
+      "discounted": "Giá Cuối",
+      "currency": " VNĐ"
+    },
+    "promotion": {
+      "label": "Chọn Khuyến Mãi",
+      "placeholder": "Chọn mã khuyến mãi",
+      "discount": "Giảm {{percent}}%",
+      "apply": "Áp Dụng Khuyến Mãi"
+    },
+    "messages": {
+      "loadingError": "Không thể tải khuyến mãi",
+      "priceUpdated": "Cập nhật giá thành công",
+      "priceError": "Không thể lấy giá",
+      "checkPrice": "Vui lòng kiểm tra giá trước",
+      "invalidPromo": "Mã khuyến mãi không hợp lệ",
+      "promoApplied": "Đã áp dụng khuyến mãi: {{description}}",
+      "noPromo": "Không có khuyến mãi được áp dụng",
+      "applyFirst": "Vui lòng áp dụng khuyến mãi trước",
+      "bookingSuccess": "Đặt chuyến thành công!",
+      "bookingError": "Đặt chuyến thất bại. Vui lòng thử lại."
+    }
+  },
+
+  "profile": {
+    "rewards": {
+      "loading": "Đang tải..."
+    }
+  },
+
+  "footer": {
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "terms": "Điều khoản & Điều kiện",
+    "privacy": "Chính sách bảo mật",
+    "support": "Hỗ trợ"
+  },
+
+  "carRental": {
+    "title": "Dịch Vụ Thuê Xe",
+    "subtitle": "Đặt xe cho chuyến đi của bạn",
+    "form": {
+      "startLocation": {
+        "label": "Điểm Đón",
+        "placeholder": "Nhập địa chỉ điểm đón"
+      },
+      "endLocation": {
+        "label": "Điểm Trả",
+        "placeholder": "Nhập địa chỉ điểm trả"
+      },
+      "startTime": {
+        "label": "Thời Gian Đón"
+      },
+      "endTime": {
+        "label": "Thời Gian Trả"
+      },
+      "carType": {
+        "label": "Chọn Loại Xe (Số Gh��)",
+        "options": {
+          "7": "Xe 7 Chỗ",
+          "16": "Xe 16 Chỗ",
+          "29": "Xe 29 Chỗ",
+          "45": "Xe 45 Chỗ"
+        }
+      },
+      "bookButton": "Đặt Xe Ngay"
+    },
+    "messages": {
+      "success": "Thành công! Chúng tôi sẽ liên hệ lại với bạn.",
+      "error": "Đặt xe thất bại. Vui lòng thử lại!",
+      "timeRequired": "Vui lòng chọn thời gian đón và trả xe"
+    },
+    "info": {
+      "title": "Tại Sao Chọn Dịch Vụ Thuê Xe Của Chúng Tôi?",
+      "features": [
+        {
+          "title": "Đa Dạng Phương Tiện",
+          "description": "Từ xe 7 chỗ đến xe 45 chỗ"
+        },
+        {
+          "title": "Tài Xế Chuyên Nghiệp",
+          "description": "Tài xế giàu kinh nghiệm và có chứng chỉ"
+        },
+        {
+          "title": "Thời Gian Thuê Linh Hoạt",
+          "description": "Cho thuê theo giờ, ngày hoặc dài hạn"
+        },
+        {
+          "title": "Hỗ Trợ 24/7",
+          "description": "Luôn sẵn sàng hỗ trợ khách hàng"
+        }
+      ]
+    }
+  }
+} 

@@ -1,0 +1,223 @@
+{
+  "accountInfo": "Account Information",
+  "member": "Member",
+  "regular": "Regular",
+  "myOrders": "My Orders",
+  "offers": "My Offers",
+  "changePassword": "Change Password",
+  "tripReview": "Trip Reviews",
+  "logout": "Logout",
+  
+  "header": {
+    "myOrdersLink": "My Orders",
+    "findSharedRide": "Find Shared Ride",
+    "profile": "Profile Page",
+    "login": "Login"
+  },
+
+  "home": {
+    "banner": {
+      "title": "Book Bus Tickets Online",
+      "subtitle": "Over 1000+ high-quality bus operators nationwide",
+      "tabs": {
+        "bus": "Bus",
+        "shared": "Shared Ride",
+        "rental": "Car Rental"
+      },
+      "search": {
+        "from": "From",
+        "to": "To",
+        "date": "Date",
+        "fromPlaceholder": "Select departure point",
+        "toPlaceholder": "Select destination",
+        "searchButton": "Find Buses"
+      }
+    },
+    "features": {
+      "title": "Why Choose Us?",
+      "operators": {
+        "title": "1000+ Quality Bus Operators",
+        "description": "Wide selection of trusted operators nationwide"
+      },
+      "booking": {
+        "title": "Easy Booking",
+        "description": "Quick and convenient booking in just a few steps"
+      },
+      "payment": {
+        "title": "Secure Payment",
+        "description": "Multiple payment methods, absolute security"
+      },
+      "support": {
+        "title": "24/7 Service",
+        "description": "Customer support anytime, anywhere"
+      }
+    },
+    "popularRoutes": {
+      "title": "Popular Routes",
+      "subtitle": "Routes trusted by our customers",
+      "viewAll": "View All",
+      "priceFrom": "From",
+      "bookButton": "Book Now",
+      "duration": "Duration",
+      "distance": "Distance"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Login",
+      "username": "Username",
+      "password": "Password",
+      "submit": "Login",
+      "forgotPassword": "Forgot Password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up",
+      "processing": "Processing...",
+      "usernameRequired": "Please enter your username",
+      "passwordRequired": "Please enter your password",
+      "success": "Login successful",
+      "error": "An error occurred, please try again"
+    },
+    "register": {
+      "title": "Register",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In",
+      "emailRequired": "Please enter your email",
+      "usernameRequired": "Please enter your username",
+      "passwordRequired": "Please enter your password",
+      "success": "Registration successful",
+      "emailPlaceholder": "Enter your email",
+      "usernamePlaceholder": "Enter your username",
+      "passwordPlaceholder": "Enter your password"
+    },
+    "otp": {
+      "title": "Enter OTP",
+      "label": "OTP Code",
+      "placeholder": "Enter OTP code",
+      "submit": "Verify",
+      "required": "Please enter the OTP code",
+      "success": "Verification successful",
+      "error": "Invalid OTP code"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "processing": "Processing..."
+    }
+  },
+
+  "convenient": {
+    "title": "Book a Convenient Trip",
+    "service": {
+      "label": "Select Service Type",
+      "shared": "Shared Trip",
+      "private": "Private Trip"
+    },
+    "form": {
+      "startPoint": "Starting Point",
+      "endPoint": "Destination",
+      "time": "Departure Time",
+      "phone": "Phone Number",
+      "searchButton": "Check Price",
+      "bookButton": "Book Now"
+    },
+    "price": {
+      "original": "Original Price",
+      "discounted": "Final Price",
+      "currency": " VND"
+    },
+    "promotion": {
+      "label": "Select Promotion",
+      "placeholder": "Choose a promotion code",
+      "discount": "{{percent}}% discount",
+      "apply": "Apply Promotion"
+    },
+    "messages": {
+      "loadingError": "Failed to load promotions",
+      "priceUpdated": "Price updated successfully",
+      "priceError": "Failed to get price",
+      "checkPrice": "Please check the price first",
+      "invalidPromo": "Invalid promotion code",
+      "promoApplied": "Promotion applied: {{description}}",
+      "noPromo": "No promotion applied",
+      "applyFirst": "Please apply promotion first",
+      "bookingSuccess": "Booking successful!",
+      "bookingError": "Booking failed. Please try again."
+    }
+  },
+
+  "profile": {
+    "rewards": {
+      "loading": "Loading..."
+    }
+  },
+
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "support": "Support"
+  },
+
+  "carRental": {
+    "title": "Car Rental Service",
+    "subtitle": "Book a car for your journey",
+    "form": {
+      "startLocation": {
+        "label": "Pickup Location",
+        "placeholder": "Enter pickup address"
+      },
+      "endLocation": {
+        "label": "Drop-off Location",
+        "placeholder": "Enter drop-off address"
+      },
+      "startTime": {
+        "label": "Pickup Time"
+      },
+      "endTime": {
+        "label": "Return Time"
+      },
+      "carType": {
+        "label": "Select Car Type (Seats)",
+        "options": {
+          "7": "7 Seater Car",
+          "16": "16 Seater Van",
+          "29": "29 Seater Bus",
+          "45": "45 Seater Bus"
+        }
+      },
+      "bookButton": "Book Now"
+    },
+    "messages": {
+      "success": "Success! We will contact you shortly.",
+      "error": "Booking failed. Please try again!",
+      "timeRequired": "Please select both pickup and return times"
+    },
+    "info": {
+      "title": "Why Choose Our Car Rental Service?",
+      "features": [
+        {
+          "title": "Wide Range of Vehicles",
+          "description": "From 7-seater cars to 45-seater buses"
+        },
+        {
+          "title": "Professional Drivers",
+          "description": "Experienced and certified drivers"
+        },
+        {
+          "title": "Flexible Rental Period",
+          "description": "Hourly, daily, or long-term rental options"
+        },
+        {
+          "title": "24/7 Support",
+          "description": "Customer support available anytime"
+        }
+      ]
+    }
+  }
+} 
