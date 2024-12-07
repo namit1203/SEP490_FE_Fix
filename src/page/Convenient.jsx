@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import Header from "./Header";
 import Footer from "./Footer";
 import { message } from "antd";
@@ -8,20 +9,21 @@ import { AppContext } from "../context/app.context";
 
 const Convenient = () => {
   const { profile } = useContext(AppContext);
+  const { t } = useTranslation();
 
   const [dataDetail, setDataDetail] = useState({
     startPoint: "Ha Noi",
     endPoint: "Bac Giang",
     startTime: "",
   });
-  const [price, setPrice] = useState(null); // Original price (Giá 1)
-  const [finalPrice, setFinalPrice] = useState(null); // Discounted price (Giá 2)
+  const [price, setPrice] = useState(null);
+  const [finalPrice, setFinalPrice] = useState(null);
   const [selectedService, setSelectedService] = useState("ConvenientTrip");
-  const [promotions, setPromotions] = useState([]); // List of promotions
-  const [selectedPromotion, setSelectedPromotion] = useState(null); // Selected promotion
+  const [promotions, setPromotions] = useState([]);
+  const [selectedPromotion, setSelectedPromotion] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(profile?.numberPhone || "");
+  const [loading, setLoading] = useState(false);
 
-  // Fetch promotions on component mount
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
@@ -39,16 +41,16 @@ const Convenient = () => {
         );
         setPromotions(uniquePromotions);
       } catch (error) {
-        console.error("Failed to fetch promotions:", error);
-        message.error("Không thể tải danh sách khuyến mãi.");
+        console.error("Error:", error);
+        message.error(t('convenient.messages.loadingError'));
       }
     };
 
     fetchPromotions();
-  }, []);
+  }, [t]);
 
-  // Fetch the price for the trip
   const handelBookTrip = async () => {
+    setLoading(true);
     const tripType = selectedService === "ConvenientTrip" ? 2 : 3;
     try {
       const { data } = await axios.get(
@@ -62,19 +64,20 @@ const Convenient = () => {
 
       if (data?.price) {
         setPrice(data.price);
-        setFinalPrice(null); // Reset final price when fetching a new trip
-        message.success("Đã cập nhật giá chuyến đi.");
+        setFinalPrice(null);
+        message.success(t('convenient.messages.priceUpdated'));
       }
     } catch (error) {
-      console.error("Error fetching trip price:", error);
-      message.error("Không thể tìm thấy giá chuyến đi.");
+      console.error("Error:", error);
+      message.error(t('convenient.messages.priceError'));
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Apply promotion to calculate the final price
   const handleApplyPromotion = () => {
     if (!price) {
-      message.warning("Vui lòng kiểm tra giá trước khi áp dụng khuyến mãi.");
+      message.warning(t('convenient.messages.checkPrice'));
       return;
     }
 
@@ -84,7 +87,7 @@ const Convenient = () => {
       );
 
       if (!selectedPromo) {
-        message.warning("Khuyến mãi không hợp lệ.");
+        message.warning(t('convenient.messages.invalidPromo'));
         return;
       }
 
@@ -92,20 +95,20 @@ const Convenient = () => {
       const discountedPrice = price - (price * discount) / 100;
       setFinalPrice(discountedPrice);
 
-      message.success(`Khuyến mãi đã áp dụng: ${selectedPromo.description}`);
+      message.success(t('convenient.messages.promoApplied', { description: selectedPromo.description }));
     } else {
-      setFinalPrice(price); // If no promotion is selected, use the original price
-      message.info("Không áp dụng khuyến mãi.");
+      setFinalPrice(price);
+      message.info(t('convenient.messages.noPromo'));
     }
   };
 
-  // Handle trip booking
   const handelResult = async () => {
     if (!finalPrice) {
-      message.warning("Vui lòng áp dụng khuyến mãi trước khi đặt xe.");
+      message.warning(t('convenient.messages.applyFirst'));
       return;
     }
 
+    setLoading(true);
     try {
       const dataPayload = {
         userName: profile?.username,
@@ -127,145 +130,185 @@ const Convenient = () => {
           },
         }
       );
-      message.success("Thành công , chúng tôi sẽ liên hệ lại bạn !");
+      message.success(t('convenient.messages.bookingSuccess'));
       setTimeout(() => {
         window.location.href = "/";
       }, 500);
     } catch (error) {
       console.error(error);
-      message.error("Thất bại , vui lòng thử lại !");
+      message.error(t('convenient.messages.bookingError'));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="bg-gray-100 min-h-screen">
-        <div className="container mx-auto p-4">
-          <div className="flex">
-            <div className="w-3/5 bg-white p-4 shadow-lg">
-              <div className="mb-4">
-                <label>Chọn dịch vụ</label>
-                <div>
-                  <label>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 mt-12">
+          {t('convenient.title')}
+        </h1>
+        
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-2/3">
+            <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+              {/* Service Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  {t('convenient.service.label')}
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center space-x-2 cursor-pointer">
                     <input
                       type="radio"
-                      name="datxe_dichvu"
+                      name="service"
                       value="ConvenientTrip"
                       checked={selectedService === "ConvenientTrip"}
                       onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-4 h-4 text-blue-600"
                     />
-                    Tiện chuyến
+                    <span>{t('convenient.service.shared')}</span>
                   </label>
-                  <label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
                     <input
                       type="radio"
-                      name="datxe_dichvu"
+                      name="service"
                       value="PrivateTrip"
                       checked={selectedService === "PrivateTrip"}
                       onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-4 h-4 text-blue-600"
                     />
-                    Bao xe
+                    <span>{t('convenient.service.private')}</span>
                   </label>
                 </div>
               </div>
-              <div className="mb-4">
-                <label>Điểm đi</label>
-                <input
-                  type="text"
-                  value={dataDetail.startPoint}
-                  onChange={(e) =>
-                    setDataDetail({ ...dataDetail, startPoint: e.target.value })
-                  }
-                  className="w-full p-2 border rounded"
-                />
+
+              {/* Form Fields */}
+              <div className="grid gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.startPoint')}
+                  </label>
+                  <input
+                    type="text"
+                    value={dataDetail.startPoint}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, startPoint: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.endPoint')}
+                  </label>
+                  <input
+                    type="text"
+                    value={dataDetail.endPoint}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, endPoint: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.time')}
+                  </label>
+                  <input
+                    type="datetime-local"
+                    value={dataDetail.startTime}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, startTime: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.phone')}
+                  </label>
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
               </div>
-              <div className="mb-4">
-                <label>Điểm đến</label>
-                <input
-                  type="text"
-                  value={dataDetail.endPoint}
-                  onChange={(e) =>
-                    setDataDetail({ ...dataDetail, endPoint: e.target.value })
-                  }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label>Thời gian</label>
-                <input
-                  type="datetime-local"
-                  value={dataDetail.startTime}
-                  onChange={(e) =>
-                    setDataDetail({ ...dataDetail, startTime: e.target.value })
-                  }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label>Số điện thoại</label>
-                <input
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <button
-                  onClick={handelBookTrip}
-                  className="bg-blue-500 text-white py-2 px-4 rounded-full"
-                >
-                  Tìm vé
-                </button>
-              </div>
+
+              {/* Search Button */}
+              <button
+                onClick={handelBookTrip}
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50"
+              >
+                {loading ? t('profile.rewards.loading') : t('convenient.form.searchButton')}
+              </button>
+            </div>
+          </div>
+
+          {/* Price and Promotion Section */}
+          <div className="w-full lg:w-1/3">
+            <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+              {/* Price Display */}
               {price !== null && (
-                <div className="mb-4">
-                  <p>Giá gốc: {`${price}đ`}</p>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-600">
+                    {t('convenient.price.original')}:{' '}
+                    <span className={finalPrice ? 'line-through text-gray-400' : 'font-semibold'}>
+                      {price.toLocaleString()}{t('convenient.price.currency')}
+                    </span>
+                  </p>
+                  {finalPrice && (
+                    <p className="text-green-600 font-semibold mt-2">
+                      {t('convenient.price.discounted')}:{' '}
+                      {finalPrice.toLocaleString()}{t('convenient.price.currency')}
+                    </p>
+                  )}
                 </div>
               )}
-              <div className="mb-4">
-                <label>Chọn khuyến mãi</label>
+
+              {/* Promotion Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('convenient.promotion.label')}
+                </label>
                 <select
                   value={selectedPromotion}
                   onChange={(e) => setSelectedPromotion(e.target.value)}
-                  className="w-full p-2 border rounded"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none mb-3"
                 >
-                  <option value="">-- Chọn khuyến mãi --</option>
+                  <option value="">{t('convenient.promotion.placeholder')}</option>
                   {promotions.map((promo) => (
-                    <option
-                      key={promo.codePromotion}
-                      value={promo.codePromotion}
-                    >
-                      {promo.codePromotion} - Giảm {promo.discount}%
+                    <option key={promo.codePromotion} value={promo.codePromotion}>
+                      {promo.codePromotion} - {t('convenient.promotion.discount', { percent: promo.discount })}
                     </option>
                   ))}
                 </select>
                 <button
                   onClick={handleApplyPromotion}
-                  className="bg-blue-500 text-white py-2 px-4 mt-2 rounded-full w-full"
+                  disabled={!price || loading}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50"
                 >
-                  Áp dụng khuyến mãi
+                  {t('convenient.promotion.apply')}
                 </button>
               </div>
-              {finalPrice !== null && (
-                <div className="mb-4">
-                  <p>
-                    Giá gốc:{" "}
-                    <span className="line-through text-gray-500">{`${price}đ`}</span>
-                  </p>
-                  <p>
-                    Giá sau khuyến mãi:{" "}
-                    <span className="text-green-500">{`${finalPrice}đ`}</span>
-                  </p>
-                </div>
+
+              {/* Book Button */}
+              {finalPrice && (
+                <button
+                  onClick={handelResult}
+                  disabled={loading}
+                  className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50"
+                >
+                  {loading ? t('profile.rewards.loading') : t('convenient.form.bookButton')}
+                </button>
               )}
-              <button
-                onClick={handelResult}
-                className="bg-green-500 text-white py-2 px-4 rounded-full w-full"
-              >
-                ĐẶT XE NGAY
-              </button>
             </div>
           </div>
         </div>
