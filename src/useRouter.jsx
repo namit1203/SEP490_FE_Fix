@@ -1,4 +1,5 @@
 import { useRoutes } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import BookingCar from "./page/BookingCar";
 import Bookingconfirmation from "./page/Bookingconfirmation";
 import Checkout from "./page/Checkout";
@@ -17,6 +18,8 @@ import MyPromotion from "./page/profile/MyPromotion";
 import RewardPoints from "./page/profile/RewardPoints";
 
 export default function useRouteElements() {
+  const { t } = useTranslation();
+  
   const routeElements = useRoutes([
     {
       path: "/",
@@ -26,7 +29,7 @@ export default function useRouteElements() {
       path: "*",
       element: (
         <div className="text-center font-bold text-black text-4xl">
-          Page not found!
+          {t('pageNotFound')}
         </div>
       ),
     },
