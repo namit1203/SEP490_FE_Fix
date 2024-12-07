@@ -1,12 +1,14 @@
 import { Button, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import { checkLoginToken } from "../../utils";
 
 export default function MyOrder() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     setLoading(true);
@@ -23,21 +25,19 @@ export default function MyOrder() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error(t('profile.orders.noOrders'));
       }
 
       const result = await response.json();
-
-      // Map API response to table's data structure
       const formattedData = result.map((item) => ({
-        id: item.id, // Use the actual ID from the API response
+        id: item.id,
         description: item.description,
-        note: "Chờ xác nhận", // Assuming note is static
+        status: t('profile.orders.status'),
       }));
 
       setData(formattedData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
@@ -49,50 +49,52 @@ export default function MyOrder() {
 
   const columns = [
     {
-      title: "ID",
+      title: t('profile.orders.orderNumber'),
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Description",
+      title: t('profile.orders.description'),
       dataIndex: "description",
       key: "description",
     },
     {
-      title: "Note",
-      dataIndex: "note",
-      key: "note",
+      title: t('profile.orders.status'),
+      dataIndex: "status",
+      key: "status",
     },
     {
-      title: "Action",
+      title: t('profile.orders.action'),
       key: "action",
       render: (record) => (
         <Button
           type="primary"
           onClick={() => handleAction(record.id)}
-          htmlType="button"
+          className="bg-blue-500 hover:bg-blue-600"
         >
-          Chi tiết
+          {t('profile.orders.details')}
         </Button>
       ),
     },
   ];
 
   const handleAction = (id) => {
-    // Navigate to the ticket-detail page with the selected ID from the API
     navigate(`/ticket-detail/${id}`);
   };
 
   return (
-    <>
-      <p className="text-xl font-bold">Đơn hàng của tôi:</p>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold mb-6">{t('profile.orders.title')}</h2>
       <Table
         dataSource={data}
         columns={columns}
         rowKey="id"
         loading={loading}
         pagination={{ pageSize: 5 }}
+        locale={{
+          emptyText: t('profile.orders.noOrders')
+        }}
       />
-    </>
+    </div>
   );
 }

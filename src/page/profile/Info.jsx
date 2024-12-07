@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { AppContext } from "../../context/app.context";
 import { checkLoginToken } from "../../utils";
 
 const Info = () => {
   const { profile } = useContext(AppContext);
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -28,6 +30,7 @@ const Info = () => {
       });
     }
   }, [profile]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -39,8 +42,7 @@ const Info = () => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/` +
-          profile.id,
+        `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/${profile.id}`,
         {
           method: "PUT",
           headers: {
@@ -52,80 +54,119 @@ const Info = () => {
         }
       );
       if (response.ok) {
-        // Thông báo thành công hoặc cập nhật giao diện
-        alert("Cập nhật thông tin thành công!");
+        alert(t('profile.info.updateSuccess'));
       } else {
-        alert("Có lỗi xảy ra khi cập nhật!");
+        alert(t('profile.info.updateError'));
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Có lỗi xảy ra khi kết nối!");
+      alert(t('profile.info.updateError'));
     }
   };
 
   return (
-    <div className="space-y-4">
-      <div>
-        <label className="block text-gray-700">
-          Họ và tên<span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2 mt-1"
-        />
-      </div>
-      <div>
-        <label className="block text-gray-700">
-          Email<span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2 mt-1"
-        />
-      </div>
-      <div>
-        <label className="block text-gray-700">Số điện thoại</label>
-        <input
-          type="text"
-          name="numberPhone"
-          value={formData.numberPhone}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2 mt-1"
-        />
-      </div>
-      <div>
-        <label className="block text-gray-700">Ngày sinh</label>
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2 mt-1"
-        />
-      </div>
-      <div>
-        <label className="block text-gray-700">Địa chỉ</label>
-        <input
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2 mt-1"
-        />
-      </div>
-      <div>
-        <button
-          onClick={handleSave}
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Lưu
-        </button>
+    <div className="max-w-2xl mx-auto">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        {t('profile.info.title')}
+      </h2>
+
+      <div className="grid gap-6">
+        {/* Profile Image */}
+        <div className="flex items-center space-x-4">
+          <img
+            src={formData.avatar}
+            alt="Profile"
+            className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
+          />
+          <button className="px-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
+            {t('profile.info.changePhoto')}
+          </button>
+        </div>
+
+        {/* Form Fields */}
+        <div className="grid gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Username */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('profile.info.fullName')}<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('profile.info.email')}<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
+              />
+            </div>
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('profile.info.phone')}
+            </label>
+            <input
+              type="tel"
+              name="numberPhone"
+              value={formData.numberPhone}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
+            />
+          </div>
+
+          {/* Date of Birth */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('booking.date')}
+            </label>
+            <input
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
+            />
+          </div>
+
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('profile.info.address')}
+            </label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              rows="3"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200 resize-none"
+            />
+          </div>
+        </div>
+
+        {/* Save Button */}
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={handleSave}
+            className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium transition-all duration-200"
+          >
+            {t('profile.info.save')}
+          </button>
+        </div>
       </div>
     </div>
   );

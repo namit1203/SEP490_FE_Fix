@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { checkLoginToken } from "../../utils";
 
 const RewardPoints = () => {
   const [dataUser, setDataUser] = useState(null);
   const [promotions, setPromotions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showHistory, setShowHistory] = useState(false); // State for point history modal
-  const [pointHistory, setPointHistory] = useState([]); // Placeholder for point history
+  const [showHistory, setShowHistory] = useState(false);
+  const [pointHistory, setPointHistory] = useState([]);
+  const { t } = useTranslation();
 
   const handelFetchData = async () => {
     try {
@@ -21,7 +23,7 @@ const RewardPoints = () => {
       );
       setDataUser(data);
     } catch (error) {
-      console.error("Failed to fetch user points", error);
+      console.error("Error:", error);
     }
   };
 
@@ -37,9 +39,9 @@ const RewardPoints = () => {
         }
       );
       setPromotions(data);
-      setLoading(false);
     } catch (error) {
-      console.error("Failed to fetch promotions", error);
+      console.error("Error:", error);
+    } finally {
       setLoading(false);
     }
   };
@@ -47,7 +49,7 @@ const RewardPoints = () => {
   const handleExchange = async (id) => {
     try {
       setLoading(true);
-      const response = await axios.post(
+      await axios.post(
         `https://boring-wiles.202-92-7-204.plesk.page:5127/api/Promotion/exchangePromtion/${id}`,
         {},
         {
@@ -56,18 +58,17 @@ const RewardPoints = () => {
           },
         }
       );
-      alert("Exchange successful!");
+      alert(t('profile.rewards.exchangeSuccess'));
       handelFetchData();
       fetchPromotions();
     } catch (error) {
-      console.error("Exchange failed", error);
-      alert("Failed to exchange promotion");
+      console.error("Error:", error);
+      alert(t('profile.rewards.exchangeError'));
     } finally {
       setLoading(false);
     }
   };
 
-  // Simulated point history (replace with API if available)
   useEffect(() => {
     setPointHistory([
       { date: "2024-01-01", points: 50 },
@@ -82,84 +83,89 @@ const RewardPoints = () => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Điểm Tích Lũy</h2>
-      {/* Display user points */}
-      <div className="bg-blue-100 p-4 rounded-lg mb-6">
-        <p className="text-gray-600">Điểm hiện tại của bạn:</p>
-        <h3 className="text-4xl font-bold text-blue-600">{dataUser?.points || 0} điểm</h3>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6">{t('profile.rewards.title')}</h2>
+      
+      <div className="bg-blue-50 p-6 rounded-lg shadow-sm">
+        <p className="text-gray-600 mb-2">{t('profile.rewards.currentPoints')}:</p>
+        <h3 className="text-4xl font-bold text-blue-600">
+          {dataUser?.points || 0} {t('profile.rewards.points')}
+        </h3>
         <button
-          className="mt-4 bg-gray-500 text-white px-3 py-1 rounded"
+          className="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors duration-200"
           onClick={() => setShowHistory(true)}
         >
-          Lịch sử cộng điểm của bạn
+          {t('profile.rewards.history')}
         </button>
       </div>
 
-      {/* Display promotion list */}
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">Đổi Điểm Lấy Ưu Đãi</h3>
-      {loading ? (
-        <p className="text-gray-500">Đang tải...</p>
-      ) : promotions.length > 0 ? (
-        <div
-          className="space-y-4 overflow-y-auto max-h-96 p-2 border rounded-lg"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "#CBD5E0 transparent" }}
-        >
-          {promotions.map((promo) => (
-            <div
-              key={promo.id}
-              className="flex justify-between items-center p-3 bg-gray-100 rounded-lg"
-            >
-              <div>
-                <p className="text-gray-800 font-semibold">{promo.codePromotion}</p>
-                <p className="text-gray-600">{promo.description}</p>
-                <p className="text-sm text-gray-500">Điểm yêu cầu: {promo.exchangePoint}</p>
-              </div>
-              <button
-                className="bg-green-500 text-white px-3 py-1 rounded"
-                onClick={() => handleExchange(promo.id)}
-                disabled={dataUser?.points < promo.exchangePoint}
+      <div>
+        <h3 className="text-xl font-semibold mb-4">{t('profile.rewards.exchange')}</h3>
+        {loading ? (
+          <p className="text-gray-500">{t('profile.rewards.loading')}</p>
+        ) : promotions.length > 0 ? (
+          <div className="space-y-4 max-h-96 overflow-y-auto rounded-lg border border-gray-200">
+            {promotions.map((promo) => (
+              <div
+                key={promo.id}
+                className="p-4 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
               >
-                Đổi
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">Không có ưu đãi khả dụng.</p>
-      )}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-semibold text-gray-800">{promo.codePromotion}</p>
+                    <p className="text-gray-600">{promo.description}</p>
+                    <p className="text-sm text-gray-500">
+                      {t('profile.rewards.requiredPoints')}: {promo.exchangePoint}
+                    </p>
+                  </div>
+                  <button
+                    className={`px-4 py-2 rounded transition-colors duration-200 ${
+                      dataUser?.points >= promo.exchangePoint
+                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                    }`}
+                    onClick={() => handleExchange(promo.id)}
+                    disabled={dataUser?.points < promo.exchangePoint}
+                  >
+                    {t('profile.rewards.exchange')}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">{t('profile.rewards.noPromotions')}</p>
+        )}
+      </div>
 
-      {/* Point History Modal */}
       {showHistory && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 max-w-lg w-full">
-            <h2 className="text-xl font-semibold mb-4">Lịch Sử Cộng Điểm</h2>
-            <div className="max-h-64 overflow-y-auto space-y-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-lg w-full m-4">
+            <h2 className="text-xl font-semibold mb-4">{t('profile.rewards.history')}</h2>
+            <div className="max-h-[60vh] overflow-y-auto space-y-3">
               {pointHistory.length > 0 ? (
                 pointHistory.map((entry, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center p-3 bg-gray-100 rounded-lg"
+                    className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
                   >
                     <p className="text-gray-700">{entry.date}</p>
-                    <p
-                      className={`text-lg font-semibold ${
-                        entry.points > 0 ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      {entry.points > 0 ? `+${entry.points}` : `${entry.points}`}
+                    <p className={`text-lg font-semibold ${
+                      entry.points > 0 ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {entry.points > 0 ? `+${entry.points}` : entry.points}
                     </p>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500">Không có lịch sử cộng điểm.</p>
+                <p className="text-gray-500">{t('profile.rewards.noHistory')}</p>
               )}
             </div>
             <button
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+              className="mt-4 w-full bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors duration-200"
               onClick={() => setShowHistory(false)}
             >
-              Đóng
+              {t('profile.rewards.close')}
             </button>
           </div>
         </div>
