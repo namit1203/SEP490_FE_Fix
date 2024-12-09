@@ -1,44 +1,45 @@
-import React from "react";
+import { useTranslation } from 'react-i18next';
 import { useAppSelector } from "../../../stores/hooks";
 import DataTrip from "./data/DataTrip";
 import BookingFilter from "./filter/BookingFilter";
 import BookingSort from "./sort/BookingSort";
 
 export default function DataViews() {
+  const { t } = useTranslation();
   const DataTripStaion = useAppSelector((state) => state.trips?.data);
 
   const sortingOptions = [
-    { id: 1, label: "Mặc định" },
-    { id: 2, label: "Giờ đi sớm nhất" },
-    { id: 3, label: "Giờ đi muộn nhất" },
-    { id: 4, label: "Đánh giá cao nhất" },
-    { id: 5, label: "Giá tăng dần" },
-    { id: 6, label: "Giá giảm dần" },
+    { id: 1, label: t('booking.sort.default') },
+    { id: 2, label: t('booking.sort.earliestDeparture') },
+    { id: 3, label: t('booking.sort.latestDeparture') },
+    { id: 4, label: t('booking.sort.highestRating') },
+    { id: 5, label: t('booking.sort.priceAscending') },
+    { id: 6, label: t('booking.sort.priceDescending') },
   ];
 
   return (
-    <div className="flex w-full gap-2.5 justify-between">
-      {/* filter and sort */}
-      <div className="flex flex-col gap-4 overflow-hidden w-[266px]">
-        {/* sort */}
-        <div className="border p-4 rounded-lg border-solid border-[rgb(224,224,224)] flex flex-col gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      {/* Filter and Sort Section */}
+      <div className="lg:col-span-1 space-y-4">
+        {/* Sort */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
           <BookingSort options={sortingOptions} />
         </div>
-        {/* filter */}
-        <div className="border p-4 rounded-lg border-solid border-[rgb(224,224,224)] flex flex-col gap-4">
+        {/* Filter */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
           <BookingFilter />
         </div>
       </div>
 
-      {/* data */}
-      <div className="w-[730px] flex flex-col gap-5">
-        <div className="flex gap-2">
-          <p className="text-2xl font-bold leading-8 tracking-[0px] mb-0">
-            Kết quả:
-          </p>
-          <span className="font-bold text-2xl leading-8 tracking-[-0.5px]">
-            {DataTripStaion?.length || 0} chuyến
-          </span>
+      {/* Results Section */}
+      <div className="lg:col-span-3">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-gray-900">
+            {t('booking.results.title')}:{' '}
+            <span className="text-blue-600">
+              {DataTripStaion?.length || 0} {t('booking.results.trips')}
+            </span>
+          </h2>
         </div>
         <DataTrip />
       </div>

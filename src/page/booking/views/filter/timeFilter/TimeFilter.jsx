@@ -1,46 +1,54 @@
-import React, { useState } from "react";
-import DropdownIcons from "../../../../../components/icons/dropdown";
+import { useState } from "react";
+import { useTranslation } from 'react-i18next';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 export default function TimeFilter() {
+  const { t } = useTranslation();
   const [startTime, setStartTime] = useState("00:00");
   const [endTime, setEndTime] = useState("24:00");
-  const [isTimeRangeVisible, setIsTimeRangeVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
-    <div className="pb-4 border-b-[rgb(224,224,224)] border-b border-solid">
-      <div
-        className="flex justify-between cursor-pointer"
-        onClick={() => setIsTimeRangeVisible((prev) => !prev)}
+    <div className="py-4">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="flex items-center justify-between w-full group"
       >
-        <p className="text-base leading-5 font-bold mb-0">Giờ đi</p>
-        <DropdownIcons />
-      </div>
-      {/* Time Range Input */}
-      {isTimeRangeVisible && (
-        <div className="flex justify-between items-center mt-4">
-          <div
-            className="flex flex-col items-center border-gray-300 rounded-md
-          border-solid border"
-          >
-            <label className="text-xs text-gray-500 font-semibold">Từ</label>
-            <input
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              className="w-full text-center px-1 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs font-semibold"
-            />
-          </div>
-          <span className="mx-2">-</span>
-          <div
-            className="flex flex-col items-center border-gray-300 rounded-md
-          border-solid border"
-          >
-            <label className="text-xs text-gray-500 font-semibold">Đến</label>
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="w-full text-center px-1 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs font-semibold"
-            />
+        <h4 className="text-base font-semibold text-gray-900 group-hover:text-gray-700">
+          {t('booking.filter.time.title')}
+        </h4>
+        {isExpanded ? (
+          <FiChevronUp className="w-5 h-5 text-gray-500" />
+        ) : (
+          <FiChevronDown className="w-5 h-5 text-gray-500" />
+        )}
+      </button>
+
+      {isExpanded && (
+        <div className="mt-4 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                {t('booking.filter.time.from')}
+              </label>
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                {t('booking.filter.time.to')}
+              </label>
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+              />
+            </div>
           </div>
         </div>
       )}

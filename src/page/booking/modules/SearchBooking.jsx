@@ -1,5 +1,7 @@
 import { message } from "antd";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from 'react-i18next';
+import { FiMapPin, FiCalendar, FiSearch } from 'react-icons/fi';
 import { options } from "../../../mock/location";
 import {
   setEndPoint,
@@ -8,23 +10,16 @@ import {
 } from "../../../stores/BookingCar/reducer";
 import { useAppDispatch } from "../../../stores/hooks";
 import DropdownSearch from "./Dropdown";
+
 export default function SearchBooking() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
   const [fromInputValue, setFromInputValue] = useState(options[0].value);
-
   const [toInputValue, setToInputValue] = useState(options[1].value);
-
   const [openDropdown, setOpenDropdown] = useState(null);
-
   const [dateTime, setDateTime] = useState("");
 
-  const handleChange = (event) => {
-    setDateTime(event.target.value);
-  };
-
   const fromDropdownRef = useRef(null);
-
   const toDropdownRef = useRef(null);
 
   const filteredFromOptions = options.filter((option) =>
@@ -61,164 +56,121 @@ export default function SearchBooking() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [handleClickOutside]);
 
-  const handleFromInputClick = () => {
-    setOpenDropdown(openDropdown === "from" ? null : "from");
-  };
-
-  const handleToInputClick = () => {
-    setOpenDropdown(openDropdown === "to" ? null : "to");
-  };
-
   const handleSearch = () => {
     if (!fromInputValue || !toInputValue || !dateTime) {
-      return message.error("Vui lòng chọn điểm xuất phát, đích và thời gian");
+      return message.error(t('booking.search.errors.missingFields'));
     }
   
     const currentTime = new Date();
     if (new Date(dateTime).getTime() < currentTime.getTime()) {
-      return message.error("Thời gian không hợp lệ");
+      return message.error(t('booking.search.errors.invalidTime'));
     }
   
-    // Dispatch Redux actions to update the global state
     dispatch(setStartPoint(fromInputValue));
     dispatch(setEndPoint(toInputValue));
     dispatch(setTime(dateTime));
-  
-    // Save the selected time into localStorage
     localStorage.setItem("bookingTime", dateTime);
-  
-    message.success("Thông tin đã được lưu thành công");
   };
   
   return (
-    <div className="p-4 w-full">
-      <div className="flex gap-4">
-        <div className="border rounded-lg border-solid border-[rgb(224,224,224)]">
-          <div className="flex items-center space-x-4 h-[54px]">
-            {/* Start - Nơi xuất phát */}
-            <div className="flex flex-row gap-2 px-4 py-0 border-r-[rgb(224,224,224)] border-r border-solid">
-              <div className="flex flex-col justify-center items-center">
-                <img
-                  src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/pickup_vex_blue_24dp.svg"
-                  width="24"
-                  height="24"
-                  alt=""
+    <div className="w-full max-w-7xl mx-auto">
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 justify-between items-center">
+          {/* From Location */}
+          <div className="md:col-span-3">
+            <div className="relative" ref={fromDropdownRef}>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('booking.search.from')}
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FiMapPin className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={fromInputValue}
+                  onChange={(e) => {
+                    setFromInputValue(e.target.value);
+                    setOpenDropdown("from");
+                  }}
+                  onClick={() => setOpenDropdown("from")}
+                  placeholder={t('booking.search.fromPlaceholder')}
                 />
               </div>
-              <div className="flex flex-1 flex-col-reverse justify-around w-full">
-                <div ref={fromDropdownRef} className="relative w-full">
-                  {/* Input */}
-                  <input
-                    type="text"
-                    className="outline-none !border-none !ring-0 !text-base !p-0 font-semibold"
-                    value={fromInputValue}
-                    onChange={(e) => {
-                      setFromInputValue(e.target.value);
-                      setOpenDropdown("from");
-                    }}
-                    onClick={handleFromInputClick}
-                  />
-
-                  {/* Dropdown for "Nơi xuất phát" */}
-                  {openDropdown === "from" && (
-                    <DropdownSearch
-                      filteredOptions={filteredFromOptions}
-                      isOpen={true}
-                      handleOptionClick={handleFromOptionClick}
-                    />
-                  )}
-                </div>
-                <label
-                  className="base__Caption-sc-1tvbuqk-26 hTYbup color--light-disable"
-                  htmlFor="from_input"
-                >
-                  Nơi xuất phát
-                </label>
-              </div>
-            </div>
-
-            {/* End - Nơi đến */}
-            <div className="flex flex-row gap-2 px-4 py-0">
-              <div className="flex flex-col justify-center items-center">
-                <img
-                  src="https://229a2c9fe669f7b.cmccloud.com.vn/svgIcon/dropoff_new_24dp.svg"
-                  width="24"
-                  height="24"
-                  alt=""
+              {openDropdown === "from" && (
+                <DropdownSearch
+                  filteredOptions={filteredFromOptions}
+                  isOpen={true}
+                  handleOptionClick={handleFromOptionClick}
                 />
-              </div>
-              <div className="flex flex-1 flex-col-reverse justify-around w-full">
-                <div ref={toDropdownRef} className="relative w-full">
-                  {/* Input */}
-                  <input
-                    type="text"
-                    className="outline-none !border-none !ring-0 !text-base !p-0 font-semibold"
-                    value={toInputValue}
-                    onChange={(e) => {
-                      setToInputValue(e.target.value);
-                      setOpenDropdown("to");
-                    }}
-                    onClick={handleToInputClick}
-                  />
-
-                  {/* Dropdown for "Nơi đến" */}
-                  {openDropdown === "to" && (
-                    <DropdownSearch
-                      filteredOptions={filteredToOptions}
-                      isOpen={true}
-                      handleOptionClick={handleToOptionClick}
-                    />
-                  )}
-                </div>
-                <label
-                  className="base__Caption-sc-1tvbuqk-26 hTYbup color--light-disable"
-                  htmlFor="to_input"
-                >
-                  Nơi đến
-                </label>
-              </div>
-            </div>
-
-            {/* Time - Ngày đi */}
-            <div className="flex flex-row gap-2 px-4 py-0 border-l-[rgb(224,224,224)] border-l border-solid">
-              <div className="flex flex-col justify-center items-center">
-                <img
-                  src="https://storage.googleapis.com/fe-production/svgIcon/event_vex_blue_24dp.svg"
-                  width="24"
-                  height="24"
-                  alt=""
-                />
-              </div>
-              <div className="flex flex-1 flex-col-reverse justify-around w-full">
-                <div className="relative w-full">
-                  {/* Input */}
-                  <input
-                    type="datetime-local"
-                    className="outline-none !border-none !ring-0 !text-base !p-0 font-semibold"
-                    value={dateTime}
-                    onChange={handleChange}
-                  />
-                </div>
-                <label
-                  className="base__Caption-sc-1tvbuqk-26 hTYbup color--light-disable"
-                  htmlFor="to_input"
-                >
-                  Ngày đi
-                </label>
-              </div>
+              )}
             </div>
           </div>
-        </div>
 
-        <div className="grow">
-          <button
-            onClick={handleSearch}
-            data-testid="SearchWidget.search"
-            data-tracking-event="search_tickets"
-            className="ant-btn DesktopSearchWidgetInterface__ButtonDateStyled-sc-9goqqe-0 DesktopSearchWidgetInterface__ButtonSearchStyled-sc-9goqqe-1 kvbcsM jfbJs button-search ant-btn-block"
-          >
-            <span>Tìm kiếm</span>
-          </button>
+          {/* To Location */}
+          <div className="md:col-span-3">
+            <div className="relative" ref={toDropdownRef}>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('booking.search.to')}
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FiMapPin className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={toInputValue}
+                  onChange={(e) => {
+                    setToInputValue(e.target.value);
+                    setOpenDropdown("to");
+                  }}
+                  onClick={() => setOpenDropdown("to")}
+                  placeholder={t('booking.search.toPlaceholder')}
+                />
+              </div>
+              {openDropdown === "to" && (
+                <DropdownSearch
+                  filteredOptions={filteredToOptions}
+                  isOpen={true}
+                  handleOptionClick={handleToOptionClick}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Date Time */}
+          <div className="md:col-span-3">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t('booking.search.date')}
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiCalendar className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="datetime-local"
+                className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={dateTime}
+                onChange={(e) => setDateTime(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Search Button */}
+          <div className="md:col-span-3">
+            <label className="block text-sm font-medium text-transparent mb-1">
+              {t('booking.search.action')}
+            </label>
+            <button
+              onClick={handleSearch}
+              className="w-full h-[42px] bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <FiSearch className="w-5 h-6" />
+              <span>{t('booking.search.button')}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

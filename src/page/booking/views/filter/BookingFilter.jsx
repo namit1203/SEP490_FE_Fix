@@ -1,23 +1,27 @@
-import React from "react";
+import { useTranslation } from 'react-i18next';
 import TimeFilter from "./timeFilter/TimeFilter";
 import GarageFilter from "./garageFilter/GarageFilter";
 import PriceFilter from "./priceFilter/PriceFilter";
 
 export default function BookingFilter() {
+  const { t } = useTranslation();
+
   return (
-    <>
-      <div className="w-full gap-4 flex justify-between">
-        <p className="font-bold text-lg leading-6 mb-0">Lọc</p>
-        <p className="text-sm font-bold leading-5 tracking-[0px] underline underline-offset-1 break-normal mb-0 text-[rgb(36,116,229)] cursor-pointer">
-          Xóa lọc
-        </p>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-gray-900">
+          {t('booking.filter.title')}
+        </h3>
+        <button className="text-sm font-medium text-blue-600 hover:text-blue-700 underline">
+          {t('booking.filter.clearAll')}
+        </button>
       </div>
-      {/* time filter */}
-      <TimeFilter />
-      {/* garage filter */}
-      <GarageFilter />
-      {/* price filter */}
-      <PriceFilter/>
-    </>
+
+      <div className="space-y-6 divide-y divide-gray-200">
+        <TimeFilter />
+        <GarageFilter />
+        <PriceFilter />
+      </div>
+    </div>
   );
 }
