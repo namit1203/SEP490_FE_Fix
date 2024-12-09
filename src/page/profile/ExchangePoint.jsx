@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { checkLoginToken } from "../../utils";
+import { message } from "antd";
 
 const ExchangePoint = () => {
   const [points, setPoints] = useState(0);
@@ -61,7 +62,8 @@ const ExchangePoint = () => {
           },
         }
       );
-      alert(t('profile.rewards.exchangeSuccess'));
+      message.success("Đổi điểm thành công");
+
       fetchPoints();
       fetchPromotions();
     } catch (error) {

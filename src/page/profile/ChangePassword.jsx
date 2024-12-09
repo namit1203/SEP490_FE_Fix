@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { AppContext } from "../../context/app.context";
 import { checkLoginToken } from "../../utils";
+import { message } from 'antd';
 
 const ChangePassword = () => {
   const { profile } = useContext(AppContext);
@@ -11,6 +12,8 @@ const ChangePassword = () => {
     newPassword: "",
     confirmPassword: "",
   });
+
+  const currentEmail = profile?.email || localStorage.getItem("email"); // Lấy email từ profile hoặc localStorage
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,44 +25,58 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Regular expression for password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_])[A-Za-z\d!@#$%^&*()_]{7,}$/;
+
+    // Check if new password and confirmation match
     if (formData.newPassword !== formData.confirmPassword) {
-      alert(t('profile.password.mismatch'));
-      return;
+        message.error(t('profile.password.mismatch'));
+        return;
+    }
+
+    // Check password strength using regex
+    if (!passwordRegex.test(formData.newPassword)) {
+        message.error(t('profile.password.invalid')); // Add this message to your translations
+        return;
     }
 
     try {
-      const response = await fetch(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/User/ChangePassword/${profile.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            accept: "*/*",
-            Authorization: "Bearer " + checkLoginToken(),
-          },
-          body: JSON.stringify({
-            oldPassword: formData.oldPassword,
-            newPassword: formData.newPassword,
-          }),
-        }
-      );
+        const response = await fetch(
+            `https://boring-wiles.202-92-7-204.plesk.page/api/User/ChangePassword/`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    accept: "*/*",
+                    Authorization: "Bearer " + checkLoginToken(),
+                },
+                body: JSON.stringify({
+                    currentEmail, // Include currentEmail in the payload
+                    oldPassword: formData.oldPassword,
+                    newPassword: formData.newPassword,
+                }),
+            }
+        );
 
-      if (response.ok) {
-        alert(t('profile.password.success'));
-        setFormData({
-          oldPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        });
-      } else {
-        alert(t('profile.password.error'));
-      }
+        if (response.ok) {
+            message.success(t('profile.password.success'));
+            setFormData({
+                oldPassword: "",
+                newPassword: "",
+                confirmPassword: "",
+            });
+        } else {
+            message.error(t('profile.password.error'));
+        }
     } catch (error) {
-      console.error("Error:", error);
-      alert(t('profile.password.error'));
+        console.error("Error:", error);
+        message.error(t('profile.password.error'));
     }
-  };
+};
+
+
+
 
   return (
     <div className="space-y-4">

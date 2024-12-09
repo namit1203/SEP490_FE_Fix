@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { AppContext } from "../../context/app.context";
 import { checkLoginToken } from "../../utils";
+import { message } from "antd";
 
 const Info = () => {
   const { profile } = useContext(AppContext);
@@ -54,13 +55,13 @@ const Info = () => {
         }
       );
       if (response.ok) {
-        alert(t('profile.info.updateSuccess'));
+        message.success(t('profile.info.updateSuccess'));
       } else {
-        alert(t('profile.info.updateError'));
+        message.error(t('profile.info.updateError'));
       }
     } catch (error) {
       console.error("Error:", error);
-      alert(t('profile.info.updateError'));
+      message.error(t('profile.info.updateError'));
     }
   };
 
@@ -74,7 +75,7 @@ const Info = () => {
         {/* Profile Image */}
         <div className="flex items-center space-x-4">
           <img
-            src={formData.avatar}
+            src={formData.avatar && formData.avatar !== "string" ? formData.avatar : "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp"}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
           />
@@ -132,7 +133,7 @@ const Info = () => {
           {/* Date of Birth */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('booking.date')}
+              {t('profile.info.date')}
             </label>
             <input
               type="date"

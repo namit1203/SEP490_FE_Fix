@@ -20,25 +20,23 @@ export default function MyPromotion() {
           },
         }
       );
-
-      const currentDate = new Date();
+  
+      const currentDate = new Date(); // Ngày hiện tại
       const formattedData = response.data.map((item, index) => {
-        const endDate = new Date(item.endDate);
-        const daysLeft = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
-
+        const endDate = new Date(item.endDate); // Ngày kết thúc
+        const isExpired = endDate < currentDate; // Kiểm tra đã hết hạn
+  
         return {
           key: index,
           id: item.id,
           code: item.codePromotion,
           description: item.description,
           discount: `${item.discount}%`,
-          validUntil: daysLeft > 0 
-            ? t('profile.promotions.daysLeft', { days: daysLeft })
-            : t('profile.promotions.expired'),
-          status: daysLeft > 0 ? 'active' : 'expired'
+          endDate: endDate.toLocaleDateString(), // Hiển thị ngày hết hạn
+          status: isExpired ? 'expired' : 'active', // Trạng thái
         };
       });
-
+  
       setData(formattedData);
     } catch (error) {
       console.error("Error:", error);
@@ -46,6 +44,8 @@ export default function MyPromotion() {
       setLoading(false);
     }
   };
+  
+  
 
   useEffect(() => {
     fetchData();
@@ -73,9 +73,9 @@ export default function MyPromotion() {
       key: "discount",
     },
     {
-      title: t('profile.promotions.validUntil'),
-      dataIndex: "validUntil",
-      key: "validUntil",
+      title: t('profile.promotions.endDate'), // Tiêu đề mới
+      dataIndex: "endDate",
+      key: "endDate",
       render: (text, record) => (
         <span className={record.status === 'expired' ? 'text-red-500' : 'text-green-500'}>
           {text}
@@ -97,7 +97,7 @@ export default function MyPromotion() {
       ),
     },
   ];
-
+  
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-6">{t('profile.promotions.title')}</h2>

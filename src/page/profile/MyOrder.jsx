@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Modal, Input, message } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,9 @@ import { checkLoginToken } from "../../utils";
 export default function MyOrder() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [reasonCancel, setReasonCancel] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -32,7 +35,8 @@ export default function MyOrder() {
       const formattedData = result.map((item) => ({
         id: item.id,
         description: item.description,
-        status: t('profile.orders.status'),
+        status: item.status,
+        timeFrom: item.timeFrom, // Add timeFrom to the data
       }));
 
       setData(formattedData);
@@ -45,6 +49,7 @@ export default function MyOrder() {
 
   useEffect(() => {
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -64,22 +69,93 @@ export default function MyOrder() {
       key: "status",
     },
     {
+      title: t('profile.orders.timeFrom'),
+      dataIndex: "timeFrom",
+      key: "timeFrom",
+      render: (text) => new Date(text).toLocaleString(), // Format timeFrom
+    },
+    {
       title: t('profile.orders.action'),
       key: "action",
       render: (record) => (
-        <Button
-          type="primary"
-          onClick={() => handleAction(record.id)}
-          className="bg-blue-500 hover:bg-blue-600"
-        >
-          {t('profile.orders.details')}
-        </Button>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <Button
+            type="primary"
+            onClick={() => handleAction(record.id)}
+            className="bg-blue-500 hover:bg-blue-600"
+          >
+            {t('profile.orders.details')}
+          </Button>
+          {record.status !== "Hủy chuyến" && record.status !== "Chờ xác nhận hủy chuyến từ hệ thống" && (
+            <Button
+              danger
+              onClick={() => handleCancel(record)}
+            >
+              {t('profile.orders.cancel')}
+            </Button>
+          )}
+        </div>
       ),
     },
   ];
+  
 
   const handleAction = (id) => {
     navigate(`/ticket-detail/${id}`);
+  };
+
+  const handleCancel = (ticket) => {
+    const now = new Date();
+    const timeFrom = new Date(ticket.timeFrom);
+
+    // Validate timeFrom must be at least 1 day in future
+    const oneDayBefore = new Date(timeFrom);
+    oneDayBefore.setDate(timeFrom.getDate() - 1);
+
+    if (now > oneDayBefore) {
+      message.error(t("profile.orders.cancelTooLate"));
+      return;
+    }
+
+    setSelectedTicket(ticket);
+    setCancelModalVisible(true);
+  };
+
+  const handleCancelSubmit = async () => {
+    if (!reasonCancel.trim()) {
+      message.error(t("profile.orders.cancelReasonRequired"));
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://boring-wiles.202-92-7-204.plesk.page/api/UserCancleTicket/userCancleTicket",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + checkLoginToken(),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reasonCancle: reasonCancel,
+            ticketId: selectedTicket.id,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        message.success(t("profile.orders.cancelSuccess"));
+        fetchData(); // Refresh the table
+      } else {
+        message.error(t("profile.orders.cancelFailed"));
+      }
+    } catch (error) {
+      console.error("Error canceling ticket:", error);
+      message.error(t("profile.orders.cancelFailed"));
+    } finally {
+      setCancelModalVisible(false);
+      setReasonCancel("");
+    }
   };
 
   return (
@@ -95,6 +171,24 @@ export default function MyOrder() {
           emptyText: t('profile.orders.noOrders')
         }}
       />
+
+      {/* Cancel Modal */}
+      <Modal
+        visible={cancelModalVisible}
+        title={t("profile.orders.cancelTicket")}
+        onCancel={() => setCancelModalVisible(false)}
+        onOk={handleCancelSubmit}
+        okText={t("profile.orders.confirmCancel")}
+        cancelText={t("profile.orders.cancelClose")}
+      >
+        <p>{t("profile.orders.cancelReasonLabel")}</p>
+        <Input.TextArea
+          rows={4}
+          value={reasonCancel}
+          onChange={(e) => setReasonCancel(e.target.value)}
+          placeholder={t("profile.orders.cancelReasonPlaceholder")}
+        />
+      </Modal>
     </div>
   );
 }
