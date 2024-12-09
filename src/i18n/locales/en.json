@@ -7,7 +7,7 @@
   "changePassword": "Change Password",
   "tripReview": "Trip Reviews",
   "logout": "Logout",
-  
+
   "header": {
     "myOrdersLink": "My Orders",
     "findSharedRide": "Find Shared Ride",
@@ -74,7 +74,9 @@
       "signUp": "Sign Up",
       "processing": "Processing...",
       "usernameRequired": "Please enter your username",
+      "usernamePlaceholder": "Enter your username",
       "passwordRequired": "Please enter your password",
+      "passwordPlaceholder": "Enter your password",
       "success": "Login successful",
       "error": "An error occurred, please try again"
     },
@@ -87,12 +89,17 @@
       "hasAccount": "Already have an account?",
       "signIn": "Sign In",
       "emailRequired": "Please enter your email",
+      "phonenumber": "Phone Number",
+      "phonenumberRequired": "Please enter your phone number",
       "usernameRequired": "Please enter your username",
       "passwordRequired": "Please enter your password",
       "success": "Registration successful",
       "emailPlaceholder": "Enter your email",
       "usernamePlaceholder": "Enter your username",
-      "passwordPlaceholder": "Enter your password"
+      "passwordPlaceholder": "Enter your password",
+      "phonenumberPlaceholder": "Enter your phone number",
+      "invalidEmail": "Invalid email address",
+      "dob": "Date of Birth"
     },
     "otp": {
       "title": "Enter OTP",
@@ -107,6 +114,19 @@
       "required": "This field is required",
       "invalidEmail": "Invalid email address",
       "processing": "Processing..."
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "submit": "Send Reset Link",
+      "backToLogin": "Back to Login",
+      "success": "Password reset link has been sent to your email",
+      "error": "Error sending reset link. Please try again",
+      "invalidEmail": "Please enter a valid email address",
+      "notFound": "Email address not found",
+      "instructions": "Check your email for the password reset link"
     }
   },
 
@@ -151,8 +171,50 @@
   },
 
   "profile": {
+    "info": {
+      "title": "Profile Information",
+      "changePhoto": "Change Profile Photo",
+      "fullName": "Full Name",
+      "staff": "Staff",
+      "email": "Email",
+      "phone": "Phone Number",
+      "date": "Date of Birth",
+      "address": "Address",
+      "save": "Save"
+    },
     "rewards": {
-      "loading": "Loading..."
+      "title": "Rewards",
+      "currentPoints": "Current Points",
+      "points": "Points",
+      "history": "Points History",
+      "exchange": "Exchange",
+      "noPromotions": "No promotions available"
+    },
+    "orders": {
+      "title": "Orders",
+      "orderNumber": "Order Number",
+      "description": "Description",
+      "status": "Status",
+      "timeFrom": "Departure Time",
+      "action": "Action",
+      "details": "View Details",
+      "cancel": "Cancel Order"
+    },
+    "promotions": {
+      "title": "Promotions",
+      "code": "Promotion Code",
+      "description": "Description",
+      "discount": "Discount",
+      "endDate": "End Date",
+      "action": "Action",
+      "useNow": "Use Now"
+    },
+    "password": {
+      "title": "Change Password",
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm Password",
+      "update": "Update Password"
     }
   },
 
@@ -219,5 +281,264 @@
         }
       ]
     }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications",
+    "booking": {
+      "title": "New Booking",
+      "message": "Your booking has been confirmed successfully!"
+    },
+    "promotion": {
+      "title": "Special Offer",
+      "message": "Get 20% off on your next booking with code SAVE20"
+    }
+  },
+
+  "booking": {
+    "title": "Book Your Trip",
+    "nav": {
+      "bus": "Bus"
+    },
+    "search": {
+      "title": "Find the perfect trip for your journey",
+      "from": "From",
+      "fromPlaceholder": "Enter departure location",
+      "to": "To",
+      "toPlaceholder": "Enter destination",
+      "date": "Departure Date",
+      "action": "Search",
+      "button": "Search",
+      "errors": {
+        "missingFields": "Please select departure, destination and time",
+        "invalidTime": "Invalid time selected"
+      }
+    },
+    "sort": {
+      "title": "Sort Results",
+      "default": "Default",
+      "earliestDeparture": "Earliest Departure",
+      "latestDeparture": "Latest Departure",
+      "highestRating": "Highest Rating",
+      "priceAscending": "Price: Low to High",
+      "priceDescending": "Price: High to Low"
+    },
+    "filter": {
+      "title": "Filter Results",
+      "clearAll": "Clear All",
+      "time": {
+        "title": "Departure Time",
+        "from": "From",
+        "to": "To"
+      },
+      "operator": {
+        "title": "Bus Operator",
+        "searchPlaceholder": "Search operators",
+        "noResults": "No operators found"
+      },
+      "price": {
+        "title": "Price Range",
+        "currency": "VND"
+      }
+    },
+    "results": {
+      "title": "Available Trips",
+      "trips": "trips found"
+    },
+    "tripCard": {
+      "from": "From",
+      "seats": "seats",
+      "licensePlate": "License Plate",
+      "hideDetails": "Hide details",
+      "showDetails": "Show details",
+      "close": "Close",
+      "selectTrip": "Select Trip",
+      "available": "Available Seats",
+      "premium": "Premium",
+      "rating": "Rating",
+      "discount": "Discount",
+      "tabs": {
+        "pickupDrop": "Pickup/Drop-off",
+        "policy": "Policy",
+        "images": "Gallery",
+        "reviews": "Reviews"
+      }
+    },
+    "tripDetails": {
+      "startTime": "Departure Time",
+      "startPoint": "Departure Point",
+      "endPoint": "Destination",
+      "price": "Price",
+      "vehicleType": "Vehicle Type",
+      "description": "Description"
+    },
+    "pickupDrop": {
+      "note": "Note",
+      "disclaimer": "The pickup and drop-off times below are estimated times.",
+      "scheduleChange": "This schedule may change depending on actual conditions.",
+      "reportIssue": "Report incorrect/missing information",
+      "details": {
+        "pickupPoint": "Pickup Point",
+        "dropoffPoint": "Drop-off Point",
+        "startTime": "Departure Time",
+        "endTime": "Arrival Time"
+      }
+    },
+    "policy": {
+      "cancellation": {
+        "title": "Cancellation Policy",
+        "today": "Today",
+        "departure": "Departure",
+        "noFee": "No Fee",
+        "fullFee": "100% Fee",
+        "note": "Note",
+        "noteText": "Cancellation fees are calculated based on the original price, without any discounts or promotions applied, and will not exceed the amount you have paid."
+      },
+      "busPolicy": {
+        "title": "Bus Operator Policy",
+        "boarding": {
+          "title": "Boarding Requirements",
+          "items": [
+            "Arrive at the office/ticket counter/bus station 30 minutes before departure",
+            "Present physical ticket before boarding",
+            "Show SMS/Email booking confirmation to staff",
+            "No strong-smelling food or drinks allowed",
+            "No smoking or use of stimulants on the bus",
+            "No littering on the bus",
+            "No disturbing or causing disorder",
+            "No shoes or sandals on the bus"
+          ]
+        },
+        "luggage": {
+          "title": "Hand Luggage",
+          "items": [
+            "Total luggage weight must not exceed 20 kg",
+            "No bulky items allowed",
+            "Luggage policy applies in case of cancellation due to luggage violations"
+          ]
+        },
+        "specialPassengers": {
+          "title": "Children and Pregnant Women",
+          "items": [
+            "Children under 5 years or under 100 cm travel free when sharing seat/bed with parents",
+            "Children 5 years and above or over 120 cm require full fare ticket",
+            "Operator ensures health safety during travel",
+            "Operator may refuse service if health regulations not followed"
+          ]
+        },
+        "pets": {
+          "title": "Pets/Animals",
+          "items": [
+            "Operator reserves right to refuse pet transport as hand luggage",
+            "Passengers responsible for pet care",
+            "Bus temperature may not be suitable for pets",
+            "Operator not liable for pet-related incidents"
+          ]
+        },
+        "invoice": {
+          "title": "VAT Invoice",
+          "items": [
+            "VAT invoice available for bus services, 10% fee applies",
+            "Please provide complete and accurate invoice information",
+            "No invoice reissuance for incorrect information provided"
+          ]
+        }
+      },
+      "reportIssue": "Report incorrect/missing information"
+    },
+    "gallery": {
+      "prev": "Previous image",
+      "next": "Next image",
+      "imageCount": "{{current}}/{{total}}",
+      "reportIssue": "Report incorrect/missing information",
+      "altText": {
+        "mainImage": "Main view of the bus",
+        "thumbnail": "Thumbnail image {{index}}"
+      },
+      "watermark": "VeXeRe"
+    },
+    "selectTrip": {
+      "legend": "Legend",
+      "seatQuantity": {
+        "label": "Number of seats",
+        "placeholder": "Enter number of seats"
+      },
+      "summary": {
+        "seats": "Seats",
+        "total": "Total",
+        "currency": "VND",
+        "bookButton": "Book Trip"
+      }
+    },
+    "optionTrip": {
+      "pickupPoints": {
+        "title": "Pickup Points",
+        "select": "Select pickup point",
+        "distance": "{{distance}} km from your location"
+      },
+      "dropoffPoints": {
+        "title": "Drop-off Points",
+        "select": "Select drop-off point",
+        "distance": "{{distance}} km from your location"
+      },
+      "alert": {
+        "title": "Safe Travel Guarantee",
+        "message": "Rest assured with accurate pickup and drop-off points, with easy changes when needed."
+      },
+      "seatsAvailable": "{{count}} seats available",
+      "selectedSeat": "Seat",
+      "payment": "Payment",
+      "continue": "Continue"
+    }
+  },
+
+  "bookingConfirmation": {
+    "title": "Booking Confirmation",
+    "backToHome": "< Back",
+    "contactInfo": {
+      "title": "Contact Information",
+      "name": "Passenger Name *",
+      "phone": "Phone Number *",
+      "email": "Email for booking information *",
+      "notice": "Phone number and email will be used to send booking information and contact when necessary."
+    },
+    "payment": {
+      "title": "Payment Method",
+      "qrCode": {
+        "title": "QR Transfer/E-wallet",
+        "badge": "Safe & Convenient",
+        "description": "Instant confirmation, quick and error-free."
+      },
+      "cashOnBus": {
+        "title": "Pay on Bus",
+        "description": "You can pay the driver when boarding"
+      },
+      "privacyNotice": "By clicking Payment, you agree to the Payment Privacy Policy",
+      "privacyLink": "Payment Privacy Policy"
+    },
+    "tripInfo": {
+      "title": "Trip Information",
+      "departureTime": "Departure Time",
+      "arrivalTime": "Arrival Time",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "currency": "VND"
+    },
+    "promotions": {
+      "title": "Available Promotions",
+      "expiresText": "Expires Soon",
+      "noPromotions": "No promotions available",
+      "points": "points",
+      "validUntil": "Valid until",
+      "expired": "Expired",
+      "select": "Select this promotion"
+    },
+    "qrPayment": {
+      "transferButton": "Confirm Transfer",
+      "countdown": "Time remaining"
+    }
   }
-} 
+}

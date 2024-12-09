@@ -7,7 +7,7 @@
   "changePassword": "Đổi mật khẩu",
   "tripReview": "Đánh giá chuyến đi",
   "logout": "Đăng xuất",
-  
+
   "header": {
     "myOrdersLink": "Đơn hàng của tôi",
     "findSharedRide": "Tìm xe ghép",
@@ -46,6 +46,7 @@
       "payment": {
         "title": "Thanh toán an toàn",
         "description": "Nhiều phương thức thanh toán, bảo mật tuyệt đối"
+ 
       },
       "support": {
         "title": "Dịch vụ 24/7",
@@ -74,7 +75,9 @@
       "signUp": "Đăng ký",
       "processing": "Đang xử lý...",
       "usernameRequired": "Vui lòng nhập tên đăng nhập",
+      "usernamePlaceholder": "Nhập tên đăng nhập",
       "passwordRequired": "Vui lòng nhập mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu",
       "success": "Đăng nhập thành công",
       "error": "Có lỗi xảy ra, vui lòng thử lại"
     },
@@ -92,7 +95,12 @@
       "success": "Đăng ký thành công",
       "emailPlaceholder": "Nhập email của bạn",
       "usernamePlaceholder": "Nhập tên đăng nhập",
-      "passwordPlaceholder": "Nhập mật khẩu"
+      "passwordPlaceholder": "Nhập mật khẩu",
+      "phonenumber": "Số điện thoại",
+      "phonenumberPlaceholder": "Nhập số điện thoại",
+      "phonenumberRequired": "Số điện thoại là bắt buộc",
+      "invalidEmail": "Email không hợp lệ",
+      "dob": "Ngày sinh"
     },
     "otp": {
       "title": "Nhập mã OTP",
@@ -107,6 +115,19 @@
       "required": "Vui lòng nhập thông tin này",
       "invalidEmail": "Email không hợp lệ",
       "processing": "Đang xử lý..."
+    },
+    "forgotPassword": {
+      "title": "Quên Mật Khẩu",
+      "subtitle": "Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn liên kết để đặt lại mật khẩu",
+      "email": "Địa Chỉ Email",
+      "emailPlaceholder": "Nhập địa chỉ email của bạn",
+      "submit": "Gửi Liên Kết Đặt Lại",
+      "backToLogin": "Quay Lại Đăng Nhập",
+      "success": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn",
+      "error": "Lỗi khi gửi liên kết đặt lại. Vui lòng thử lại",
+      "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+      "notFound": "Không tìm thấy địa ch�� email",
+      "instructions": "Kiểm tra email của bạn để lấy liên kết đặt lại mật khẩu"
     }
   },
 
@@ -152,7 +173,64 @@
 
   "profile": {
     "rewards": {
-      "loading": "Đang tải..."
+      "loading": "Đang tải...",
+      "title": "Đổi điểm",
+      "history": "Lịch sử tích điểm",
+      "currentPoints": "Điểm của bạn",
+      "points": "Điểm",
+      "requiredPoints": "Điểm yêu cầu",
+      "exchange": "Đổi",
+      "exchangeSuccess": "Đổi ưu đãi thành công",
+      "close": "Đóng",
+      "noPromotions": "Không có ưu đãi khả dụng để đổi"
+    },
+    "password": {
+      "tooShort": "Mật khẩu phải dài hơn 6 ký tự",
+      "mismatch": "Mật khẩu xác nhận không khớp",
+      "success": "Thay đổi mật khẩu thành công",
+      "error": "Đã xảy ra lỗi. Vui lòng thử lại",
+      "current": "Mật khẩu hiện tại",
+      "new": "Mật khẩu mới",
+      "invalid": "Mật khẩu phải có ít nhất 7 ký tự, 1 chữ in hoa và 1 ký tự đặc biệt !@#$%^&*()_",
+      "confirm": "Xác nhận mật khẩu"
+    },
+    "promotions": {
+      "title": "Ưu đãi",
+      "code": "Mã giảm giá",
+      "description": "Chi tiết",
+      "discount": "Giá trị",
+      "validUntil": "Thời gian còn lại",
+      "expired": "Hết hạn",
+      "daysLeft": "Ngày",
+      "action": "Hành động",
+      "useNow": "Dùng ngay",
+      "endDate": "Ngày hết hạn"
+    },
+    "orders": {
+      "orderNumber": "Mã vé",
+      "description": "Chi tiết",
+      "status": "Trạng thái",
+      "action": "Hành động",
+      "details": "Chi tiết vé",
+      "cancel": "Hủy vé",
+      "cancelTicket": "Hủy vé",
+      "cancelReasonPlaceholder": "Lý do hủy vé",
+      "cancelReasonLabel": "Lý do hủy vé",
+      "cancelClose": "Đóng",
+      "confirmCancel": "Xác nhận",
+      "timeFrom": "Ngày xuất phát",
+      "cancelReasonRequired": "Vui lòng nhập lý do",
+      "cancelTooLate": "Quá thời gian hủy vé cho phép"
+    },
+    "info": {
+      "title": "Thông tin cá nhân",
+      "fullName": "Họ Tên",
+      "email": "Email",
+      "phone": "Số Điện Thoại",
+      "address": "Địa chỉ",
+      "date": "Ngày sinh",
+      "changePhoto": "Đổi ảnh đại diện",
+      "save": "Lưu"
     }
   },
 
@@ -183,7 +261,7 @@
         "label": "Thời Gian Trả"
       },
       "carType": {
-        "label": "Chọn Loại Xe (Số Gh��)",
+        "label": "Chọn Loại Xe (Số Ghế)",
         "options": {
           "7": "Xe 7 Chỗ",
           "16": "Xe 16 Chỗ",
@@ -199,7 +277,7 @@
       "timeRequired": "Vui lòng chọn thời gian đón và trả xe"
     },
     "info": {
-      "title": "Tại Sao Chọn Dịch Vụ Thuê Xe Của Chúng Tôi?",
+      "title": "Tại Sao Chọn Dịch Vụ Thuê Xe Của Chng Tôi?",
       "features": [
         {
           "title": "Đa Dạng Phương Tiện",
@@ -219,5 +297,251 @@
         }
       ]
     }
+  },
+
+  "booking": {
+    "title": "Đặt Vé Xe",
+    "nav": {
+      "bus": "Xe khách"
+    },
+    "search": {
+      "title": "Tìm chuyến xe phù hợp cho hành trình của bạn",
+      "from": "Điểm đi",
+      "fromPlaceholder": "Nhập điểm xuất phát",
+      "to": "Điểm đến",
+      "toPlaceholder": "Nhập điểm đến",
+      "date": "Ngày đi",
+      "action": "Tìm kiếm",
+      "button": "Tìm kiếm",
+      "errors": {
+        "missingFields": "Vui lòng chọn điểm xuất phát, điểm đến và thời gian",
+        "invalidTime": "Thời gian không hợp lệ"
+      }
+    },
+    "sort": {
+      "title": "Sắp xếp kết quả",
+      "default": "Mặc định",
+      "earliestDeparture": "Khởi hành sớm nhất",
+      "latestDeparture": "Khởi hành muộn nhất",
+      "highestRating": "Đánh giá cao nhất",
+      "priceAscending": "Giá: Thấp đến cao",
+      "priceDescending": "Giá: Cao đến thấp"
+    },
+    "filter": {
+      "title": "Lọc kết quả",
+      "clearAll": "Xóa tất cả",
+      "time": {
+        "title": "Thời gian khởi hành",
+        "from": "Từ",
+        "to": "Đến"
+      },
+      "operator": {
+        "title": "Nh�� xe",
+        "searchPlaceholder": "Tìm nhà xe",
+        "noResults": "Không tìm thấy nhà xe"
+      },
+      "price": {
+        "title": "Khoảng giá",
+        "currency": "VNĐ"
+      }
+    },
+    "results": {
+      "title": "Chuyến xe khả dụng",
+      "trips": "chuyến tìm thấy"
+    },
+    "tripCard": {
+      "from": "Từ",
+      "seats": "chỗ",
+      "licensePlate": "Biển số xe",
+      "hideDetails": "Ẩn chi tiết",
+      "showDetails": "Thông tin chi tiết",
+      "close": "Đóng",
+      "selectTrip": "Chọn chuyến",
+      "available": "Số ghế trống",
+      "premium": "Cao cấp",
+      "rating": "Đánh giá",
+      "discount": "Giảm giá",
+      "tabs": {
+        "pickupDrop": "Đón/trả",
+        "policy": "Chính sách",
+        "images": "Hình ảnh",
+        "reviews": "Đánh giá"
+      }
+    },
+    "tripDetails": {
+      "startTime": "Giờ khởi hành",
+      "startPoint": "Điểm đón",
+      "endPoint": "Điểm đến",
+      "price": "Giá vé",
+      "vehicleType": "Loại xe",
+      "description": "Mô tả"
+    },
+    "pickupDrop": {
+      "note": "Lưu ý",
+      "disclaimer": "Thời gian đón và trả khách dưới đây là thời gian dự kiến.",
+      "scheduleChange": "Lịch trình có thể thay đổi tùy theo điều kiện thực tế.",
+      "reportIssue": "Báo cáo thông tin sai/thiếu",
+      "details": {
+        "pickupPoint": "Điểm đón",
+        "dropoffPoint": "Điểm trả",
+        "startTime": "Giờ khởi hành",
+        "endTime": "Giờ đến"
+      }
+    },
+    "policy": {
+      "cancellation": {
+        "title": "Chính sách hủy đơn hàng",
+        "today": "Hôm nay",
+        "departure": "Khởi hành",
+        "noFee": "Không mất phí",
+        "fullFee": "Phí hủy 100%",
+        "note": "Ghi chú",
+        "noteText": "Phí hủy sẽ được tính trên giá gốc, không giảm trừ khuyến mãi hoặc giảm giá; đồng thời không vượt quá số tiền quý khách đã thanh toán."
+      },
+      "busPolicy": {
+        "title": "Chính sách nhà xe",
+        "boarding": {
+          "title": "Yêu cầu lên xe",
+          "items": [
+            "Có mặt tại văn phòng/quầy vé/bến xe trước 30 phút để làm thủ tục lên xe",
+            "Đối vé giấy trước khi lên xe",
+            "Xuất trình SMS/Email đặt vé cho nhân viên",
+            "Không mang đồ ăn, thức uống có mùi lên xe",
+            "Không hút thuốc lá, không sử dụng chất kích thích trên xe",
+            "Không vứt rác trên xe",
+            "Không làm ồn, gây mất trật tự trên xe",
+            "Không mang giày, dép trên xe"
+          ]
+        },
+        "luggage": {
+          "title": "Hành lý xách tay",
+          "items": [
+            "Tổng trọng lượng hành lý không vượt quá 20 kg",
+            "Không vận chuyển hàng hóa cồng kềnh",
+            "Hành lý trên trong trường hợp hủy đơn hàng do vi phạm các quy định về hành lý"
+          ]
+        },
+        "specialPassengers": {
+          "title": "Trẻ em và phụ nữ có thai",
+          "items": [
+            "Trẻ em dưới 5 tuổi hoặc dưới 100 cm được miễn phí nếu ngồi cùng ghế/giường với bố mẹ",
+            "Trẻ em từ 5 tuổi hoặc từ 120 cm trở lên mua vé như người lớn",
+            "Nhà xe có thể đảm bảo sức khỏe trong quá trình di chuyển",
+            "Nhà xe từ chối vận chuyển nếu hành khách không tuân thủ các quy định về sức khỏe"
+          ]
+        },
+        "pets": {
+          "title": "Động vật cảnh/Thú c��ng",
+          "items": [
+            "Hành xe có quyền từ chối vận chuyển động vật là một hành lý xách tay",
+            "Hành khách có trách nhiệm chăm sóc thú cưng",
+            "Nhiệt độ trên xe có thể không phù hợp với điều kiện sinh hoạt của thú cưng",
+            "Trong trường hợp thú cưng gây hại, nhà xe không chịu trách nhiệm về sự cố"
+          ]
+        },
+        "invoice": {
+          "title": "Xuất hóa đơn GTGT",
+          "items": [
+            "Nhà xe có cung cấp hóa đơn GTGT cho dịch vụ xe khách, phí xuất hóa đơn là 10% giá trị vé",
+            "Quý khách vui lòng cung cấp đầy đủ, chính xác thông tin hóa đơn",
+            "Nhà xe từ chối xuất lại hóa đơn nếu hành khách cung cấp sai thông tin"
+          ]
+        }
+      },
+      "reportIssue": "Báo cáo sai/thiếu thông tin"
+    },
+    "gallery": {
+      "prev": "Ảnh trước",
+      "next": "Ảnh sau",
+      "imageCount": "{{current}}/{{total}}",
+      "reportIssue": "Báo cáo sai/thiếu thông tin",
+      "altText": {
+        "mainImage": "Hình ảnh chính của xe",
+        "thumbnail": "Hình thu nhỏ {{index}}"
+      },
+      "watermark": "VeXeRe"
+    },
+    "selectTrip": {
+      "legend": "Chú thích",
+      "seatQuantity": {
+        "label": "Số lượng ghế",
+        "placeholder": "Nhập số lượng ghế"
+      },
+      "summary": {
+        "seats": "Ghế",
+        "total": "Tổng cộng",
+        "currency": "đ",
+        "bookButton": "Đặt chuyến"
+      }
+    },
+    "optionTrip": {
+      "pickupPoints": {
+        "title": "Điểm đón",
+        "select": "Chọn điểm đón",
+        "distance": "Cách vị trí của bạn {{distance}} km"
+      },
+      "dropoffPoints": {
+        "title": "Điểm trả",
+        "select": "Chọn điểm trả",
+        "distance": "Cách vị trí của bạn {{distance}} km"
+      },
+      "alert": {
+        "title": "Đảm bảo an toàn",
+        "message": "An tâm được đón đúng nơi, trả đúng chỗ đã chọn và dễ dàng thay đổi khi cần."
+      },
+      "seatsAvailable": "Còn {{count}} chỗ",
+      "selectedSeat": "Ghế",
+      "payment": "Thanh toán",
+      "continue": "Tiếp tục"
+    }
+  },
+    "bookingConfirmation": {
+      "title": "Xác Nhận Đặt Vé",
+      "backToHome": "< Quay lại",
+      "contactInfo": {
+        "title": "Thông tin liên hệ",
+        "name": "Tên người đi *",
+        "phone": "Số điện thoại *",
+        "email": "Email để nhận thông tin đặt chỗ *",
+        "notice": "Số điện thoại và email được sử dụng để gửi thông tin đơn hàng và liên hệ khi cần thiết."
+      },
+      "payment": {
+        "title": "Phương thức thanh toán",
+        "qrCode": {
+          "title": "QR chuyển khoản/ Ví điện tử",
+          "badge": "An toàn & tiện lợi",
+          "description": "Xác nhận thanh toán tức thì, nhanh chóng và ít sai sót."
+        },
+        "cashOnBus": {
+          "title": "Thanh toán khi lên xe",
+          "description": "Bạn có thể thanh toán cho tài xế khi lên xe"
+        },
+        "privacyNotice": "Bằng việc nhấn nút Thanh toán, bạn đồng ý với Chính sách bảo mật thanh toán",
+        "privacyLink": "Chính sách bảo mật thanh toán"
+      },
+      "tripInfo": {
+        "title": "Thông tin chuyến đi",
+        "departureTime": "Giờ khởi hành",
+        "arrivalTime": "Giờ đến",
+        "price": "Giá vé",
+        "quantity": "Số lượng",
+        "total": "Tổng cộng",
+        "currency": "đ"
+      },
+      "promotions": {
+        "title": "Khuyến mãi có sẵn",
+        "expiresText": "Sắp hết hạn",
+        "noPromotions": "Không có khuyến mãi",
+        "points": "điểm",
+        "validUntil": "Có hiệu lực đến",
+        "expired": "Đã hết hạn",
+        "select": "Chọn khuyến mãi này"
+      },
+      "qrPayment": {
+        "transferButton": "Đã chuyển khoản",
+        "countdown": "Thời gian còn lại"
+      }
+    }
   }
-} 
+
+
