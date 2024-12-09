@@ -13,6 +13,7 @@ function App() {
       i18n.changeLanguage(defaultLang);
       localStorage.setItem('i18nextLng', defaultLang);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeLanguage = (lng) => {

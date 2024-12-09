@@ -42,7 +42,7 @@ const Convenient = () => {
         setPromotions(uniquePromotions);
       } catch (error) {
         console.error("Error:", error);
-        message.error(t('convenient.messages.loadingError'));
+        // message.error(t('convenient.messages.loadingError'));
       }
     };
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {  FiClock, FiMapPin, FiCalendar, FiSearch } from 'react-icons/fi';
+import { FiClock, FiMapPin, FiCalendar, FiSearch } from 'react-icons/fi';
 import { FaBus } from 'react-icons/fa';
 import { TbBus } from 'react-icons/tb';
 import { useState } from 'react';
@@ -23,7 +23,7 @@ const Banner = () => {
         {
             icon: <FaBus className="w-5 h-5" />,
             label: t('home.banner.tabs.bus'),
-            to: "/bookingCar",
+            to: "/booking-car",
             active: true
         },
         {
@@ -74,7 +74,7 @@ const Banner = () => {
 
                                 {/* Search Form */}
                                 <form onSubmit={handleSearch} className="space-y-4">
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                         <div className="relative">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                                 {t('home.banner.search.from')}
@@ -122,14 +122,15 @@ const Banner = () => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <button
-                                        type="submit"
-                                        className="w-full flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                                    >
-                                        <FiSearch className="w-5 h-5" />
-                                        <span>{t('home.banner.search.searchButton')}</span>
-                                    </button>
+                                    <Link to="/booking-car">
+                                        <button
+                                            type="submit"
+                                            className="w-full flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                        >
+                                            <FiSearch className="w-5 h-5" />
+                                            <span>{t('home.banner.search.searchButton')}</span>
+                                        </button>
+                                    </Link>
                                 </form>
                             </div>
                         </div>
