@@ -4,7 +4,6 @@ import BookingCar from "./page/BookingCar";
 import Bookingconfirmation from "./page/Bookingconfirmation";
 import Checkout from "./page/Checkout";
 import Convenient from "./page/Convenient";
-import DefaultLayout from "./page/DefaultLayout";
 import DetaillTicket from "./page/DetaillTicket";
 import Home from "./page/Home";
 import ForgotPassword from "./page/Forgotpassword";
@@ -16,10 +15,12 @@ import MyOrder from "./page/profile/MyOrder";
 import Profile from "./page/profile/Profile";
 import MyPromotion from "./page/profile/MyPromotion";
 import RewardPoints from "./page/profile/RewardPoints";
+import Login from "./page/Login";
+import Register from "./page/Register";
 
 export default function useRouteElements() {
   const { t } = useTranslation();
-  
+
   const routeElements = useRoutes([
     {
       path: "/",
@@ -38,6 +39,14 @@ export default function useRouteElements() {
       element: <ForgotPassword />,
     },
     {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+    },
+    {
       path: "/profile",
       element: <Profile />,
       children: [
@@ -49,7 +58,7 @@ export default function useRouteElements() {
       ],
     },
     {
-      path: "/bookingCar",
+      path: "/booking-car",
       element: <BookingCar />,
     },
     {
@@ -70,7 +79,7 @@ export default function useRouteElements() {
       path: "/checkout",
       element: <Checkout />,
     },
-   
+
   ]);
   return routeElements;
 }
