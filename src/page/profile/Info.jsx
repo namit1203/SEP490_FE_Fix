@@ -43,9 +43,9 @@ const Info = () => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/${profile.id}`,
+        `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             accept: "*/*",

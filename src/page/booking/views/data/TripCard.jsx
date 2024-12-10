@@ -219,8 +219,7 @@ export const TripCard = ({
                   <span className="font-medium">{data?.listVehicle[0]?.licensePlate}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">{t('booking.tripCard.available')}</span>
-                  <span className="font-medium text-green-600">12 {t('booking.tripCard.seats')}</span>
+              
                 </div>
               </div>
 
