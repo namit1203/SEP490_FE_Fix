@@ -13,6 +13,7 @@ const Info = () => {
     email: "",
     numberPhone: "",
     avatar: "",
+    avatarFile: null, // Lưu file ảnh
     fullName: "",
     address: "",
     dob: "",
@@ -41,6 +42,7 @@ const Info = () => {
             email: data.email || "",
             numberPhone: data.numberPhone || "",
             avatar: data.avatar || "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp",
+            avatarFile: null,
             fullName: data.fullName || "",
             address: data.address || "",
             dob: data.dob?.split("T")?.[0] || "",
@@ -65,23 +67,50 @@ const Info = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prevData) => ({
+        ...prevData,
+        avatarFile: file,
+        avatar: URL.createObjectURL(file), // Hiển thị preview
+      }));
+    }
+  };
+
   const handleSave = async () => {
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("username", formData.username);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("numberPhone", formData.numberPhone);
+      formDataToSend.append("fullName", formData.fullName);
+      formDataToSend.append("address", formData.address);
+      formDataToSend.append("dob", formData.dob);
+      if (formData.avatarFile) {
+        formDataToSend.append("avatar", formData.avatarFile);
+      }
+  
       const response = await fetch(
         `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            accept: "*/*",
             Authorization: "Bearer " + checkLoginToken(),
           },
-          body: JSON.stringify(formData),
+          body: formDataToSend,
         }
       );
-      if (response.ok) {
+  
+      // Kiểm tra phản hồi trước khi parse JSON
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json(); // Parse JSON nếu đúng định dạng
+        setProfile(data);
         message.success(t('profile.info.updateSuccess'));
       } else {
+        const text = await response.text(); // Nếu không phải JSON, đọc dưới dạng text
+        console.error("Unexpected response format:", text);
         message.error(t('profile.info.updateError'));
       }
     } catch (error) {
@@ -89,6 +118,7 @@ const Info = () => {
       message.error(t('profile.info.updateError'));
     }
   };
+  
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -100,13 +130,19 @@ const Info = () => {
         {/* Profile Image */}
         <div className="flex items-center space-x-4">
           <img
-            src={formData.avatar && formData.avatar !== "string" ? formData.avatar : "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp"}
+            src={formData.avatar}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
           />
-          <button className="px-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
+          <label className="px-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium cursor-pointer">
             {t('profile.info.changePhoto')}
-          </button>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
         </div>
 
         {/* Form Fields */}
