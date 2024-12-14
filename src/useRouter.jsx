@@ -17,6 +17,7 @@ import MyPromotion from "./page/profile/MyPromotion";
 import RewardPoints from "./page/profile/RewardPoints";
 import Login from "./page/Login";
 import Register from "./page/Register";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 export default function useRouteElements() {
   const { t } = useTranslation();
@@ -48,13 +49,36 @@ export default function useRouteElements() {
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: (
+        <PrivateRoute>
+          <Profile />
+        </PrivateRoute>
+      ),
       children: [
-        { index: true, element: <Info /> },
-        { path: "change-pass", element: <ChangePassword /> },
-        { path: "reward-point", element: <RewardPoints /> },
-        { path: "my-order", element: <MyOrder /> },
-        { path: "my-promotion", element: <MyPromotion /> },
+        {
+          index: true,
+          element: <Info />,
+        },
+        {
+          path: "info",
+          element: <Info />,
+        },
+        {
+          path: "change-pass",
+          element: <ChangePassword />,
+        },
+        {
+          path: "reward-point",
+          element: <RewardPoints />,
+        },
+        {
+          path: "my-order",
+          element: <MyOrder />,
+        },
+        {
+          path: "my-promotion",
+          element: <MyPromotion />,
+        },
       ],
     },
     {
@@ -67,7 +91,11 @@ export default function useRouteElements() {
     },
     {
       path: "/bookingconfirmation/:id",
-      element: <Bookingconfirmation />,
+      element: (
+        <PrivateRoute>
+          <Bookingconfirmation />
+        </PrivateRoute>
+      ),
     },
     {
       path: "/payment-method/:id",
@@ -79,7 +107,6 @@ export default function useRouteElements() {
       path: "/checkout",
       element: <Checkout />,
     },
-
   ]);
   return routeElements;
 }

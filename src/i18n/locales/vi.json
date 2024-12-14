@@ -46,7 +46,6 @@
       "payment": {
         "title": "Thanh toán an toàn",
         "description": "Nhiều phương thức thanh toán, bảo mật tuyệt đối"
- 
       },
       "support": {
         "title": "Dịch vụ 24/7",
@@ -65,6 +64,7 @@
   },
 
   "auth": {
+    "requireLogin": "Vui lòng đăng nhập để sử dụng chức năng này",
     "login": {
       "title": "Đăng nhập",
       "username": "Tên đăng nhập",
@@ -191,7 +191,6 @@
       "error": "Đã xảy ra lỗi. Vui lòng thử lại",
       "current": "Mật khẩu hiện tại",
       "new": "Mật khẩu mới",
-      "invalid": "Mật khẩu phải có ít nhất 7 ký tự, 1 chữ in hoa và 1 ký tự đặc biệt !@#$%^&*()_",
       "confirm": "Xác nhận mật khẩu"
     },
     "promotions": {
@@ -328,21 +327,14 @@
       "priceDescending": "Giá: Cao đến thấp"
     },
     "filter": {
-      "title": "Lọc kết quả",
+      "title": "Bộ lọc kết quả",
       "clearAll": "Xóa tất cả",
-      "time": {
-        "title": "Thời gian khởi hành",
-        "from": "Từ",
-        "to": "Đến"
-      },
-      "operator": {
-        "title": "Nh�� xe",
-        "searchPlaceholder": "Tìm nhà xe",
-        "noResults": "Không tìm thấy nhà xe"
-      },
-      "price": {
-        "title": "Khoảng giá",
-        "currency": "VNĐ"
+      "timeRange": "Khung giờ khởi hành",
+      "garages": "Nhà xe",
+      "priceRange": "Khoảng giá",
+      "operators": {
+        "nhaxeninhbinh": "Nhà xe Ninh Bình",
+        "nhaxebacgiang2": "Nhà xe Bắc Giang 2"
       }
     },
     "results": {
@@ -431,7 +423,7 @@
           ]
         },
         "pets": {
-          "title": "Động vật cảnh/Thú c��ng",
+          "title": "Động vật cảnh/Thú cưng",
           "items": [
             "Hành xe có quyền từ chối vận chuyển động vật là một hành lý xách tay",
             "Hành khách có trách nhiệm chăm sóc thú cưng",
@@ -443,7 +435,7 @@
           "title": "Xuất hóa đơn GTGT",
           "items": [
             "Nhà xe có cung cấp hóa đơn GTGT cho dịch vụ xe khách, phí xuất hóa đơn là 10% giá trị vé",
-            "Quý khách vui lòng cung cấp đầy đủ, chính xác thông tin hóa đơn",
+            "Quý khách vui lòng cung cấp ��ầy đủ, chính xác thông tin hóa đơn",
             "Nhà xe từ chối xuất lại hóa đơn nếu hành khách cung cấp sai thông tin"
           ]
         }
@@ -493,8 +485,7 @@
       "selectedSeat": "Ghế",
       "payment": "Thanh toán",
       "continue": "Tiếp tục"
-    }
-  },
+    },
     "bookingConfirmation": {
       "title": "Xác Nhận Đặt Vé",
       "backToHome": "< Quay lại",
@@ -526,7 +517,9 @@
         "price": "Giá vé",
         "quantity": "Số lượng",
         "total": "Tổng cộng",
-        "currency": "đ"
+        "currency": "đ",
+        "discount": "Giảm giá",
+        "originalPrice": "Giá gốc"
       },
       "promotions": {
         "title": "Khuyến mãi có sẵn",
@@ -540,8 +533,30 @@
       "qrPayment": {
         "transferButton": "Đã chuyển khoản",
         "countdown": "Thời gian còn lại"
+      },
+      "errors": {
+        "selectPayment": "Vui lòng chọn phương thức thanh toán",
+        "payOnBusLimit": "Đối với thanh toán tiền mặt chỉ được phép đặt 1 vé",
+        "noBookingTime": "Thời gian đặt vé không tồn tại. Vui lòng kiểm tra lại.",
+        "generic": "Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại."
+      },
+      "messages": {
+        "payOnBusConfirmed": "Thanh toán khi lên xe đã được xác nhận!",
+        "paymentSuccess": "Thanh toán thành công!",
+        "paymentError": "Thanh toán thất bại, vui lòng liên hệ bộ phận hỗ trợ!"
       }
+    },
+    "review": {
+      "submitReview": "Gửi đánh giá",
+      "modalTitle": "Viết đánh giá",
+      "submit": "Gửi",
+      "cancel": "Hủy",
+      "placeholder": "Chia sẻ trải nghiệm của bạn về chuyến đi này...",
+      "emptyError": "Vui lòng viết đánh giá trước khi gửi",
+      "submitSuccess": "Cảm ơn bạn đã đánh giá!",
+      "submitError": "Không thể gửi đánh giá. Vui lòng thử lại.",
+      "loginRequired": "Vui lòng đăng nhập để gửi đánh giá",
+      "unauthorized": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
     }
   }
-
-
+}

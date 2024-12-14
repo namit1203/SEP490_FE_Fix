@@ -44,7 +44,7 @@ const ProfileSidebar = () => {
         { 
             icon: <FaCommentDots className="text-xl" />, 
             text: t('tripReview'), 
-            path: '/profile/reviews' 
+            path: '#' 
         },
         { 
             icon: <FaPowerOff className="text-xl" />, 

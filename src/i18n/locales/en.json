@@ -64,6 +64,7 @@
   },
 
   "auth": {
+    "requireLogin": "Please login to use this feature",
     "login": {
       "title": "Login",
       "username": "Username",
@@ -188,7 +189,8 @@
       "points": "Points",
       "history": "Points History",
       "exchange": "Exchange",
-      "noPromotions": "No promotions available"
+      "noPromotions": "No promotions available",
+      "loading": "Loading..."
     },
     "orders": {
       "title": "Orders",
@@ -198,7 +200,8 @@
       "timeFrom": "Departure Time",
       "action": "Action",
       "details": "View Details",
-      "cancel": "Cancel Order"
+      "cancel": "Cancel Order",
+      "noOrders": "No Order Available"
     },
     "promotions": {
       "title": "Promotions",
@@ -207,7 +210,8 @@
       "discount": "Discount",
       "endDate": "End Date",
       "action": "Action",
-      "useNow": "Use Now"
+      "useNow": "Use Now",
+      "noPromotions": "No promotions available"
     },
     "password": {
       "title": "Change Password",
@@ -328,19 +332,12 @@
     "filter": {
       "title": "Filter Results",
       "clearAll": "Clear All",
-      "time": {
-        "title": "Departure Time",
-        "from": "From",
-        "to": "To"
-      },
-      "operator": {
-        "title": "Bus Operator",
-        "searchPlaceholder": "Search operators",
-        "noResults": "No operators found"
-      },
-      "price": {
-        "title": "Price Range",
-        "currency": "VND"
+      "timeRange": "Departure Time Range",
+      "garages": "Bus Operators",
+      "priceRange": "Price Range",
+      "operators": {
+        "nhaxeninhbinh": "Ninh Binh Bus",
+        "nhaxebacgiang2": "Bac Giang Bus 2"
       }
     },
     "results": {
@@ -525,7 +522,9 @@
       "price": "Price",
       "quantity": "Quantity",
       "total": "Total",
-      "currency": "VND"
+      "currency": "VND",
+      "discount": "Discount",
+      "originalPrice": "Original Price"
     },
     "promotions": {
       "title": "Available Promotions",
@@ -539,6 +538,30 @@
     "qrPayment": {
       "transferButton": "Confirm Transfer",
       "countdown": "Time remaining"
+    },
+    "errors": {
+      "selectPayment": "Please select a payment method",
+      "payOnBusLimit": "Cash payment on bus is limited to 1 ticket only",
+      "noBookingTime": "Booking time does not exist. Please check again.",
+      "generic": "An error occurred while booking. Please try again."
+    },
+    "messages": {
+      "payOnBusConfirmed": "Pay on bus has been confirmed!",
+      "paymentSuccess": "Payment successful!",
+      "paymentError": "Payment failed, please contact support!"
     }
+  },
+
+  "review": {
+    "submitReview": "Submit Review",
+    "modalTitle": "Write a Review",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "placeholder": "Share your experience with this trip...",
+    "emptyError": "Please write your review before submitting",
+    "submitSuccess": "Thank you for your review!",
+    "submitError": "Failed to submit review. Please try again.",
+    "loginRequired": "Please login to submit a review",
+    "unauthorized": "Your session has expired. Please login again."
   }
 }

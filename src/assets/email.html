@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .otp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007BFF;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #666666;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+           ICTS
+        </div>
+        <div class="content">
+            <p>Xin chào <strong>{username}</strong>,</p>
+            <p>Để hoàn tất quy trình đăng ký, vui lòng sử dụng mã OTP sau:</p>
+            <div class="otp">{OTPCode}</div>
+            <p>Mã OTP này sẽ hết hạn sau <strong>5 phút</strong>. Nếu bạn không yêu cầu mã OTP, vui lòng bỏ qua email này hoặc liên hệ với chúng tôi để được hỗ trợ.</p>
+            <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+            <p>
+                <a href="{SupportLink}" class="button">Liên hệ hỗ trợ</a>
+            </p>
+        </div>
+        <div class="footer">
+            © 2024 Hệ Thống Bán Vé Xe. Mọi quyền được bảo lưu.<br>
+            Vui lòng không trả lời email này.
+        </div>
+    </div>
+</body>
+</html>

@@ -2495,7 +2495,7 @@ ms@^2.1.3:
     i18next-browser-languagedetector "^7.2.0"
     i18next-http-backend "^2.5.0"
     jwt-decode "^4.0.0"
-    my-project "file:../../../AppData/Local/Yarn/Cache/v6/npm-my-project-0.0.0-f5a1df83-4f2f-4d62-902d-646ddabc9e84-1733730136077/node_modules/my-project"
+    my-project "file:../../AppData/Local/Yarn/Cache/v6/npm-my-project-0.0.0-6cc76c4d-8ab7-4116-aeaf-219dc6ead210-1733937042951/node_modules/my-project"
     react "^18.3.1"
     react-dom "^18.3.1"
     react-i18next "^14.1.0"

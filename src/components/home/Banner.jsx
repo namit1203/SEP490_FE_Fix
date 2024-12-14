@@ -75,52 +75,7 @@ const Banner = () => {
                                 {/* Search Form */}
                                 <form onSubmit={handleSearch} className="space-y-4">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                        <div className="relative">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                {t('home.banner.search.from')}
-                                            </label>
-                                            <div className="relative">
-                                                <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                                <input
-                                                    type="text"
-                                                    value={searchData.from}
-                                                    onChange={(e) => setSearchData({ ...searchData, from: e.target.value })}
-                                                    placeholder={t('home.banner.search.fromPlaceholder')}
-                                                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
-                                        </div>
 
-                                        <div className="relative">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                {t('home.banner.search.to')}
-                                            </label>
-                                            <div className="relative">
-                                                <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                                <input
-                                                    type="text"
-                                                    value={searchData.to}
-                                                    onChange={(e) => setSearchData({ ...searchData, to: e.target.value })}
-                                                    placeholder={t('home.banner.search.toPlaceholder')}
-                                                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="relative">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                {t('home.banner.search.date')}
-                                            </label>
-                                            <div className="relative">
-                                                <FiCalendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                                <input
-                                                    type="date"
-                                                    value={searchData.date}
-                                                    onChange={(e) => setSearchData({ ...searchData, date: e.target.value })}
-                                                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
-                                        </div>
                                     </div>
                                     <Link to="/booking-car">
                                         <button

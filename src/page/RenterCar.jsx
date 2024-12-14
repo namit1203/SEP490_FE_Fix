@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useTranslation } from 'react-i18next';
 import { FiMapPin, FiCalendar, FiClock, FiTruck } from 'react-icons/fi';
 import Header from "./Header";
@@ -6,8 +6,12 @@ import Footer from "./Footer";
 import { message } from "antd";
 import axios from "axios";
 import { checkLoginToken } from "../utils";
+import { AppContext } from "../context/app.context";
+import { useNavigate } from "react-router-dom";
 
 const RenterCar = () => {
+  const { profile } = useContext(AppContext);
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
@@ -43,6 +47,13 @@ const RenterCar = () => {
   ];
 
   const handelSubmit = async () => {
+    const token = checkLoginToken();
+    if (!token || !profile) {
+      message.warning(t('auth.requireLogin'));
+      navigate('/login', { state: { from: '/renter' } });
+      return;
+    }
+
     if (!dataDetail.startTime || !dataDetail.endTime) {
       message.warning(t('carRental.messages.timeRequired'));
       return;
@@ -63,7 +74,7 @@ const RenterCar = () => {
         dataPayload,
         {
           headers: {
-            Authorization: `Bearer ${checkLoginToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -86,7 +97,7 @@ const RenterCar = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 mt-10">
             {t('carRental.title')}
           </h1>
           <p className="text-lg text-gray-600">

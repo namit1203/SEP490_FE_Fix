@@ -53,21 +53,6 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-8">
-              {isLoggedIn && (
-                <NavLink
-                  to="/profile/my-order"
-                  className={({ isActive }) =>
-                    `text-sm font-medium transition-colors hover:text-blue-600 ${
-                      isActive ? 'text-blue-600' : 'text-gray-700'
-                    }`
-                  }
-                >
-                  {t('header.myOrdersLink')}
-                </NavLink>
-              )}
-            </div>
 
             {/* Right Side Menu */}
             <div className="flex items-center space-x-4">
@@ -87,17 +72,15 @@ const Header = () => {
                   <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 transform transition-all duration-200">
                     <button
                       onClick={() => changeLanguage('en')}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${
-                        i18n.language === 'en' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'en' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
+                        }`}
                     >
                       English
                     </button>
                     <button
                       onClick={() => changeLanguage('vi')}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${
-                        i18n.language === 'vi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'vi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
+                        }`}
                     >
                       Tiếng Việt
                     </button>
@@ -108,8 +91,7 @@ const Header = () => {
               <NavLink
                 to="/convenient"
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-colors hover:text-blue-600 ${
-                    isActive ? 'text-blue-600' : 'text-gray-700'
+                  `text-sm font-medium transition-colors hover:text-blue-600 ${isActive ? 'text-blue-600' : 'text-gray-700'
                   }`
                 }
               >

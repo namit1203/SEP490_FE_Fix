@@ -6,9 +6,11 @@ import { message } from "antd";
 import axios from "axios";
 import { checkLoginToken } from "../utils";
 import { AppContext } from "../context/app.context";
+import { useNavigate } from "react-router-dom";
 
 const Convenient = () => {
   const { profile } = useContext(AppContext);
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [dataDetail, setDataDetail] = useState({
@@ -42,14 +44,23 @@ const Convenient = () => {
         setPromotions(uniquePromotions);
       } catch (error) {
         console.error("Error:", error);
-        // message.error(t('convenient.messages.loadingError'));
+        message.error(t('convenient.messages.loadingError'));
       }
     };
 
-    fetchPromotions();
-  }, [t]);
+    if (checkLoginToken() && profile) {
+      fetchPromotions();
+    }
+  }, [t, profile]);
 
   const handelBookTrip = async () => {
+    const token = checkLoginToken();
+    if (!token || !profile) {
+      message.warning(t('auth.requireLogin'));
+      navigate('/login', { state: { from: '/convenient' } });
+      return;
+    }
+
     setLoading(true);
     const tripType = selectedService === "ConvenientTrip" ? 2 : 3;
     try {
@@ -57,7 +68,7 @@ const Convenient = () => {
         `https://boring-wiles.202-92-7-204.plesk.page/api/Trip/searchTripForConvenient/${dataDetail.startPoint}/${dataDetail.endPoint}/${tripType}`,
         {
           headers: {
-            Authorization: `Bearer ${checkLoginToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -103,6 +114,13 @@ const Convenient = () => {
   };
 
   const handelResult = async () => {
+    const token = checkLoginToken();
+    if (!token || !profile) {
+      message.warning(t('auth.requireLogin'));
+      navigate('/login', { state: { from: '/convenient' } });
+      return;
+    }
+
     if (!finalPrice) {
       message.warning(t('convenient.messages.applyFirst'));
       return;
@@ -126,7 +144,7 @@ const Convenient = () => {
         dataPayload,
         {
           headers: {
-            Authorization: `Bearer ${checkLoginToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

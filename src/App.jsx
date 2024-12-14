@@ -16,34 +16,9 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
 
   return (
     <>
-      <div className="fixed top-4 right-4 z-50 flex gap-2">
-        <button
-          onClick={() => changeLanguage('en')}
-          className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-            i18n.language === 'en'
-              ? 'bg-blue-500 text-white shadow-md'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          English
-        </button>
-        <button
-          onClick={() => changeLanguage('vi')}
-          className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-            i18n.language === 'vi'
-              ? 'bg-blue-500 text-white shadow-md'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Tiếng Việt
-        </button>
-      </div>
       {routeElements}
     </>
   );

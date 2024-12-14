@@ -2,31 +2,36 @@ import { Input } from "antd";
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import IconsSeat from "../../../../components/icons/seat";
-import { useState } from "react";
+import { useContext } from 'react';
+import { AppContext } from '../../../../context/app.context';
+import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 export default function SelectTrip({ data, onContinue }) {
   const { t } = useTranslation();
-  const [error, setError] = useState(""); // State to handle error message
-  const [quantity, setQuantity] = useState(0); // State to handle input value
+  const { profile } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (value <= 0 || isNaN(value)) {
-      setError("Vui lòng chọn ít nhất 1 ghế");
-      setQuantity(0); // Reset value if invalid
-    } else {
-      setError("");
-      setQuantity(value); // Update value if valid
+    const value = e.target.value;
+    if (value >= 0) {
+      localStorage.setItem("quantity", value);
     }
   };
 
   const handleContinue = () => {
-    if (quantity <= 0) {
-      setError("Vui lòng chọn ít nhất 1 ghế");
-    } else {
-      setError("");
-      onContinue(); // Call the provided continue function
+    // Set booking time in localStorage
+    const currentDateTime = new Date().toISOString();
+    localStorage.setItem("bookingTime", currentDateTime);
+
+    if (!profile) {
+      message.warning(t('auth.requireLogin'));
+      setTimeout(() => {
+        navigate('/login', { state: { from: window.location.pathname } });
+      }, 1000);
+      return;
     }
+    onContinue();
   };
 
   return (
@@ -60,17 +65,12 @@ export default function SelectTrip({ data, onContinue }) {
                 min={0}
                 placeholder={t('booking.selectTrip.seatQuantity.placeholder')}
                 onChange={handleQuantityChange}
-                className={`w-full sm:w-48 focus:border-blue-500 ${error ? 'border-red-500' : ''}`}
+                className="w-full sm:w-48 focus:border-blue-500"
               />
               <label className="text-sm text-gray-600 whitespace-nowrap">
                 {t('booking.selectTrip.seatQuantity.label')}
               </label>
             </div>
-            {error && (
-              <p className="text-red-500 text-sm mt-1">
-                {error}
-              </p>
-            )}
           </div>
         </div>
       </div>
@@ -85,7 +85,10 @@ export default function SelectTrip({ data, onContinue }) {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           {/* Seat Information */}
           <div className="flex items-center gap-2">
-            {/* You can add seat-specific information here */}
+            <span className="text-gray-600">
+              {t('booking.selectTrip.summary.seats')}:
+            </span>
+            <span className="text-blue-600 font-medium">A3</span>
           </div>
 
           {/* Price and Action */}

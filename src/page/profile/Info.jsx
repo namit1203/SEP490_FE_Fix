@@ -5,8 +5,8 @@ import { checkLoginToken } from "../../utils";
 import { message } from "antd";
 
 const Info = () => {
-  const { profile } = useContext(AppContext);
   const { t } = useTranslation();
+  const { profile, setProfile } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -19,18 +19,43 @@ const Info = () => {
   });
 
   useEffect(() => {
-    if (profile) {
-      setFormData({
-        username: profile?.username || "",
-        email: profile?.email || "",
-        numberPhone: profile?.numberPhone || "",
-        avatar: profile?.avatar || "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp",
-        fullName: profile?.fullName || "",
-        address: profile?.address || "",
-        dob: profile?.dob?.split("T")?.[0] || "",
-      });
-    }
-  }, [profile]);
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(
+          `https://boring-wiles.202-92-7-204.plesk.page/api/Auth/userProfile`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              accept: "*/*",
+              Authorization: "Bearer " + checkLoginToken(),
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setProfile(data); // Cập nhật profile trong AppContext
+          setFormData({
+            username: data.username || "",
+            email: data.email || "",
+            numberPhone: data.numberPhone || "",
+            avatar: data.avatar || "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp",
+            fullName: data.fullName || "",
+            address: data.address || "",
+            dob: data.dob?.split("T")?.[0] || "",
+          });
+        } else {
+          message.error(t('profile.info.fetchError'));
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        message.error(t('profile.info.fetchError'));
+      }
+    };
+
+    fetchProfile();
+  }, [setProfile, t]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

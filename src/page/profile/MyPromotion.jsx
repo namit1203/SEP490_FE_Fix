@@ -87,12 +87,16 @@ export default function MyPromotion() {
       key: "action",
       render: (_, record) => (
         record.status === 'active' && (
-          <Button
-            type="primary"
-            className="bg-blue-500 hover:bg-blue-600"
-          >
-            {t('profile.promotions.useNow')}
-          </Button>
+<Button
+  type="primary"
+  className="bg-blue-500 hover:bg-blue-600"
+  onClick={() => {
+    window.location.href = '/booking-car';
+  }}
+>
+  {t('profile.promotions.useNow')}
+</Button>
+
         )
       ),
     },
