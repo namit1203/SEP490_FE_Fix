@@ -75,7 +75,7 @@ const Bookingconfirmation = () => {
   const handelFetchData = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        "https://boring-wiles.202-92-7-204.plesk.page/api/Promotion",
+        "https://boring-wiles.202-92-7-204.plesk.page/api/Promotion/getPromotionById",
         {
           headers: {
             Authorization: `Bearer ${checkLoginToken()}`,
@@ -180,19 +180,19 @@ const Bookingconfirmation = () => {
   };
 
   // Get QR image source
-  const getImgSrc = useMemo(() => {
-    const finalAmount = discountedPrice || totalPrice;
+  const getImgSrc = () => {
+    const totalAmount = discountedPrice || totalPrice;
     const accountNameTK = "Le Son Nam";
-    const descriptionn = `${profile?.username}${randomCode}`;
+    const descriptionn = `${profile?.username}${randomCode || "000000"}`; // Fallback nếu randomCode null
     const bankId = "970415";
     const accountNo = "108881732352";
     const template = "print";
-
+  
     return {
-      url: `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${finalAmount}&addInfo=${descriptionn}&accountName=${accountNameTK}`,
+      url: `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${totalAmount}&addInfo=${descriptionn}&accountName=${accountNameTK}`,
     };
-  }, [discountedPrice, totalPrice, profile?.username, randomCode]);
-
+  };
+  
   // Check authentication on mount
   useEffect(() => {
     const token = checkLoginToken();

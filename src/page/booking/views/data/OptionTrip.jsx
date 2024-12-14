@@ -138,7 +138,7 @@ export default function OptionTrip({ data }) {
                       <span className="text-sm text-gray-800">{item?.pointStartDetails}</span>
                     </div>
                     <p className="text-sm text-green-600 mt-2">
-                      {t('booking.optionTrip.pickupPoints.distance', { distance: '7.6' })}
+                    
                     </p>
                   </div>
                 </label>
@@ -183,7 +183,7 @@ export default function OptionTrip({ data }) {
                       <span className="text-sm text-gray-800">{item?.pointEndDetails}</span>
                     </div>
                     <p className="text-sm text-green-600 mt-2">
-                      {t('booking.optionTrip.dropoffPoints.distance', { distance: '240.1' })}
+                    
                     </p>
                   </div>
                 </label>
