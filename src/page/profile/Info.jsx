@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.context";
 import { checkLoginToken } from "../../utils";
 import { message } from "antd";
@@ -12,8 +12,8 @@ const Info = () => {
     username: "",
     email: "",
     numberPhone: "",
-    avatar: "",
-    avatarFile: null, // Lưu file ảnh
+    avatar: "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp",
+    avatarFile: null,
     fullName: "",
     address: "",
     dob: "",
@@ -36,7 +36,7 @@ const Info = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setProfile(data); // Cập nhật profile trong AppContext
+          setProfile(data);
           setFormData({
             username: data.username || "",
             email: data.email || "",
@@ -48,11 +48,11 @@ const Info = () => {
             dob: data.dob?.split("T")?.[0] || "",
           });
         } else {
-          message.error(t('profile.info.fetchError'));
+          message.error(t("profile.info.fetchError"));
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
-        message.error(t('profile.info.fetchError'));
+        message.error(t("profile.info.fetchError"));
       }
     };
 
@@ -67,14 +67,61 @@ const Info = () => {
     }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch(
+        "https://boring-wiles.202-92-7-204.plesk.page/api/UploadImage/image",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + checkLoginToken(),
+          },
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        message.success(t("profile.info.uploadSuccess"));
+        return result.url; // Trả về URL của ảnh vừa upload
+      } else {
+        const errorResponse = await response.json();
+        console.error("Upload error:", errorResponse);
+        message.error(t("profile.info.uploadError"));
+        return null;
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      message.error(t("profile.info.uploadError"));
+      return null;
+    }
+  };
+
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prevData) => ({
-        ...prevData,
-        avatarFile: file,
-        avatar: URL.createObjectURL(file), // Hiển thị preview
-      }));
+      const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+      if (!validTypes.includes(file.type)) {
+        message.error(t("profile.info.invalidImageType"));
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        message.error(t("profile.info.fileTooLarge"));
+        return;
+      }
+
+      // Gửi ảnh lên server
+      const uploadedUrl = await handleFileUpload(file);
+      if (uploadedUrl) {
+        // Nếu upload thành công, cập nhật formData.avatar
+        setFormData((prevData) => ({
+          ...prevData,
+          avatar: uploadedUrl,
+        }));
+      }
     }
   };
 
@@ -87,10 +134,8 @@ const Info = () => {
       formDataToSend.append("fullName", formData.fullName);
       formDataToSend.append("address", formData.address);
       formDataToSend.append("dob", formData.dob);
-      if (formData.avatarFile) {
-        formDataToSend.append("avatar", formData.avatarFile);
-      }
-  
+      formDataToSend.append("avatar", formData.avatar); // Gửi URL avatar
+
       const response = await fetch(
         `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/`,
         {
@@ -101,33 +146,42 @@ const Info = () => {
           body: formDataToSend,
         }
       );
-  
-      // Kiểm tra phản hồi trước khi parse JSON
+
       const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json(); // Parse JSON nếu đúng định dạng
+      if (contentType?.includes("application/json")) {
+        const data = await response.json();
         setProfile(data);
-        message.success(t('profile.info.updateSuccess'));
+        message.success(t("profile.info.updateSuccess"));
       } else {
-        const text = await response.text(); // Nếu không phải JSON, đọc dưới dạng text
-        console.error("Unexpected response format:", text);
-        message.error(t('profile.info.updateError'));
+        const text = await response.text();
+        console.log("API Response:", text);
+        if (response.ok) {
+          message.success(t("profile.info.updateSuccess"));
+        } else {
+          message.error(t("profile.info.updateError"));
+        }
       }
     } catch (error) {
       console.error("Error:", error);
-      message.error(t('profile.info.updateError'));
+      message.error(t("profile.info.updateError"));
     }
   };
-  
+
+  useEffect(() => {
+    return () => {
+      if (formData.avatarFile) {
+        URL.revokeObjectURL(formData.avatar);
+      }
+    };
+  }, [formData.avatarFile]);
 
   return (
     <div className="max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">
-        {t('profile.info.title')}
+        {t("profile.info.title")}
       </h2>
 
       <div className="grid gap-6">
-        {/* Profile Image */}
         <div className="flex items-center space-x-4">
           <img
             src={formData.avatar}
@@ -135,7 +189,7 @@ const Info = () => {
             className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
           />
           <label className="px-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium cursor-pointer">
-            {t('profile.info.changePhoto')}
+            {t("profile.info.changePhoto")}
             <input
               type="file"
               accept="image/*"
@@ -145,13 +199,11 @@ const Info = () => {
           </label>
         </div>
 
-        {/* Form Fields */}
         <div className="grid gap-6">
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Username */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('profile.info.fullName')}<span className="text-red-500">*</span>
+                {t("profile.info.fullName")}<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -161,11 +213,9 @@ const Info = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
               />
             </div>
-
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('profile.info.email')}<span className="text-red-500">*</span>
+                {t("profile.info.email")}<span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -176,11 +226,9 @@ const Info = () => {
               />
             </div>
           </div>
-
-          {/* Phone */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('profile.info.phone')}
+              {t("profile.info.phone")}
             </label>
             <input
               type="tel"
@@ -190,11 +238,9 @@ const Info = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
             />
           </div>
-
-          {/* Date of Birth */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('profile.info.date')}
+              {t("profile.info.date")}
             </label>
             <input
               type="date"
@@ -204,11 +250,9 @@ const Info = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
             />
           </div>
-
-          {/* Address */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('profile.info.address')}
+              {t("profile.info.address")}
             </label>
             <textarea
               name="address"
@@ -220,13 +264,12 @@ const Info = () => {
           </div>
         </div>
 
-        {/* Save Button */}
         <div className="flex justify-end mt-6">
           <button
             onClick={handleSave}
             className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium transition-all duration-200"
           >
-            {t('profile.info.save')}
+            {t("profile.info.save")}
           </button>
         </div>
       </div>

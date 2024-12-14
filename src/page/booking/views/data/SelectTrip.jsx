@@ -22,7 +22,7 @@ export default function SelectTrip({ data, onContinue }) {
   const handleContinue = () => {
     // Set booking time in localStorage
     const currentDateTime = new Date().toISOString();
-    localStorage.setItem("bookingTime", currentDateTime);
+
 
     if (!profile) {
       message.warning(t('auth.requireLogin'));

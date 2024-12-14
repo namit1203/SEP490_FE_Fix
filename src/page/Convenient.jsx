@@ -25,7 +25,6 @@ const Convenient = () => {
   const [selectedPromotion, setSelectedPromotion] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(profile?.numberPhone || "");
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
@@ -37,9 +36,16 @@ const Convenient = () => {
             },
           }
         );
-
+  
+        // Filter promotions where endDate is greater than or equal to the current date
+        const currentDate = new Date();
+        const validPromotions = data.filter((promo) => {
+          const promoEndDate = new Date(promo.endDate);
+          return promoEndDate >= currentDate;
+        });
+  
         const uniquePromotions = Array.from(
-          new Map(data.map((promo) => [promo.codePromotion, promo])).values()
+          new Map(validPromotions.map((promo) => [promo.codePromotion, promo])).values()
         );
         setPromotions(uniquePromotions);
       } catch (error) {
@@ -47,11 +53,12 @@ const Convenient = () => {
         message.error(t('convenient.messages.loadingError'));
       }
     };
-
+  
     if (checkLoginToken() && profile) {
       fetchPromotions();
     }
   }, [t, profile]);
+  
 
   const handelBookTrip = async () => {
     const token = checkLoginToken();

@@ -231,7 +231,8 @@
       "address": "Địa chỉ",
       "date": "Ngày sinh",
       "changePhoto": "Đổi ảnh đại diện",
-      "save": "Lưu"
+      "save": "Lưu",
+      "updateSuccess":"Cập nhật thành công"
     }
   },
 

@@ -72,8 +72,9 @@ export default function MyOrder() {
       title: t('profile.orders.timeFrom'),
       dataIndex: "timeFrom",
       key: "timeFrom",
-      render: (text) => new Date(text).toLocaleString(), // Format timeFrom
+      render: (text) => new Date(text).toLocaleDateString(), // Chỉ hiển thị ngày
     },
+    
     {
       title: t('profile.orders.action'),
       key: "action",

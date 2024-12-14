@@ -6,7 +6,6 @@ import {
     FaBox,
     FaGift,
     FaCreditCard,
-    FaCommentDots,
     FaPowerOff
 } from 'react-icons/fa';
 
@@ -41,11 +40,7 @@ const ProfileSidebar = () => {
             text: t('changePassword'), 
             path: '/profile/change-pass' 
         },
-        { 
-            icon: <FaCommentDots className="text-xl" />, 
-            text: t('tripReview'), 
-            path: '#' 
-        },
+      
         { 
             icon: <FaPowerOff className="text-xl" />, 
             text: t('logout'), 

@@ -119,8 +119,8 @@ const DetailTicket = () => {
                 />
                 <TicketRow
                   icon={<BsClock />}
-                  label="Giờ đón (dự kiến)"
-                  value={new Date(ticket.timeFrom).toLocaleString()}
+                  label="Ghi chú"
+                  value={ticket.note}
                 />
                 <TicketRow
                   icon={<IoLocationSharp />}
