@@ -191,7 +191,9 @@
       "error": "Đã xảy ra lỗi. Vui lòng thử lại",
       "current": "Mật khẩu hiện tại",
       "new": "Mật khẩu mới",
-      "confirm": "Xác nhận mật khẩu"
+      "confirm": "Xác nhận mật khẩu",
+      "invalid":"Mật khẩu không hợp lệ",
+      "popupMessage":"Mật khẩu phải có ít nhất 8 ký tự, 1 chữ in hoa và ký tự đặc biệt"
     },
     "promotions": {
       "title": "Ưu đãi",
@@ -485,7 +487,8 @@
       "selectedSeat": "Ghế",
       "payment": "Thanh toán",
       "continue": "Tiếp tục"
-    },
+    }
+  },
     "bookingConfirmation": {
       "title": "Xác Nhận Đặt Vé",
       "backToHome": "< Quay lại",
@@ -559,4 +562,3 @@
       "unauthorized": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
     }
   }
-}
