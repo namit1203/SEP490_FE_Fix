@@ -1,0 +1,303 @@
+{
+    "accountInfo": "账户信息",
+    "member": "会员",
+    "regular": "普通",
+    "myOrders": "我的订单",
+    "offers": "我的优惠",
+    "changePassword": "更改密码",
+    "tripReview": "旅行评价",
+    "logout": "登出",
+  
+    "header": {
+      "myOrdersLink": "我的订单",
+      "findSharedRide": "寻找拼车",
+      "profile": "个人资料",
+      "login": "登录"
+    },
+  
+    "home": {
+      "banner": {
+        "title": "在线预订客车票",
+        "subtitle": "全国1000+优质车队",
+        "tabs": {
+          "bus": "客车",
+          "shared": "拼车",
+          "rental": "旅游租车"
+        },
+        "search": {
+          "from": "出发点",
+          "to": "目的地",
+          "date": "出发日期",
+          "fromPlaceholder": "选择出发点",
+          "toPlaceholder": "选择目的地",
+          "searchButton": "搜索车次"
+        }
+      },
+      "features": {
+        "title": "为什么选择我们？",
+        "operators": {
+          "title": "1000+ 优质车队",
+          "description": "覆盖全国范围的优质车队选择"
+        },
+        "booking": {
+          "title": "轻松订票",
+          "description": "几步操作即可快速订票"
+        },
+        "payment": {
+          "title": "安全支付",
+          "description": "多种支付方式，保障绝对安全"
+        },
+        "support": {
+          "title": "24/7 服务",
+          "description": "随时随地为客户提供支持"
+        }
+      },
+      "popularRoutes": {
+        "title": "热门路线",
+        "subtitle": "最受客户信赖的路线",
+        "viewAll": "查看全部",
+        "priceFrom": "起价",
+        "bookButton": "订票",
+        "duration": "时长",
+        "distance": "距离"
+      }
+    },
+  
+    "auth": {
+      "requireLogin": "请登录以使用此功能",
+      "login": {
+        "title": "登录",
+        "username": "用户名",
+        "password": "密码",
+        "submit": "登录",
+        "forgotPassword": "忘记密码？",
+        "noAccount": "还没有账户？",
+        "signUp": "注册",
+        "processing": "处理中...",
+        "usernameRequired": "请输入用户名",
+        "usernamePlaceholder": "输入用户名",
+        "passwordRequired": "请输入密码",
+        "passwordPlaceholder": "输入密码",
+        "success": "登录成功",
+        "error": "发生错误，请重试"
+      },
+      "register": {
+        "title": "注册",
+        "email": "邮箱",
+        "username": "用户名",
+        "password": "密码",
+        "submit": "注册",
+        "hasAccount": "已有账户？",
+        "signIn": "登录",
+        "emailRequired": "请输入邮箱",
+        "usernameRequired": "请输入用户名",
+        "passwordRequired": "请输入密码",
+        "success": "注册成功",
+        "emailPlaceholder": "输入您的邮箱",
+        "usernamePlaceholder": "输入用户名",
+        "passwordPlaceholder": "输入密码",
+        "phonenumber": "电话号码",
+        "phonenumberPlaceholder": "输入电话号码",
+        "phonenumberRequired": "电话号码是必填项",
+        "invalidEmail": "邮箱无效",
+        "dob": "出生日期"
+      },
+      "otp": {
+        "title": "输入OTP验证码",
+        "label": "OTP验证码",
+        "placeholder": "输入OTP验证码",
+        "submit": "确认",
+        "required": "请输入OTP验证码",
+        "success": "验证成功",
+        "error": "OTP验证码错误"
+      },
+      "validation": {
+        "required": "请输入此信息",
+        "invalidEmail": "邮箱无效",
+        "processing": "处理中..."
+      },
+      "forgotPassword": {
+        "title": "忘记密码",
+        "subtitle": "输入您的邮箱，我们将发送密码重置链接",
+        "email": "邮箱地址",
+        "emailPlaceholder": "输入您的邮箱地址",
+        "submit": "发送重置链接",
+        "backToLogin": "返回登录",
+        "success": "密码重置链接已发送至您的邮箱",
+        "error": "发送重置链接时发生错误，请重试",
+        "invalidEmail": "请输入有效的邮箱地址",
+        "notFound": "未找到邮箱地址",
+        "instructions": "检查您的邮箱获取密码重置链接"
+      }
+    },
+  
+    "convenient": {
+      "title": "预订拼车",
+      "service": {
+        "label": "选择服务类型",
+        "shared": "拼车",
+        "private": "专车"
+      },
+      "form": {
+        "startPoint": "出发点",
+        "endPoint": "目的地",
+        "time": "出发时间",
+        "phone": "电话号码",
+        "searchButton": "查看价格",
+        "bookButton": "立即预订"
+      },
+      "price": {
+        "original": "原价",
+        "discounted": "最终价",
+        "currency": "元"
+      },
+      "promotion": {
+        "label": "选择优惠",
+        "placeholder": "选择优惠码",
+        "discount": "优惠 {{percent}}%",
+        "apply": "应用优惠"
+      },
+      "messages": {
+        "loadingError": "无法加载优惠",
+        "priceUpdated": "价格更新成功",
+        "priceError": "无法获取价格",
+        "checkPrice": "请先检查价格",
+        "invalidPromo": "优惠码无效",
+        "promoApplied": "已应用优惠：{{description}}",
+        "noPromo": "未应用任何优惠",
+        "applyFirst": "请先应用优惠",
+        "bookingSuccess": "预订成功！",
+        "bookingError": "预订失败，请重试。"
+      }
+    },
+  
+    "profile": {
+      "rewards": {
+        "loading": "加载中...",
+        "title": "兑换积分",
+        "history": "积分历史",
+        "currentPoints": "您的积分",
+        "points": "积分",
+        "requiredPoints": "所需积分",
+        "exchange": "兑换",
+        "exchangeSuccess": "兑换优惠成功",
+        "close": "关闭",
+        "noPromotions": "暂无可兑换的优惠"
+      },
+      "password": {
+        "tooShort": "密码长度必须大于6个字符",
+        "mismatch": "确认密码不一致",
+        "success": "密码更改成功",
+        "error": "发生错误，请重试",
+        "current": "当前密码",
+        "new": "新密码",
+        "confirm": "确认密码",
+        "invalid": "密码无效",
+        "popupMessage": "密码必须至少包含8个字符、一个大写字母和一个特殊字符"
+      },
+      "promotions": {
+        "title": "优惠",
+        "code": "优惠码",
+        "description": "详情",
+        "discount": "折扣",
+        "validUntil": "有效期",
+        "expired": "已过期",
+        "daysLeft": "天",
+        "action": "操作",
+        "useNow": "立即使用",
+        "endDate": "截止日期"
+      },
+      "orders": {
+        "orderNumber": "票号",
+        "description": "详情",
+        "status": "状态",
+        "action": "操作",
+        "details": "票务详情",
+        "cancel": "取消票务",
+        "cancelTicket": "取消票务",
+        "cancelReasonPlaceholder": "取消原因",
+        "cancelReasonLabel": "取消原因",
+        "cancelClose": "关闭",
+        "confirmCancel": "确认",
+        "timeFrom": "出发日期",
+        "cancelReasonRequired": "请输入取消原因",
+        "cancelTooLate": "已超过允许取消票务的时间"
+      },
+      "info": {
+        "title": "个人信息",
+        "fullName": "姓名",
+        "email": "邮箱",
+        "phone": "电话号码",
+        "address": "地址",
+        "date": "出生日期",
+        "changePhoto": "更换头像",
+        "save": "保存"
+      }
+    },
+  
+    "footer": {
+      "about": "关于我们",
+      "contact": "联系我们",
+      "terms": "条款与条件",
+      "privacy": "隐私政策",
+      "support": "支持"
+    },
+  
+    "carRental": {
+      "title": "租车服务",
+      "subtitle": "为您的旅程预订车辆",
+      "form": {
+        "startLocation": {
+          "label": "上车地点",
+          "placeholder": "输入上车地址"
+        },
+        "endLocation": {
+          "label": "下车地点",
+          "placeholder": "输入下车地址"
+        },
+        "startTime": {
+          "label": "上车时间"
+        },
+        "endTime": {
+          "label": "下车时间"
+        },
+        "carType": {
+          "label": "选择车型（座位数）",
+          "options": {
+            "7": "7座车",
+            "16": "16座车",
+            "29": "29座车",
+            "45": "45座车"
+          }
+        },
+        "bookButton": "立即预订"
+      },
+      "messages": {
+        "success": "成功！我们会尽快与您联系。",
+        "error": "预订失败，请重试！",
+        "timeRequired": "请选择上车和下车时间"
+      },
+      "info": {
+        "title": "为什么选择我们的租车服务？",
+        "features": [
+          {
+            "title": "多样化的车型",
+            "description": "从7座到45座应有尽有"
+          },
+          {
+            "title": "专业司机",
+            "description": "经验丰富、持证上岗的司机"
+          },
+          {
+            "title": "灵活租车时间",
+            "description": "按小时、按天或长期租赁均可"
+          },
+          {
+            "title": "24/7 支持",
+            "description": "随时为客户提供支持"
+          }
+        ]
+      }
+    }
+  }
+  

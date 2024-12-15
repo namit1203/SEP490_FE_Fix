@@ -1,115 +1,224 @@
 import { message } from "antd";
-import React from "react";
+import axios from "axios";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../stores/hooks";
+import { checkLoginToken, getTripDetailId } from "../../../../utils";
 
 export default function OptionTrip({ data }) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [selectedPickup, setSelectedPickup] = useState(null);
+  const [selectedDropoff, setSelectedDropoff] = useState(null);
+  const [listTrip, setListTrip] = useState([]);
+
   const startPointArr = useAppSelector((state) => state.trips?.startPointArr);
   const endPointArr = useAppSelector((state) => state.trips?.endPointArr);
   const countSeat = useAppSelector((state) => state.trips?.countseat);
   const quantity = localStorage.getItem("quantity");
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTripDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://boring-wiles.202-92-7-204.plesk.page/api/TripDetails/tripId?TripId=${data?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${checkLoginToken()}`,
+            },
+          }
+        );
+        setListTrip(response.data);
+      } catch (error) {
+        console.error("API call error:", error.message);
+        message.error("Failed to load trip details");
+      }
+    };
+
+    if (data?.id) {
+      fetchTripDetails();
+    }
+  }, [data?.id]);
 
   const handleTransaction = () => {
-    if (countSeat === 0 || quantity > countSeat) {
-      return message.error("Không còn chỗ trống cho chuyến xe này!");
+    if (!selectedPickup || !selectedDropoff) {
+      message.error(t('booking.optionTrip.errors.selectBoth'));
+      return;
     }
+
+    if (countSeat === 0 || quantity > countSeat) {
+      message.error("No seats available for this trip!");
+      return;
+    }
+
     localStorage.setItem("priceTrip", data?.listVehicle[0]?.price);
-    navigate("/bookingconfirmation/" + data.id);
+    const tripDetailId = getTripDetailId(
+      listTrip,
+      localStorage.getItem("startPoint"),
+      localStorage.getItem("endPoint")
+    );
+    localStorage.setItem("tripId", data?.id);
+    navigate(`/bookingconfirmation/${tripDetailId}`);
   };
+
+  const handlePickupSelect = (item) => {
+    setSelectedPickup(item);
+    localStorage.setItem("startTime", item?.timeStartDetils);
+    localStorage.setItem("startPoint", item?.pointStartDetails);
+  };
+
+  const handleDropoffSelect = (item) => {
+    setSelectedDropoff(item);
+    localStorage.setItem("endTime", item?.timeEndDetails);
+    localStorage.setItem("endPoint", item?.pointEndDetails);
+  };
+
   return (
-    <>
-      <div
-        className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 mt-4"
-        role="alert"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="max-w-4xl mx-auto space-y-6"
+    >
+      {/* Alert Banner */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="bg-green-50 border border-green-200 rounded-lg p-4"
       >
-        <span className="block sm:inline text-sm">
-          An tâm được đón đúng nơi, trả đúng chỗ đã chọn và dễ dàng thay đổi khi
-          cần.
-        </span>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="border p-4 rounded">
-          <h2 className="font-bold mb-2 text-lg">Điểm đón</h2>
-          <div className="text-green-600 text-sm my-2">
-            Cách vị trí của bạn 1.5 km
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <h3 className="font-medium text-green-800">
+              {t('booking.optionTrip.alert.title')}
+            </h3>
+            <p className="text-green-700 text-sm mt-1">
+              {t('booking.optionTrip.alert.message')}
+            </p>
           </div>
-          {startPointArr?.map((item, index) => {
-            return (
-              <div key={index} className="mb-4">
-                <input
-                  type="radio"
-                  id="pickup1"
-                  name="pickup"
-                  className="mr-2"
-                  onChange={(e) => {
-                    localStorage.setItem("startTime", item?.timeStartDetils);
-                    localStorage.setItem("startPoint", item?.pointStartDetails);
-                  }}
-                />
-                <label>
-                  <span className="font-bold">{item?.timeStartDetils}</span> •
-                  <span className="font-semibold text-sm">
-                    {item?.pointStartDetails}
-                  </span>
-                </label>
-                <div className="text-green-600 text-sm my-2">
-                  Cách vị trí của bạn 7.6 km
-                </div>
-              </div>
-            );
-          })}
         </div>
-        <div className="border p-4 rounded">
-          <h2 className="font-bold mb-2 text-lg">Điểm trả</h2>
-          <div className="text-green-600 text-sm my-2">
-            Cách vị trí của bạn 240.1 km
-          </div>
-          {endPointArr?.map((item, index) => {
-            return (
-              <div key={index} className="mb-4">
-                <input
-                  type="radio"
-                  id="pickup2"
-                  name="pickup2"
-                  className="mr-2"
-                  onChange={(e) => {
-                    localStorage.setItem("endTime", item?.timeEndDetails);
-                    localStorage.setItem("endPoint", item?.pointEndDetails);
-                  }}
-                />
-                <label>
-                  <span className="font-bold">{item?.timeEndDetails}</span> •
-                  <span className="font-semibold text-sm">
-                    {item?.pointEndDetails}
-                  </span>
-                </label>
-                <div className="text-green-600 text-sm my-2">
-                  Cách vị trí của bạn 7.6 km
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      </motion.div>
 
-      <div className="flex justify-between mt-4 items-baseline">
-        <span className="text-md font-medium">
-          Ghế: <span className="text-blue-600 text-md">A3</span>
-        </span>
-
-        <span className="text-[rgb(72, 72, 72)] mt-2 text-sm font-medium text-right">
-          Còn {countSeat || 0} chỗ
-        </span>
-
-        <button
-          className="mt-2 px-4 block py-2 bg-blue-400 rounded-none border-none text-sm text-white"
-          onClick={handleTransaction}
+      {/* Points Selection Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Pickup Points */}
+        <motion.section
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
         >
-          Thanh toán
-        </button>
+          <h2 className="text-lg font-bold text-gray-800">
+            {t('booking.optionTrip.pickupPoints.title')}
+          </h2>
+          <div className="space-y-4">
+            {startPointArr?.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className={`p-4 border rounded-lg transition-all duration-200 ${selectedPickup === item
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
+                  }`}
+              >
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="pickup"
+                    className="mt-1"
+                    checked={selectedPickup === item}
+                    onChange={() => handlePickupSelect(item)}
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-medium">{item?.timeStartDetils}</span>
+                      <span className="text-gray-600">•</span>
+                      <span className="text-sm text-gray-800">{item?.pointStartDetails}</span>
+                    </div>
+                    <p className="text-sm text-green-600 mt-2">
+                    
+                    </p>
+                  </div>
+                </label>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Dropoff Points */}
+        <motion.section
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
+        >
+          <h2 className="text-lg font-bold text-gray-800">
+            {t('booking.optionTrip.dropoffPoints.title')}
+          </h2>
+          <div className="space-y-4">
+            {endPointArr?.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className={`p-4 border rounded-lg transition-all duration-200 ${selectedDropoff === item
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
+                  }`}
+              >
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="dropoff"
+                    className="mt-1"
+                    checked={selectedDropoff === item}
+                    onChange={() => handleDropoffSelect(item)}
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-medium">{item?.timeEndDetails}</span>
+                      <span className="text-gray-600">•</span>
+                      <span className="text-sm text-gray-800">{item?.pointEndDetails}</span>
+                    </div>
+                    <p className="text-sm text-green-600 mt-2">
+                    
+                    </p>
+                  </div>
+                </label>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
       </div>
-    </>
+
+      {/* Summary Footer */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100"
+      >
+        <div className="flex items-center gap-4">
+          <div className="text-gray-600">
+            {t('booking.optionTrip.selectedSeat')}:{' '}
+            <span className="text-blue-600 font-medium">A3</span>
+          </div>
+          <div className="text-gray-600 text-sm">
+            {t('booking.optionTrip.seatsAvailable', { count: countSeat || 0 })}
+          </div>
+        </div>
+
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={handleTransaction}
+          className="px-6 py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
+        >
+          {t('booking.optionTrip.payment')}
+        </motion.button>
+      </motion.div>
+    </motion.div>
   );
 }

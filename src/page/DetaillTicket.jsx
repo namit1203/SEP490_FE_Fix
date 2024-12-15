@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { message } from "antd";
+import { motion } from "framer-motion";
 import { checkLoginToken } from "../utils";
+import Header from "./Header";
+import { FaBus } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
+import { BsClock, BsCashCoin } from "react-icons/bs";
+import { MdPayment } from "react-icons/md";
 
-const DetaillTicket = () => {
-  const { id } = useParams(); // Get the ticket ID from the route
+const DetailTicket = () => {
+  const { id } = useParams();
+  const navigate = useNavigate(); // Hook for navigation
   const [ticket, setTicket] = useState(null);
   const [licensePlate, setLicensePlate] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // Fetch ticket details
   useEffect(() => {
     const fetchTicketDetails = async () => {
       try {
@@ -24,7 +31,6 @@ const DetaillTicket = () => {
         setTicket(data);
 
         if (data.vehicleId) {
-          // Fetch vehicle details
           const vehicleResponse = await axios.get(
             `https://boring-wiles.202-92-7-204.plesk.page/api/Vehicle/getInforVehicle/${data.vehicleId}`,
             {
@@ -34,222 +40,146 @@ const DetaillTicket = () => {
             }
           );
           setLicensePlate(vehicleResponse.data.licensePlate);
+          setDescription(vehicleResponse.data.description);
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching ticket details:", error);
-        message.error("Không thể tải thông tin vé.");
+        setLoading(false);
       }
     };
 
     fetchTicketDetails();
   }, [id]);
 
-  if (!ticket) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+      </div>
+    );
   }
 
-  const paymentStatus =
-    ticket.typeOfPayment === 1 ? "Đã thanh toán" : "Chưa thanh toán";
+  if (!ticket) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-red-500">
+        Không tìm thấy thông tin vé
+      </div>
+    );
+  }
 
   return (
-    <div style={{ backgroundColor: "#1365af", padding: "15px 5px 15px" }}>
-      <div
-        style={{
-          maxWidth: 600,
-          margin: "0 auto",
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        <div style={{ backgroundColor: "#fff" }}>
-          <div
-            style={{
-              padding: "10px 25px",
-              fontFamily: "Arial, sans-serif",
-              fontSize: 14,
-              lineHeight: 24,
-            }}
-          >
-            <div
-              style={{
-                border: "1px solid #1e62a3",
-                borderRadius: 5,
-                width: "100%",
-              }}
-            >
-              <div
-                style={{
-                  borderTopLeftRadius: 5,
-                  borderTopRightRadius: 5,
-                  backgroundColor: "#1d65b1",
-                  width: "100%",
-                }}
-              >
-                <table style={{ width: "100%" }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: "100%" }}>
-                        <div style={{ float: "left", padding: 5 }}>
-                          <img
-                            src="https://static.vexere.com/images/logo.jpg"
-                            alt="vexere.com"
-                            height="40px"
-                          />
-                        </div>
-                        <div
-                          style={{
-                            float: "right",
-                            width: 240,
-                            color: "#ffffff",
-                            fontSize: "1.2em",
-                            fontWeight: "bold",
-                            textAlign: "right",
-                            padding: "10px 5px",
-                          }}
-                        >
-                          <span>MÃ VÉ:</span>{" "}
-                          <span style={{ color: "#fdb813" }}>{id}</span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div style={{ backgroundColor: "#fff", paddingBottom: 15 }}>
-                <div style={{ paddingLeft: 15, paddingRight: 15 }}>
-                  <h3
-                    style={{
-                      fontSize: "1.7em",
-                      color: "#1e62a3",
-                      textAlign: "center",
-                      margin: "10px 0",
-                    }}
-                  >
-                    Thông tin vé xe
-                  </h3>
-                  <table
-                    style={{
-                      width: "100%",
-                      verticalAlign: "text-top",
-                      fontSize: 13,
-                      color: "#000",
-                      lineHeight: 20,
-                      fontFamily: "Arial, sans-serif",
-                    }}
-                  >
-                    <tbody>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>Hãng xe:</td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          <b>Phúc Lộc Thọ Limousine</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>Điểm đón:</td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          <b>{ticket.pointStart}</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>
-                          Giờ đón (dự kiến):
-                        </td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          <b>{new Date(ticket.timeFrom).toLocaleString()}</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>Điểm trả:</td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          <b>{ticket.pointEnd}</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>Tuyến:</td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          <b>{ticket.description}</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>Ghi chú:</td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          {ticket.note}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>
-                          Biển số xe:
-                        </td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          {licensePlate || "Đang tải..."}
-                        </td>
-                      </tr>
-                      <tr style={{ fontSize: 16, fontWeight: "bold" }}>
-                        <td
-                          style={{
-                            width: "35%",
-                            padding: "10px 5px",
-                            color: "#1e62a3",
-                          }}
-                        >
-                          Tổng tiền:
-                        </td>
-                        <td
-                          style={{
-                            width: "65%",
-                            padding: "10px 5px",
-                            color: "#fd8017",
-                          }}
-                        >
-                          {ticket.pricePromotion.toLocaleString()} VND
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={{ width: "35%", padding: 5 }}>
-                          Trạng thái thanh toán:
-                        </td>
-                        <td style={{ width: "65%", padding: 5 }}>
-                          {paymentStatus}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 mt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-2xl mx-auto"
+        >
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6">
+              <div className="flex justify-between items-center">
+                <img
+                  src="https://i.imgur.com/uoIrR3w.png"
+                  className="w-16 h-auto"
+                  alt="Logo"
+                />
+                <div className="text-white">
+                  <span className="text-sm">MÃ VÉ:</span>
+                  <span className="ml-2 font-bold text-yellow-300">{id}</span>
                 </div>
               </div>
-              <div
-                style={{
-                  backgroundColor: "#1d65b1",
-                  color: "#ffffff",
-                  lineHeight: 24,
-                  padding: "5px 15px",
-                  borderBottomLeftRadius: 5,
-                  borderBottomRightRadius: 5,
-                  fontSize: 12,
-                }}
+            </div>
+
+            {/* Nút Quay lại */}
+            <div className="p-4">
+              <button
+                onClick={() => navigate("/profile/my-order")}
+                className="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600"
               >
-                <table style={{ width: "100%" }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: "100%", color: "#fff" }}>
-                        <div style={{ float: "left" }}>
-                          <span>Hotline: 1900 969681</span>
-                        </div>
-                        <div style={{ float: "right" }}>
-                          <span>
-                            E-Ticket - Vexere.com (
-                            {new Date().toLocaleString()})
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                Quay lại
+              </button>
+            </div>
+
+            {/* Ticket Content */}
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-center text-orange-600 mb-6">
+                Thông tin vé xe
+              </h2>
+
+              <div className="space-y-4">
+                <TicketRow icon={<FaBus />} label="Hãng xe" value={description} />
+                <TicketRow
+                  icon={<IoLocationSharp />}
+                  label="Điểm đón"
+                  value={ticket.pointStart}
+                />
+                <TicketRow
+                  icon={<BsClock />}
+                  label="Ghi chú"
+                  value={ticket.note}
+                />
+                <TicketRow
+                  icon={<IoLocationSharp />}
+                  label="Điểm trả"
+                  value={ticket.pointEnd}
+                />
+                <TicketRow
+                  icon={<FaBus />}
+                  label="Tuyến"
+                  value={ticket.description}
+                />
+                <TicketRow icon={<FaBus />} label="Biển số xe" value={licensePlate} />
+                <TicketRow
+                  icon={<BsCashCoin />}
+                  label="Tổng tiền"
+                  value={`${ticket.pricePromotion.toLocaleString()} VND`}
+                  highlight
+                />
+                <TicketRow
+                  icon={<MdPayment />}
+                  label="Trạng thái thanh toán"
+                  value={ticket.status}
+                />
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-orange-500 p-4 text-white text-sm">
+              <div className="flex justify-between items-center">
+                <span>Hotline: 1900 xxxx</span>
+                <span>E-Ticket ({new Date().toLocaleString()})</span>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default DetaillTicket;
+const TicketRow = ({ icon, label, value, highlight = false }) => (
+  <motion.div
+    whileHover={{ scale: 1.01 }}
+    className={`flex items-center space-x-3 p-3 rounded-lg ${
+      highlight ? "bg-orange-50" : "hover:bg-gray-50"
+    }`}
+  >
+    <span className="text-orange-500 text-xl">{icon}</span>
+    <div className="flex-1">
+      <span className="text-gray-600">{label}:</span>
+      <span
+        className={`ml-2 font-medium ${
+          highlight ? "text-orange-600" : "text-gray-900"
+        }`}
+      >
+        {value || "Đang tải..."}
+      </span>
+    </div>
+  </motion.div>
+);
+
+export default DetailTicket;

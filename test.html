@@ -3,35 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test API</title>
+    <title>Test API Upload Image with Auth</title>
 </head>
 <body>
-    <h1>Test API</h1>
-    <button id="testApiBtn">Test API</button>
-    <pre id="response"></pre>
+    <h1>Test API Upload Image</h1>
+    <form id="uploadForm">
+        <label for="fileInput">Choose an image to upload:</label><br>
+        <input type="file" id="fileInput" name="file" accept="image/*" required><br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="response"></div>
 
     <script>
-        document.getElementById('testApiBtn').addEventListener('click', async () => {
-            const url = 'https://boring-wiles.202-92-7-204.plesk.page/api/Vehicle/getNumberSeatAvaiable/292';
-            const responseContainer = document.getElementById('response');
+        const form = document.getElementById('uploadForm');
+        const responseDiv = document.getElementById('response');
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImR1Y2xpbmg1MTIwMDJAZ21haWwuY29tIiwiSUQiOiIyIiwicm9sZSI6IlN0YWZmIiwibmJmIjoxNzM0MTc3NDQ1LCJleHAiOjE3MzQyNjM4NDUsImlhdCI6MTczNDE3NzQ0NSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MTI0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAzIn0.FijCoOKjJ3fu4nHTpMAwl8xjPLgQHPrYlEqf4cBFTFo";
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Ngăn tải lại trang
+            const fileInput = document.getElementById('fileInput');
+
+            if (!fileInput.files[0]) {
+                alert('Please select a file before uploading.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]); // Sử dụng 'file' thay vì 'image'
 
             try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    credentials: 'include', // Include cookies
+                const response = await fetch('https://boring-wiles.202-92-7-204.plesk.page/api/UploadImage/image', {
+                    method: 'POST',
                     headers: {
-                        'Cookie': '.AspNetCore.CfDJ8ENWFa38Yj5EujJAputLhEOIcyvttG1%2Fu7OAoyOLqSQE0sPvF8Vyfr54Y7RBeItnvoBjZTu3xKMwHCbsUo1AnlLj2LHHxl1C%2Ftiwao41%2Box7bShDOyAcsCtfAac1pT%2BVaAzyMb%2FHXRl%2FADQ1yiz4BrrOheyaUeVH1Of7kZqPAyF2'
-                    }
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                responseContainer.textContent = JSON.stringify(data, null, 2);
+                const result = await response.json();
+                responseDiv.innerHTML = `<p>Response:</p><pre>${JSON.stringify(result, null, 2)}</pre>`;
             } catch (error) {
-                responseContainer.textContent = `Error: ${error.message}`;
+                console.error('Error uploading file:', error);
+                responseDiv.innerHTML = `<p style="color: red;">Error uploading file: ${error.message}</p>`;
             }
         });
     </script>

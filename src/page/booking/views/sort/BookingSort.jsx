@@ -1,25 +1,27 @@
-import React from "react";
+import { useTranslation } from 'react-i18next';
+import { Radio, Space } from 'antd';
 
-export default function BookingSort({ options }) {
+export default function BookingSort({ options, selectedOption, onSortChange }) {
+  const { t } = useTranslation();
+
   return (
-    <>
-      <div className="w-full gap-4 flex flex-col">
-        <p className="font-bold text-lg leading-6 mb-0">Sắp xếp</p>
-      </div>
-      <div className="flex flex-col gap-4">
-        {options.map((option) => (
-          <label key={option.id} className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="sorting"
-              className="w-5 h-5 accent-blue-600 cursor-pointer"
-            />
-            <span className="text-sm leading-5 font-semibold">
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold text-gray-900">
+        {t('booking.sort.title')}
+      </h3>
+      <Radio.Group 
+        value={selectedOption} 
+        onChange={(e) => onSortChange(e.target.value)}
+        className="flex flex-col gap-3"
+      >
+        <Space direction="vertical">
+          {options.map((option) => (
+            <Radio key={option.id} value={option.id}>
               {option.label}
-            </span>
-          </label>
-        ))}
-      </div>
-    </>
+            </Radio>
+          ))}
+        </Space>
+      </Radio.Group>
+    </div>
   );
 }

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import PlaneIcons from "../../../components/icons/plane";
-import StationIcons from "../../../components/icons/station";
+import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import TripIcons from "../../../components/icons/trip";
 
 export default function NavBooking() {
+  const { t } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const menuItems = [
-    { icon: <TripIcons />, label: "Xe khách" },
-    
+    { icon: <TripIcons />, label: t('booking.nav.bus') },
   ];
 
   const handleClick = (index) => {
@@ -16,29 +15,25 @@ export default function NavBooking() {
   };
 
   return (
-    <div className="flex justify-center w-full border-b border-b-[#e2e2e2] border-solid">
-      {menuItems.map((item, index) => (
-        <div
-          key={index}
-          onClick={() => handleClick(index)}
-          className={`h-auto pt-5 pb-3.5 px-6 flex justify-center items-center flex-row gap-2 cursor-pointer border-b-2 border-transparent ${
-            selectedIndex === index
-              ? "border-b-2 border-b-[rgb(36,116,229)] border-solid"
-              : ""
-          }`}
-        >
-          {item.icon}
-          <span
-            className={`text-base leading-6 ${
-              selectedIndex === index
-                ? "text-[rgb(36,116,229)] , font-bold"
-                : ""
-            }`}
+    <nav className="border-b border-gray-200">
+      <div className="flex justify-center">
+        {menuItems.map((item, index) => (
+          <button
+            key={index}
+            onClick={() => handleClick(index)}
+            className={`
+              flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors
+              ${selectedIndex === index 
+                ? 'text-blue-600 border-b-2 border-blue-600' 
+                : 'text-gray-500 hover:text-gray-700'
+              }
+            `}
           >
-            {item.label}
-          </span>
-        </div>
-      ))}
-    </div>
+            {item.icon}
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 }

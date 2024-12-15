@@ -68,10 +68,53 @@ const getCountSeatDetailsById = createAsyncThunk(
   }
 );
 
+const submitReview = createAsyncThunk(
+  "trip/submitReview",
+  async ({ description, tripId }, { rejectWithValue }) => {
+    const url = `https://boring-wiles.202-92-7-204.plesk.page/api/Review`;
+    
+    try {
+      const token = localStorage.getItem('token'); // Get auth token from localStorage
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Add auth header
+        },
+        body: JSON.stringify({
+          description,
+          tripId
+        })
+      });
+
+      if (response.status === 401) {
+        return rejectWithValue({
+          status: 401,
+          message: 'Unauthorized access. Please login again.'
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        status: error.status || 500,
+        message: error.message || 'Something went wrong'
+      });
+    }
+  }
+);
+
 export {
   getEndTripDetailsById,
   getStartTripDetailsById,
   getTripDetailsById,
   searchTrip,
   getCountSeatDetailsById,
+  submitReview,
 };

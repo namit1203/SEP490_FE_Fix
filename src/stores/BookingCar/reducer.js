@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getCountSeatDetailsById,
   getEndTripDetailsById,
   getStartTripDetailsById,
   getTripDetailsById,
   searchTrip,
-  getCountSeatDetailsById,
 } from "./action";
 
 const bookingSlice = createSlice({
@@ -18,8 +18,8 @@ const bookingSlice = createSlice({
     loading: false,
     error: null,
     startPoint: "Hà Nội",
-    endPoint: "Bắc Giang",
-    time: '2024-11-12',
+    endPoint: "",
+    time: "2024-11-12",
     startPointArr: [],
     endPointArr: [],
     countseat: 0,

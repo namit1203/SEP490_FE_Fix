@@ -1,8 +1,10 @@
 import { Input } from "antd";
-import React, { useState } from "react";
-import DropdownIcons from "../../../../../components/icons/dropdown";
+import { useState } from "react";
+import { useTranslation } from 'react-i18next';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 export default function GarageFilter() {
+  const { t } = useTranslation();
   const garageOptions = [
     { id: 1, name: "Xe khách A" },
     { id: 2, name: "Xe khách B" },
@@ -10,7 +12,7 @@ export default function GarageFilter() {
     { id: 4, name: "Xe khách D" },
   ];
 
-  const [isGarageVisible, setIsGarageVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredGarages, setFilteredGarages] = useState(garageOptions);
   const [selectedGarages, setSelectedGarages] = useState([]);
@@ -26,57 +28,61 @@ export default function GarageFilter() {
   };
 
   const handleGarageSelect = (garage) => {
-    if (selectedGarages.some((item) => item.id === garage.id)) {
-      setSelectedGarages((prev) =>
-        prev.filter((item) => item.id !== garage.id)
-      );
-    } else {
-      setSelectedGarages((prev) => [...prev, garage]);
-    }
+    setSelectedGarages(prev =>
+      prev.some(item => item.id === garage.id)
+        ? prev.filter(item => item.id !== garage.id)
+        : [...prev, garage]
+    );
   };
 
   return (
-    <div className="pb-4 border-b-[rgb(224,224,224)] border-b border-solid">
-      <div
-        className="flex justify-between cursor-pointer"
-        onClick={() => setIsGarageVisible((prev) => !prev)}
+    <div className="py-4">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="flex items-center justify-between w-full group"
       >
-        <p className="text-base leading-5 font-bold mb-0">Nhà xe</p>
-        <DropdownIcons />
-      </div>
+        <h4 className="text-base font-semibold text-gray-900 group-hover:text-gray-700">
+          {t('booking.filter.operator.title')}
+        </h4>
+        {isExpanded ? (
+          <FiChevronUp className="w-5 h-5 text-gray-500" />
+        ) : (
+          <FiChevronDown className="w-5 h-5 text-gray-500" />
+        )}
+      </button>
 
-      {isGarageVisible && (
-        <div className="flex flex-col gap-4 mt-4">
-          {/* Input tìm kiếm */}
+      {isExpanded && (
+        <div className="mt-4 space-y-4">
           <Input
-            placeholder="Tìm kiếm nhà xe"
-            className="w-full"
+            placeholder={t('booking.filter.operator.searchPlaceholder')}
             value={searchTerm}
             onChange={handleSearch}
+            className="w-full"
           />
 
-          {/* Danh sách nhà xe */}
-          <ul className="bg-white border rounded-lg shadow-lg max-h-48 overflow-y-auto">
+          <div className="max-h-48 overflow-y-auto rounded-md border border-gray-200">
             {filteredGarages.length > 0 ? (
-              filteredGarages.map((garage) => (
-                <li
-                  key={garage.id}
-                  className={`px-4 py-2 cursor-pointer hover:bg-gray-200 ${
-                    selectedGarages.some((item) => item.id === garage.id)
-                      ? "bg-blue-100 font-bold"
-                      : ""
-                  }`}
-                  onClick={() => handleGarageSelect(garage)}
-                >
-                  <span className="text-gray-800 text-sm font-medium">
+              <div className="divide-y divide-gray-200">
+                {filteredGarages.map((garage) => (
+                  <button
+                    key={garage.id}
+                    onClick={() => handleGarageSelect(garage)}
+                    className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors ${
+                      selectedGarages.some(item => item.id === garage.id)
+                        ? 'bg-blue-50 text-blue-700 font-medium'
+                        : 'text-gray-700'
+                    }`}
+                  >
                     {garage.name}
-                  </span>
-                </li>
-              ))
+                  </button>
+                ))}
+              </div>
             ) : (
-              <li className="px-4 py-2 text-gray-500">Không tìm thấy nhà xe</li>
+              <div className="px-4 py-2 text-sm text-gray-500">
+                {t('booking.filter.operator.noResults')}
+              </div>
             )}
-          </ul>
+          </div>
         </div>
       )}
     </div>
