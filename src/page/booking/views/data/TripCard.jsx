@@ -182,10 +182,7 @@ export const TripCard = ({
                   />
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <div className="flex items-center">
-                    <FiStar className="w-4 h-4 text-yellow-400" />
-                    <span className="text-sm text-gray-600 ml-1">4.8</span>
-                  </div>
+               
                   <span className="text-sm text-gray-400">•</span>
                   <span className="text-sm text-gray-600">
                     {data?.listVehicle[0]?.numberSeat} {t('booking.tripCard.seats')}

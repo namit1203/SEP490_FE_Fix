@@ -1,7 +1,7 @@
 {
   "accountInfo": "Thông tin tài khoản",
   "member": "Thành viên",
-  "regular": "Thường",
+  "regular": "",
   "myOrders": "Đơn hàng của tôi",
   "offers": "Ưu đãi của tôi",
   "changePassword": "Đổi mật khẩu",
@@ -232,7 +232,8 @@
       "date": "Ngày sinh",
       "changePhoto": "Đổi ảnh đại diện",
       "save": "Lưu",
-      "updateSuccess":"Cập nhật thành công"
+      "updateSuccess":"Cập nhật thành công",
+      "uploadSuccess":"Tải lên thành công"
     }
   },
 
@@ -518,12 +519,15 @@
         "title": "Thông tin chuyến đi",
         "departureTime": "Giờ khởi hành",
         "arrivalTime": "Giờ đến",
+        "startPoint":"Điểm đón",
+        "endPoint":"Điểm trả",
         "price": "Giá vé",
         "quantity": "Số lượng",
         "total": "Tổng cộng",
         "currency": "đ",
         "discount": "Giảm giá",
-        "originalPrice": "Giá gốc"
+        "originalPrice": "Giá gốc",
+        "startTime":"Giờ khởi hành"
       },
       "promotions": {
         "title": "Khuyến mãi có sẵn",

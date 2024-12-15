@@ -277,37 +277,62 @@ const Bookingconfirmation = () => {
     </motion.div>
   );
 
-  const renderTripInfo = () => (
-    <div className="space-y-4">
-      <div className="flex justify-between text-gray-600">
-        <span>{t("bookingConfirmation.tripInfo.price")}:</span>
-        <span>{localStorage.getItem("priceTrip")}đ</span>
-      </div>
-      <div className="flex justify-between text-gray-600">
-        <span>{t("bookingConfirmation.tripInfo.quantity")}:</span>
-        <span>x {quantity}</span>
-      </div>
-      {checkSelectPromtion && (
-        <div className="flex justify-between text-green-600">
-          <span>{t("bookingConfirmation.tripInfo.discount")}:</span>
-          <span>
-            {(() => {
-              const selectedPromo = promotion.find(p => p.codePromotion === checkSelectPromtion);
-              const discount = selectedPromo?.discount;
-              if (discount > 100) {
-                return `-${discount.toLocaleString()}đ`;
-              }
-              return `-${discount}%`;
-            })()}
-          </span>
+  const renderTripInfo = () => {
+    const startTime = localStorage.getItem("startTime") || "N/A";
+    const startPoint = localStorage.getItem("startPoint") || "N/A";
+    const endPoint = localStorage.getItem("endPoint") || "N/A";
+  
+    // Helper function to format currency
+    const formatCurrency = (amount) => {
+      return new Intl.NumberFormat('vi-VN').format(amount);
+    };
+  
+    return (
+      <div className="space-y-4">
+        <div className="flex justify-between text-gray-600">
+          <span>{t("bookingConfirmation.tripInfo.startTime")}:</span>
+          <span>{startTime}</span>
         </div>
-      )}
-      <div className="flex justify-between font-semibold text-lg mt-2">
-        <span>{t("bookingConfirmation.tripInfo.total")}:</span>
-        <span>{(discountedPrice || totalPrice).toLocaleString()}đ</span>
+        <div className="flex justify-between text-gray-600">
+          <span>{t("bookingConfirmation.tripInfo.startPoint")}:</span>
+          <span>{startPoint}</span>
+        </div>
+        <div className="flex justify-between text-gray-600">
+          <span>{t("bookingConfirmation.tripInfo.endPoint")}:</span>
+          <span>{endPoint}</span>
+        </div>
+        <div className="flex justify-between text-gray-600">
+          <span>{t("bookingConfirmation.tripInfo.price")}:</span>
+          <span>{formatCurrency(localStorage.getItem("priceTrip"))}đ</span>
+        </div>
+        <div className="flex justify-between text-gray-600">
+          <span>{t("bookingConfirmation.tripInfo.quantity")}:</span>
+          <span>x {quantity}</span>
+        </div>
+        {checkSelectPromtion && (
+          <div className="flex justify-between text-green-600">
+            <span>{t("bookingConfirmation.tripInfo.discount")}:</span>
+            <span>
+              {(() => {
+                const selectedPromo = promotion.find(p => p.codePromotion === checkSelectPromtion);
+                const discount = selectedPromo?.discount;
+                if (discount > 100) {
+                  return `-${formatCurrency(discount)}đ`;
+                }
+                return `-${discount}%`;
+              })()}
+            </span>
+          </div>
+        )}
+        <div className="flex justify-between font-semibold text-lg mt-2">
+          <span>{t("bookingConfirmation.tripInfo.total")}:</span>
+          <span>{formatCurrency(discountedPrice || totalPrice)}đ</span>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+  
+  
 
   // Add handlePaymentChange function
   const handlePaymentChange = useCallback((e) => {

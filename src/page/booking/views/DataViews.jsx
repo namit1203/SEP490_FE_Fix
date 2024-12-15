@@ -76,7 +76,6 @@ export default function DataViews() {
     { id: 1, label: t('booking.sort.default') },
     { id: 2, label: t('booking.sort.earliestDeparture') },
     { id: 3, label: t('booking.sort.latestDeparture') },
-    { id: 4, label: t('booking.sort.highestRating') },
     { id: 5, label: t('booking.sort.priceAscending') },
     { id: 6, label: t('booking.sort.priceDescending') },
   ];
