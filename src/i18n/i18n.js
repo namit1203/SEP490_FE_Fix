@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslations from './locales/en.json';
 import viTranslations from './locales/vi.json';
+import cnTranslations from './locales/cn.json'; // Import the Chinese translations
 
 i18n
   .use(LanguageDetector)
@@ -14,6 +15,9 @@ i18n
       },
       vi: {
         translation: viTranslations
+      },
+      cn: { // Add Chinese translations
+        translation: cnTranslations
       }
     },
     fallbackLng: 'en',
@@ -28,4 +32,4 @@ i18n
     }
   });
 
-export default i18n; 
+export default i18n;

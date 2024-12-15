@@ -39,6 +39,7 @@ const Bookingconfirmation = () => {
   const [randomCode, setRandomCode] = useState(null);
   const [checkSelectPromtion, setCheckSelectPromtion] = useState(null);
   const [checkQr, setCheckQr] = useState(false);
+  const [isBooking, setIsBooking] = useState(false); 
   const [selectedPayment, setSelectedPayment] = useState("");
   const [totalPrice] = useState(() => {
     const basePrice = Number(localStorage.getItem("priceTrip")) || 0;
@@ -102,27 +103,35 @@ const Bookingconfirmation = () => {
 
   // Handle booking
   const handelBookTrip = async () => {
+    if (isBooking) return; // Prevent multiple clicks
+    setIsBooking(true); // Disable the button after the first click
+  
     try {
       if (!selectedPayment) {
-        return message.error(t("bookingConfirmation.errors.selectPayment"));
+        message.error(t("bookingConfirmation.errors.selectPayment"));
+        setIsBooking(false); // Re-enable button on error
+        return;
       }
-
+  
       if (selectedPayment === "pay-on-bus" && Number(quantity) > 1) {
-        return message.error(t("bookingConfirmation.errors.payOnBusLimit"));
+        message.error(t("bookingConfirmation.errors.payOnBusLimit"));
+        setIsBooking(false); // Re-enable button on error
+        return;
       }
-
+  
       const storedBookingTime = localStorage.getItem("bookingTime");
       if (!storedBookingTime) {
-        return message.error(t("bookingConfirmation.errors.noBookingTime"));
+        message.error(t("bookingConfirmation.errors.noBookingTime"));
+        setIsBooking(false); // Re-enable button on error
+        return;
       }
-
+  
       const bookingDate = storedBookingTime.split("T")[0];
       const randomCodeGenerated = Math.floor(100000 + Math.random() * 900000).toString();
       setRandomCode(randomCodeGenerated);
-
-      // Construct the API endpoint with query parameters
+  
       const apiUrl = `https://boring-wiles.202-92-7-204.plesk.page/api/Ticket/bookTicket/${id}/${bookingDate}?numberTicket=${quantity}${checkSelectPromtion ? `&promotionCode=${checkSelectPromtion}` : ''}`;
-
+  
       const response = await axios.post(
         apiUrl,
         {
@@ -135,18 +144,20 @@ const Bookingconfirmation = () => {
           },
         }
       );
-
+  
       setTicketId(response.data.ticketId);
-
+  
       if (selectedPayment === "pay-on-bus") {
         message.success(t("bookingConfirmation.messages.payOnBusConfirmed"));
-        return navigate(`/ticket-detail/${response.data.ticketId}`);
+        navigate(`/ticket-detail/${response.data.ticketId}`);
+      } else {
+        setCheckQr(true);
       }
-
-      setCheckQr(true);
     } catch (error) {
       console.error("Booking error:", error);
       message.error(t("bookingConfirmation.errors.generic"));
+    } finally {
+      setIsBooking(false); // Re-enable button after completion
     }
   };
 
@@ -532,12 +543,16 @@ const Bookingconfirmation = () => {
             </div>
 
             <button
-              onClick={handelBookTrip}
-              className="w-full py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center"
-            >
-              <FiCreditCard className="mr-2" />
-              {t("booking.selectTrip.summary.bookButton")}
-            </button>
+  onClick={handelBookTrip}
+  className={`w-full py-4 text-white rounded-lg transition-colors flex items-center justify-center ${
+    isBooking ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+  }`}
+  disabled={isBooking} // Disable the button while booking is in progress
+>
+  <FiCreditCard className="mr-2" />
+  {t("booking.selectTrip.summary.bookButton")}
+</button>
+
           </motion.div>
         )}
       </div>
