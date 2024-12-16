@@ -152,7 +152,10 @@ const Info = () => {
       if (response.ok) {
         // Kiểm tra nội dung phản hồi
         if (text.includes("Update user profile successful")) {
-          message.success(t("profile.info.updateSuccess")); // Hiển thị thông báo thành công
+          message.success(t("profile.info.updateSuccess")); 
+          setTimeout(() => {
+            window.location.reload(); // Reload lại trang sau khi lưu thành công
+          }, 1000);// Hiển thị thông báo thành công
         } else {
           message.success(text); // Hiển thị thông báo khác nếu không khớp
         }
