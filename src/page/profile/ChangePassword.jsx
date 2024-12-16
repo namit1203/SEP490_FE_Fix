@@ -21,7 +21,7 @@ const ChangePassword = () => {
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_])[A-Za-z\d!@#$%^&*()_]{7,}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[~!@#$%^&*]).{6,}$/;
 
   const currentEmail = profile?.email || localStorage.getItem("email"); // Lấy email từ profile hoặc localStorage
 

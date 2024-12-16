@@ -194,7 +194,7 @@
       "new": "Mật khẩu mới",
       "confirm": "Xác nhận mật khẩu",
       "invalid":"Mật khẩu không hợp lệ",
-      "popupMessage":"Mật khẩu phải có ít nhất 8 ký tự, 1 chữ in hoa và ký tự đặc biệt"
+      "popupMessage":"Mật khẩu phải có ít nhất 6 ký tự, 1 chữ in hoa và ký tự đặc biệt"
     },
     "promotions": {
       "title": "Ưu đãi",
