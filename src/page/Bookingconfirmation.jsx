@@ -356,26 +356,38 @@ const Bookingconfirmation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {checkQr ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6"
-          >
-            <div className="space-y-6">
-              <CountdownTimer />
-              <img
-                src={getImgSrc()?.url}
-                className="w-full rounded-lg"
-                alt={t("bookingConfirmation.payment.qrCode.title")}
-              />
-              <button
-                onClick={handelTranferQr}
-                className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
-              >
-                <FiCreditCard />
-                <span>{t("bookingConfirmation.qrPayment.transferButton")}</span>
-              </button>
-            </div>
-          </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6"
+>
+  <div className="space-y-6">
+    <div className="border border-green-200 bg-green-50 rounded-lg p-4 flex items-center justify-between">
+      <div>
+        <h4 className="text-lg font-semibold text-green-800">
+          {t("bookingConfirmation.payment.timeoutTitle")}
+        </h4>
+
+      </div>
+      <div className="text-green-700 text-2xl font-bold">
+        <CountdownTimer />
+      </div>
+    </div>
+
+    <img
+      src={getImgSrc()?.url}
+      className="w-full rounded-lg"
+      alt={t("bookingConfirmation.payment.qrCode.title")}
+    />
+    <button
+      onClick={handelTranferQr}
+      className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+    >
+      <FiCreditCard />
+      <span>{t("bookingConfirmation.qrPayment.transferButton")}</span>
+    </button>
+  </div>
+</motion.div>
+
         ) : (
           <motion.div
             initial={{ opacity: 0 }}

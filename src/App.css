@@ -1877,11 +1877,6 @@ body {
   --overlay-opacity: 0.5;
 }
 
-.elementor-38 .elementor-element.elementor-element-f934864:not(.elementor-motion-effects-element-type-background), .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-  background-image: url("https://vexere.com/vn/thue-xe/wp-content/uploads/2022/07/Thue-xe-Limousine-Phan-Thiet-Mui-Ne2.jpg");
-  background-position: center center;
-  background-size: cover;
-}
 
 .elementor-38 .elementor-element.elementor-element-f934864::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-background-video-container::before, .elementor-38 .elementor-element.elementor-element-f934864 > .e-con-inner > .elementor-background-video-container::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-background-slideshow::before, .elementor-38 .elementor-element.elementor-element-f934864 > .e-con-inner > .elementor-background-slideshow::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-motion-effects-container > .elementor-motion-effects-layer::before {
   --background-overlay: '';
@@ -3283,11 +3278,6 @@ h1.entry-title {
   --overlay-opacity: 0.5;
 }
 
-.elementor-38 .elementor-element.elementor-element-f934864:not(.elementor-motion-effects-element-type-background), .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-  background-image: url("https://vexere.com/vn/thue-xe/wp-content/uploads/2022/07/Thue-xe-Limousine-Phan-Thiet-Mui-Ne2.jpg");
-  background-position: center center;
-  background-size: cover;
-}
 
 .elementor-38 .elementor-element.elementor-element-f934864::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-background-video-container::before, .elementor-38 .elementor-element.elementor-element-f934864 > .e-con-inner > .elementor-background-video-container::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-background-slideshow::before, .elementor-38 .elementor-element.elementor-element-f934864 > .e-con-inner > .elementor-background-slideshow::before, .elementor-38 .elementor-element.elementor-element-f934864 > .elementor-motion-effects-container > .elementor-motion-effects-layer::before {
   --background-overlay: '';

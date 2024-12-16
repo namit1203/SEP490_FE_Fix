@@ -12,12 +12,12 @@ export const ImageGallery = () => {
 
   // Sample images array - replace with actual data from props
   const images = [
-    "https://static.vexere.com/production/images/1592301219051.jpeg",
-    "https://static.vexere.com/production/images/1592301219051.jpeg",
-    "https://static.vexere.com/production/images/1592301219051.jpeg",
-    "https://static.vexere.com/production/images/1592301219051.jpeg",
-    "https://static.vexere.com/production/images/1592301219051.jpeg",
-    "https://static.vexere.com/production/images/1592301219051.jpeg"
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg",
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg",
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg",
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg",
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg",
+    "https://xelimou.vn/wp-content/uploads/2024/07/xe-nha-nam-gia-lam-2.jpg"
   ];
 
   const handlePrevious = useCallback(() => {

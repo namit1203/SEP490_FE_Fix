@@ -101,6 +101,8 @@
       "phonenumberPlaceholder": "Nhập số điện thoại",
       "phonenumberRequired": "Số điện thoại là bắt buộc",
       "invalidEmail": "Email không hợp lệ",
+      "passwordValidate": "Mật khẩu phải dài ít nhất 8 ký tự, chứa ít nhất 1 chữ hoa và 1 ký tự đặc biệt (~!@#$%^&*).",
+      "phonenumberValidate": "Số điện thoại phải đủ 10 chữ số",
       "dob": "Ngày sinh"
     },
     "otp": {
@@ -222,7 +224,8 @@
       "confirmCancel": "Xác nhận",
       "timeFrom": "Ngày xuất phát",
       "cancelReasonRequired": "Vui lòng nhập lý do",
-      "cancelTooLate": "Quá thời gian hủy vé cho phép"
+      "cancelTooLate": "Quá thời gian hủy vé cho phép",
+      "cancelSuccess":"Hủy vé thành công"
     },
     "info": {
       "title": "Thông tin cá nhân",
@@ -457,7 +460,7 @@
         "mainImage": "Hình ảnh chính của xe",
         "thumbnail": "Hình thu nhỏ {{index}}"
       },
-      "watermark": "VeXeRe"
+      "watermark": "ICTS"
     },
     "selectTrip": {
       "legend": "Chú thích",
@@ -505,11 +508,14 @@
       },
       "payment": {
         "title": "Phương thức thanh toán",
+          "timeoutTitle": "Thanh toán hết hạn trong",
         "qrCode": {
           "title": "QR chuyển khoản/ Ví điện tử",
           "badge": "An toàn & tiện lợi",
           "description": "Xác nhận thanh toán tức thì, nhanh chóng và ít sai sót."
+        
         },
+        
         "cashOnBus": {
           "title": "Thanh toán khi lên xe",
           "description": "Bạn có thể thanh toán cho tài xế khi lên xe"

@@ -29,7 +29,7 @@ const Register = () => {
   };
 
   const validatePassword = (password) => {
-    const regex = /^(?=.*[A-Z])(?=.*[~!@#$%^&*]).{6,}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?=\S+$)[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
   };
 
@@ -87,7 +87,7 @@ const Register = () => {
     }
 
     if (!validatePassword(formData.password)) {
-      message.error(t('auth.register.passwordRequirements'));
+      message.error(t('auth.register.passwordValidate'));
       return;
     }
 
