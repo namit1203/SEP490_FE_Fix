@@ -46,7 +46,7 @@ const Header = () => {
             <div className="flex-shrink-0">
               <Link to="/" className="block">
                 <img
-                  src="https://i.imgur.com/qLCRwkv.png"
+                  src="https://boring-wiles.202-92-7-204.plesk.page/uploads/2209a1a9-ba3e-41da-b811-11546337f5a9.jpg"
                   alt="logo"
                   className="h-8 w-auto"
                 />

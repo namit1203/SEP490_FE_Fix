@@ -87,7 +87,7 @@ export default function MyOrder() {
           >
             {t('profile.orders.details')}
           </Button>
-          {record.status !== "Hủy chuyến" && record.status !== "Chờ xác nhận hủy chuyến từ hệ thống" && (
+          {record.status !== "Hủy chuyến" && record.status !== "Chờ xác nhận hủy chuyến từ hệ thống" && record.status !== "Hủy vé" && (
             <Button
               danger
               onClick={() => handleCancel(record)}

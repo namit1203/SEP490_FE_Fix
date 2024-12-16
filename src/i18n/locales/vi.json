@@ -238,6 +238,7 @@
       "save": "Lưu",
       "updateSuccess":"Cập nhật thành công",
       "updateError":"Cập nhật xảy ra lỗi",  
+      
       "uploadSuccess":"Tải lên thành công"
     }
   },
@@ -444,7 +445,7 @@
           "title": "Xuất hóa đơn GTGT",
           "items": [
             "Nhà xe có cung cấp hóa đơn GTGT cho dịch vụ xe khách, phí xuất hóa đơn là 10% giá trị vé",
-            "Quý khách vui lòng cung cấp ��ầy đủ, chính xác thông tin hóa đơn",
+            "Quý khách vui lòng cung cấp đầy đủ, chính xác thông tin hóa đơn",
             "Nhà xe từ chối xuất lại hóa đơn nếu hành khách cung cấp sai thông tin"
           ]
         }
