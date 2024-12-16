@@ -10,17 +10,18 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      en: {
-        translation: enTranslations
-      },
       vi: {
         translation: viTranslations
       },
+      en: {
+        translation: enTranslations
+      },
+
       cn: { // Add Chinese translations
         translation: cnTranslations
       }
     },
-    fallbackLng: 'en',
+    fallbackLng: 'vi',
     debug: false,
     interpolation: {
       escapeValue: false,
