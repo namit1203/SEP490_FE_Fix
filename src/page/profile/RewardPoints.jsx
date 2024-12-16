@@ -94,7 +94,7 @@ const RewardPoints = () => {
       setPointHistory(filteredHistory);
     } catch (error) {
       console.error("Error fetching point history:", error);
-      message.error(t("profile.rewards.historyError")); // Thông báo lỗi
+      // message.error(t("profile.rewards.historyError")); // Thông báo lỗi
     }
   };
   
