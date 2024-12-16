@@ -7,7 +7,6 @@ import Convenient from "./page/Convenient";
 import DetaillTicket from "./page/DetaillTicket";
 import Home from "./page/Home";
 import ForgotPassword from "./page/Forgotpassword";
-import PaymentMethod from "./page/PaymentMethod";
 import RenterCar from "./page/RenterCar";
 import ChangePassword from "./page/profile/ChangePassword";
 import Info from "./page/profile/Info";
@@ -96,10 +95,6 @@ export default function useRouteElements() {
           <Bookingconfirmation />
         </PrivateRoute>
       ),
-    },
-    {
-      path: "/payment-method/:id",
-      element: <PaymentMethod />,
     },
     { path: "/renter", element: <RenterCar /> },
     { path: "/convenient", element: <Convenient /> },

@@ -1,10 +1,10 @@
 import { Avatar } from "antd";
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/app.context";
 import { checkLoginToken } from "../utils";
-import { useTranslation } from 'react-i18next';
-import { FiGlobe } from 'react-icons/fi';
+import { useTranslation } from "react-i18next";
+import { FiGlobe } from "react-icons/fi";
 import LoginModal from "../components/auth/LoginModal";
 
 const Header = () => {
@@ -28,8 +28,8 @@ const Header = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const changeLanguage = (lng) => {
@@ -46,13 +46,12 @@ const Header = () => {
             <div className="flex-shrink-0">
               <Link to="/" className="block">
                 <img
-                  src="https://i.imgur.com/qLCRwkv.png"
+                  src="https://boring-wiles.202-92-7-204.plesk.page/uploads/2209a1a9-ba3e-41da-b811-11546337f5a9.jpg"
                   alt="logo"
                   className="h-8 w-auto"
                 />
               </Link>
             </div>
-
 
             {/* Right Side Menu */}
             <div className="flex items-center space-x-4">
@@ -64,46 +63,49 @@ const Header = () => {
                 >
                   <FiGlobe className="w-5 h-5" />
                   <span className="text-sm font-medium">
-                  {i18n.language === 'vi' ? 'VI' : i18n.language === 'en' ? 'EN' : '中国人'}
+                    {i18n.language === "vi"
+                      ? "VI"
+                      : i18n.language === "en"
+                      ? "EN"
+                      : "中国人"}
                   </span>
                 </button>
 
                 {langDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 transform transition-all duration-200">
                     <button
-                      onClick={() => changeLanguage('en')}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'en' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
+                      onClick={() => changeLanguage("en")}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${
+                        i18n.language === "en"
+                          ? "text-blue-600 bg-blue-50"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
                     >
                       English
                     </button>
                     <button
-                      onClick={() => changeLanguage('vi')}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'vi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
+                      onClick={() => changeLanguage("vi")}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${
+                        i18n.language === "vi"
+                          ? "text-blue-600 bg-blue-50"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
                     >
                       Tiếng Việt
                     </button>
                     <button
-                      onClick={() => changeLanguage('cn')}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'vi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
+                      onClick={() => changeLanguage("cn")}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${
+                        i18n.language === "cn"
+                          ? "text-blue-600 bg-blue-50"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
                     >
                       中国人
                     </button>
                   </div>
                 )}
               </div>
-
-              <NavLink
-                to="/convenient"
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors hover:text-blue-600 ${isActive ? 'text-blue-600' : 'text-gray-700'
-                  }`
-                }
-              >
-                {t('header.findSharedRide')}
-              </NavLink>
 
               {isLoggedIn ? (
                 <div className="relative">
@@ -114,11 +116,14 @@ const Header = () => {
                   >
                     <span className="hidden lg:block text-right">
                       <span className="block text-sm font-medium text-gray-700">
-                        {profile?.username}
+                        {profile?.username || "Guest"}
                       </span>
                     </span>
                     <Avatar
-                      src="https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp"
+                      src={
+                        profile?.avatar ||
+                        "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp"
+                      }
                       className="w-8 h-8"
                     />
                   </button>
@@ -133,7 +138,7 @@ const Header = () => {
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        {t('header.profile')}
+                        {t("header.profile")}
                       </Link>
                       <button
                         onClick={() => {
@@ -143,7 +148,7 @@ const Header = () => {
                         }}
                         className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        {t('logout')}
+                        {t("logout")}
                       </button>
                     </div>
                   )}
@@ -153,7 +158,7 @@ const Header = () => {
                   onClick={() => setOpenLogin(true)}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
-                  {t('header.login')}
+                  {t("header.login")}
                 </button>
               )}
             </div>

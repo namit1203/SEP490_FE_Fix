@@ -125,6 +125,12 @@ const Info = () => {
   };
 
   const handleSave = async () => {
+    // Kiểm tra nếu fullName trống
+    if (!formData.fullName.trim()) {
+      message.error(t("profile.info.fullNameRequired")); // Hiển thị thông báo lỗi
+      return; // Dừng thực hiện nếu không hợp lệ
+    }
+  
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("email", formData.email);
@@ -145,24 +151,27 @@ const Info = () => {
         }
       );
   
-      // Kiểm tra nội dung phản hồi
       const text = await response.text();
-      console.log("API Response:", text); // Debug để kiểm tra phản hồi
+      console.log("API Response:", text);
   
       if (response.ok) {
-        // Kiểm tra nội dung phản hồi
         if (text.includes("Update user profile successful")) {
-          message.success(t("profile.info.updateSuccess")); // Hiển thị thông báo thành công
+          message.success(t("profile.info.updateSuccess"));
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
-          message.success(text); // Hiển thị thông báo khác nếu không khớp
+          message.success(text);
         }
       } else {
-        message.success(t("profile.info.updateError")); // Thông báo lỗi
+        message.error(t("profile.info.updateError"));
       }
     } catch (error) {
-      message.success(t("profile.info.updateError")); 
+      console.error("Error updating profile:", error);
+      message.error(t("profile.info.updateError"));
     }
   };
+  
   
 
   useEffect(() => {

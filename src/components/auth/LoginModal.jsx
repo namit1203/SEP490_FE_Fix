@@ -117,8 +117,12 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
   const validatePassword = (password) => {
     // Biểu thức chính quy kiểm tra mật khẩu
-    const regex = /^(?=.*[A-Z])(?=.*[~!@#$%^&*]).{6,}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?=\S+$)[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
+  };
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(number);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -151,13 +155,17 @@ const LoginModal = ({ isOpen, onClose }) => {
       if (!signupData.username.trim()) {
         return message.error(t("auth.register.usernameRequired"));
       }
+      if (!signupData.password.trim()) {
+        return message.error(t("auth.register.passwordRequired"));
+      }
       if (!validatePassword(signupData.password)) {
-        return message.error(
-          "Mật khẩu phải dài ít nhất 6 ký tự, chứa ít nhất 1 chữ hoa và 1 ký tự đặc biệt (~!@#$%^&*)."
-        );
+        return message.error(t("auth.register.passwordValidate"));
       }
       if (!signupData.numberPhone.trim()) {
         return message.error(t("auth.register.phonenumberRequired"));
+      }
+      if (!validatePhoneNumber(signupData.numberPhone.trim())) {
+        return message.error(t("auth.register.phonenumberValidate"));
       }
       if (!signupData.dob.trim()) {
         return message.error("Vui lòng nhập ngày sinh.");

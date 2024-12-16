@@ -101,6 +101,8 @@
       "phonenumberPlaceholder": "Nhập số điện thoại",
       "phonenumberRequired": "Số điện thoại là bắt buộc",
       "invalidEmail": "Email không hợp lệ",
+      "passwordValidate": "Mật khẩu phải dài ít nhất 8 ký tự, chứa ít nhất 1 chữ hoa và 1 ký tự đặc biệt (~!@#$%^&*).",
+      "phonenumberValidate": "Số điện thoại phải đủ 10 chữ số",
       "dob": "Ngày sinh"
     },
     "otp": {
@@ -193,7 +195,7 @@
       "current": "Mật khẩu hiện tại",
       "new": "Mật khẩu mới",
       "confirm": "Xác nhận mật khẩu",
-      "invalid":"Mật khẩu không hợp lệ",
+      "invalid":"Mật khẩu phải có ít nhất 8 ký tự, 1 chữ in hoa và ký tự đặc biệt",
       "popupMessage":"Mật khẩu phải có ít nhất 8 ký tự, 1 chữ in hoa và ký tự đặc biệt"
     },
     "promotions": {
@@ -222,7 +224,8 @@
       "confirmCancel": "Xác nhận",
       "timeFrom": "Ngày xuất phát",
       "cancelReasonRequired": "Vui lòng nhập lý do",
-      "cancelTooLate": "Quá thời gian hủy vé cho phép"
+      "cancelTooLate": "Quá thời gian hủy vé cho phép",
+      "cancelSuccess":"Hủy vé thành công"
     },
     "info": {
       "title": "Thông tin cá nhân",
@@ -235,6 +238,7 @@
       "save": "Lưu",
       "updateSuccess":"Cập nhật thành công",
       "updateError":"Cập nhật xảy ra lỗi",  
+      
       "uploadSuccess":"Tải lên thành công"
     }
   },
@@ -441,7 +445,7 @@
           "title": "Xuất hóa đơn GTGT",
           "items": [
             "Nhà xe có cung cấp hóa đơn GTGT cho dịch vụ xe khách, phí xuất hóa đơn là 10% giá trị vé",
-            "Quý khách vui lòng cung cấp ��ầy đủ, chính xác thông tin hóa đơn",
+            "Quý khách vui lòng cung cấp đầy đủ, chính xác thông tin hóa đơn",
             "Nhà xe từ chối xuất lại hóa đơn nếu hành khách cung cấp sai thông tin"
           ]
         }
@@ -457,7 +461,7 @@
         "mainImage": "Hình ảnh chính của xe",
         "thumbnail": "Hình thu nhỏ {{index}}"
       },
-      "watermark": "VeXeRe"
+      "watermark": "ICTS"
     },
     "selectTrip": {
       "legend": "Chú thích",
@@ -505,11 +509,14 @@
       },
       "payment": {
         "title": "Phương thức thanh toán",
+          "timeoutTitle": "Thanh toán hết hạn trong",
         "qrCode": {
           "title": "QR chuyển khoản/ Ví điện tử",
           "badge": "An toàn & tiện lợi",
           "description": "Xác nhận thanh toán tức thì, nhanh chóng và ít sai sót."
+        
         },
+        
         "cashOnBus": {
           "title": "Thanh toán khi lên xe",
           "description": "Bạn có thể thanh toán cho tài xế khi lên xe"
