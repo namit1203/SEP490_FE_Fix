@@ -64,7 +64,7 @@ const Header = () => {
                 >
                   <FiGlobe className="w-5 h-5" />
                   <span className="text-sm font-medium">
-                    {i18n.language === 'vi' ? 'VI' : 'EN'}
+                  {i18n.language === 'vi' ? 'VI' : i18n.language === 'en' ? 'EN' : '中国人'}
                   </span>
                 </button>
 
@@ -83,6 +83,13 @@ const Header = () => {
                         }`}
                     >
                       Tiếng Việt
+                    </button>
+                    <button
+                      onClick={() => changeLanguage('cn')}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-150 ${i18n.language === 'vi' ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                    >
+                      中国人
                     </button>
                   </div>
                 )}

@@ -10,9 +10,10 @@
 
   "header": {
     "myOrdersLink": "Đơn hàng của tôi",
-    "findSharedRide": "Tìm xe ghép",
+    "findSharedRide": "Đặt xe tiện chuyến",
     "profile": "Trang cá nhân",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "logout":"Đăng xuất"
   },
 
   "home": {
@@ -233,6 +234,7 @@
       "changePhoto": "Đổi ảnh đại diện",
       "save": "Lưu",
       "updateSuccess":"Cập nhật thành công",
+      "updateError":"Cập nhật xảy ra lỗi",  
       "uploadSuccess":"Tải lên thành công"
     }
   },

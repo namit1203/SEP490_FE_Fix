@@ -185,15 +185,7 @@ const Convenient = () => {
                 </label>
                 <div className="flex gap-4">
                   <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="service"
-                      value="ConvenientTrip"
-                      checked={selectedService === "ConvenientTrip"}
-                      onChange={(e) => setSelectedService(e.target.value)}
-                      className="w-4 h-4 text-blue-600"
-                    />
-                    <span>{t('convenient.service.shared')}</span>
+            
                   </label>
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input
