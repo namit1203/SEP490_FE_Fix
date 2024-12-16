@@ -33,12 +33,11 @@ const Info = () => {
             },
           }
         );
-
+  
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
           setFormData({
-            username: data.username || "",
             email: data.email || "",
             numberPhone: data.numberPhone || "",
             avatar: data.avatar || "https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirofemalev9.webp",
@@ -55,10 +54,10 @@ const Info = () => {
         message.error(t("profile.info.fetchError"));
       }
     };
-
+  
     fetchProfile();
   }, [setProfile, t]);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -128,14 +127,13 @@ const Info = () => {
   const handleSave = async () => {
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("username", formData.username);
       formDataToSend.append("email", formData.email);
       formDataToSend.append("numberPhone", formData.numberPhone);
       formDataToSend.append("fullName", formData.fullName);
       formDataToSend.append("address", formData.address);
       formDataToSend.append("dob", formData.dob);
-      formDataToSend.append("avatar", formData.avatar); // Gửi URL avatar
-
+      formDataToSend.append("avatar", formData.avatar);
+  
       const response = await fetch(
         `https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile/`,
         {
@@ -146,26 +144,26 @@ const Info = () => {
           body: formDataToSend,
         }
       );
-
-      const contentType = response.headers.get("content-type");
-      if (contentType?.includes("application/json")) {
-        const data = await response.json();
-        setProfile(data);
-        message.success(t("profile.info.updateSuccess"));
-      } else {
-        const text = await response.text();
-        console.log("API Response:", text);
-        if (response.ok) {
-          message.success(t("profile.info.updateSuccess"));
+  
+      // Kiểm tra nội dung phản hồi
+      const text = await response.text();
+      console.log("API Response:", text); // Debug để kiểm tra phản hồi
+  
+      if (response.ok) {
+        // Kiểm tra nội dung phản hồi
+        if (text.includes("Update user profile successful")) {
+          message.success(t("profile.info.updateSuccess")); // Hiển thị thông báo thành công
         } else {
-          message.error(t("profile.info.updateError"));
+          message.success(text); // Hiển thị thông báo khác nếu không khớp
         }
+      } else {
+        message.success(t("profile.info.updateError")); // Thông báo lỗi
       }
     } catch (error) {
-      console.error("Error:", error);
-      message.error(t("profile.info.updateError"));
+      message.success(t("profile.info.updateError")); 
     }
   };
+  
 
   useEffect(() => {
     return () => {
@@ -207,8 +205,8 @@ const Info = () => {
               </label>
               <input
                 type="text"
-                name="username"
-                value={formData.username}
+                name="fullName"
+                value={formData.fullName  }
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
               />

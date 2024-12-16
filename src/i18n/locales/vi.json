@@ -234,6 +234,7 @@
       "changePhoto": "Đổi ảnh đại diện",
       "save": "Lưu",
       "updateSuccess":"Cập nhật thành công",
+      "updateError":"Cập nhật xảy ra lỗi",  
       "uploadSuccess":"Tải lên thành công"
     }
   },
