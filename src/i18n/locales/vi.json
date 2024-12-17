@@ -129,7 +129,7 @@
       "success": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn",
       "error": "Lỗi khi gửi liên kết đặt lại. Vui lòng thử lại",
       "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
-      "notFound": "Không tìm thấy địa ch�� email",
+      "notFound": "Không tìm thấy địa chỉ email",
       "instructions": "Kiểm tra email của bạn để lấy liên kết đặt lại mật khẩu"
     }
   },
@@ -170,7 +170,12 @@
       "noPromo": "Không có khuyến mãi được áp dụng",
       "applyFirst": "Vui lòng áp dụng khuyến mãi trước",
       "bookingSuccess": "Đặt chuyến thành công!",
-      "bookingError": "Đặt chuyến thất bại. Vui lòng thử lại."
+      "bookingError": "Đặt chuyến thất bại. Vui lòng thử lại.",
+      "startPointRequired": "Vui lòng nhập điểm bắt đầu!",
+    "endPointRequired": "Vui lòng nhập điểm kết thúc!",
+    "timeRequired": "Vui lòng nhập thời gian!",
+    "phoneRequired": "Vui lòng nhập số điện thoại!"
+  
     }
   },
 
