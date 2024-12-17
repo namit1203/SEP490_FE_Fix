@@ -219,6 +219,7 @@
       "endDate": "Ngày hết hạn"
     },
     "orders": {
+      "title":"Vé của bạn",
       "orderNumber": "Mã vé",
       "description": "Chi tiết",
       "status": "Trạng thái",
