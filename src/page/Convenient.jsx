@@ -14,8 +14,8 @@ const Convenient = () => {
   const { t } = useTranslation();
 
   const [dataDetail, setDataDetail] = useState({
-    startPoint: "Ha Noi",
-    endPoint: "Bac Giang",
+    startPoint:"Hà Nội",
+    endPoint: "Bắc Giang",
     startTime: "",
   });
   const [price, setPrice] = useState(null);
@@ -59,15 +59,36 @@ const Convenient = () => {
     }
   }, [t, profile]);
   
-
+  const validateForm = () => {
+    if (!dataDetail.startPoint.trim()) {
+      message.warning(t('convenient.messages.startPointRequired'));
+      return false;
+    }
+    if (!dataDetail.endPoint.trim()) {
+      message.warning(t('convenient.messages.endPointRequired'));
+      return false;
+    }
+    if (!dataDetail.startTime) {
+      message.warning(t('convenient.messages.timeRequired'));
+      return false;
+    }
+    if (!phoneNumber.trim()) {
+      message.warning(t('convenient.messages.phoneRequired'));
+      return false;
+    }
+    return true; // Dữ liệu hợp lệ
+  };
+  
   const handelBookTrip = async () => {
+    if (!validateForm()) return; // Kiểm tra dữ liệu đầu vào
+  
     const token = checkLoginToken();
     if (!token || !profile) {
       message.warning(t('auth.requireLogin'));
       navigate('/login', { state: { from: '/convenient' } });
       return;
     }
-
+  
     setLoading(true);
     const tripType = selectedService === "ConvenientTrip" ? 2 : 3;
     try {
@@ -79,7 +100,7 @@ const Convenient = () => {
           },
         }
       );
-
+  
       if (data?.price) {
         setPrice(data.price);
         setFinalPrice(null);
@@ -92,6 +113,7 @@ const Convenient = () => {
       setLoading(false);
     }
   };
+  
 
   const handleApplyPromotion = () => {
     if (!price) {
@@ -121,18 +143,20 @@ const Convenient = () => {
   };
 
   const handelResult = async () => {
+    if (!validateForm()) return; // Kiểm tra dữ liệu đầu vào
+  
     const token = checkLoginToken();
     if (!token || !profile) {
       message.warning(t('auth.requireLogin'));
       navigate('/login', { state: { from: '/convenient' } });
       return;
     }
-
+  
     if (!finalPrice) {
       message.warning(t('convenient.messages.applyFirst'));
       return;
     }
-
+  
     setLoading(true);
     try {
       const dataPayload = {
@@ -166,6 +190,7 @@ const Convenient = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
