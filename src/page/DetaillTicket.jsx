@@ -55,7 +55,7 @@ const DetailTicket = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -80,10 +80,10 @@ const DetailTicket = () => {
         >
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {/* Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6">
+            <div className="bg-gradient-to-r from-blue-500 to-orange-600 p-6">
               <div className="flex justify-between items-center">
                 <img
-                  src="https://i.imgur.com/uoIrR3w.png"
+                  src="/src/assets/logo.png"
                   className="w-16 h-auto"
                   alt="Logo"
                 />
@@ -98,7 +98,7 @@ const DetailTicket = () => {
             <div className="p-4">
               <button
                 onClick={() => navigate("/profile/my-order")}
-                className="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600"
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
               >
                 Quay lại
               </button>
@@ -106,7 +106,7 @@ const DetailTicket = () => {
 
             {/* Ticket Content */}
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-center text-orange-600 mb-6">
+              <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
                 Thông tin vé xe
               </h2>
 
@@ -148,7 +148,7 @@ const DetailTicket = () => {
             </div>
 
             {/* Footer */}
-            <div className="bg-orange-500 p-4 text-white text-sm">
+            <div className="bg-blue-500 p-4 text-white text-sm">
               <div className="flex justify-between items-center">
                 <span>Hotline: 1900 xxxx</span>
                 <span>E-Ticket ({new Date().toLocaleString()})</span>
@@ -165,15 +165,15 @@ const TicketRow = ({ icon, label, value, highlight = false }) => (
   <motion.div
     whileHover={{ scale: 1.01 }}
     className={`flex items-center space-x-3 p-3 rounded-lg ${
-      highlight ? "bg-orange-50" : "hover:bg-gray-50"
+      highlight ? "bg-blue-50" : "hover:bg-gray-50"
     }`}
   >
-    <span className="text-orange-500 text-xl">{icon}</span>
+    <span className="text-blue-500 text-xl">{icon}</span>
     <div className="flex-1">
-      <span className="text-gray-600">{label}:</span>
+      <span className="text-blue-600">{label}:</span>
       <span
         className={`ml-2 font-medium ${
-          highlight ? "text-orange-600" : "text-gray-900"
+          highlight ? "text-blue-600" : "text-gray-900"
         }`}
       >
         {value || "Đang tải..."}
