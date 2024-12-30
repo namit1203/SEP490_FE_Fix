@@ -34,10 +34,10 @@ export default function DataTrip({ data }) {
 
   return (
     <div className="space-y-4">
-      {paginatedData.map((item, index) => (
+      {paginatedData.map((item, ) => (
         <TripCard
           key={item.id}
-          index={index}
+          index={item.id}
           selectedTrip={selectedTrip}
           setSelectedTrip={setSelectedTrip}
           activeCardIndex={activeCardIndex}

@@ -76,7 +76,7 @@ export const TripCard = ({
       console.error("Error fetching trip details:", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data?.id]);
 
   const handleReviewSubmit = async () => {
     if (!profile) {

@@ -21,7 +21,7 @@ export default function SelectTrip({ data, onContinue }) {
 
   const handleContinue = () => {
     // Set booking time in localStorage
-    const currentDateTime = new Date().toISOString();
+    // const currentDateTime = new Date().toISOString();
 
 
     if (!profile) {

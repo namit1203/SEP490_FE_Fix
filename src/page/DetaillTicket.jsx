@@ -9,7 +9,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { BsClock, BsCashCoin } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 
-const DetailTicket = () => {
+const DetailTicket = () => {  
   const { id } = useParams();
   const navigate = useNavigate(); // Hook for navigation
   const [ticket, setTicket] = useState(null);
