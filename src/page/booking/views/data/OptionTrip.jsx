@@ -14,57 +14,68 @@ export default function OptionTrip({ data }) {
   const [selectedDropoff, setSelectedDropoff] = useState(null);
   const [listTrip, setListTrip] = useState({});
 
-  console.log(data);
+  // const countSeat = useAppSelector((state) => state.trips?.countseat);
+  const DateTripStaion = useAppSelector((state) => state?.trips?.time);
+  const quantity = localStorage.getItem("quantity");
+
+  // console.log(data);
   
 
 
-  const countSeat = useAppSelector((state) => state.trips?.countseat);
-  const quantity = localStorage.getItem("quantity");
-
 
   useEffect(() => {
-    const fetchTripDetails = async () => {
+    const fetchTripDetailsAndVehicleData = async () => {
       try {
-        const response = await axios.get(
-          `https://boring-wiles.202-92-7-204.plesk.page/api/TripDetails/tripId?TripId=${data?.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${checkLoginToken()}`,
-            },
-          }
-        );
-        // Transform the data
-        const result = response.data;
-
-        // Extract `start` and `end` lists
-        const startList = result.map((item) => ({
+        // Fetch both API calls simultaneously
+        const [tripResponse, countSeatResponse] = await Promise.all([
+          axios.get(
+            `https://boring-wiles.202-92-7-204.plesk.page/api/TripDetails/tripId?TripId=${data?.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${checkLoginToken()}`,
+              },
+            }
+          ),
+          axios.get(
+            `https://boring-wiles.202-92-7-204.plesk.page/api/Vehicle/getNumberSeatAvaiable/${data?.id}/${DateTripStaion}`
+          ),
+        ]);
+  
+        // Handle the response from the first API (TripDetails)
+        const tripResult = tripResponse.data;
+        const startList = tripResult.map((item) => ({
           pointStartDetails: item.pointStartDetails,
           timeStartDetils: item.timeStartDetils,
         }));
-
-        // Assuming all trips have the same end point and time (as seen in the response)
+  
         const endList = [
           {
-            pointEndDetails: result[0]?.pointEndDetails || "",
-            timeEndDetails: result[0]?.timeEndDetails || "",
+            pointEndDetails: tripResult[0]?.pointEndDetails || "",
+            timeEndDetails: tripResult[0]?.timeEndDetails || "",
           },
         ];
-        // Update state
+  
+        // Handle the response from the second API (Vehicle)
+        const countSeat = countSeatResponse.data;
+  
+        // Update state with both responses
         setListTrip({
-          data: result,
+          data: tripResult,
           start: startList,
           end: endList,
+          countSeat, // Assuming the vehicle data should be included in the state
         });
       } catch (error) {
         console.error("API call error:", error.message);
-        message.error("Failed to load trip details");
+        message.error("Failed to load trip details or vehicle data");
       }
     };
-
-    if (data?.id) {
-      fetchTripDetails();
+  
+    if (data?.id && DateTripStaion) {
+      fetchTripDetailsAndVehicleData();
     }
-  }, [data?.id]);
+  }, [data?.id, DateTripStaion]); // Ensure dependencies are correct
+  
 
   const handleTransaction = () => {
     if (!selectedPickup || !selectedDropoff) {
@@ -72,7 +83,7 @@ export default function OptionTrip({ data }) {
       return;
     }
 
-    if (countSeat === 0 || quantity > countSeat) {
+    if (listTrip?.countSeat === 0 || quantity > listTrip?.countSeat) {
       message.error("No seats available for this trip!");
       return;
     }
@@ -230,7 +241,7 @@ export default function OptionTrip({ data }) {
             <span className="text-blue-600 font-medium">A3</span>
           </div>
           <div className="text-gray-600 text-sm">
-            {t('booking.optionTrip.seatsAvailable', { count: countSeat || 0 })}
+            {t('booking.optionTrip.seatsAvailable', { count: listTrip?.countSeat || 0 })}
           </div>
         </div>
 

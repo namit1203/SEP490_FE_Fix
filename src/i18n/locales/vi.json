@@ -332,8 +332,6 @@
       "date": "Ngày đi",
       "action": "Tìm kiếm",
       "button": "Tìm kiếm",
-      "selectStartPoint":"Vui lòng chọn điểm đón",
-      "noEndPoint":"Vui lòng chọn điểm đón",
       "errors": {
         "missingFields": "Vui lòng chọn điểm xuất phát, điểm đến và thời gian",
         "invalidTime": "Thời gian không hợp lệ"
