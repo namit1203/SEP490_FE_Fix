@@ -21,22 +21,22 @@ export default function SearchBooking() {
   const [endOptions, setEndOptions] = useState([]);
 
   // Fetch start points
-// Fetch start points
-useEffect(() => {
-  const fetchStartOptions = async () => {
-    try {
-      const response = await axios.get(
-        "https://boring-wiles.202-92-7-204.plesk.page/api/Trip/listStartPoint"
-      );
-      setStartOptions(response.data || []);
-    } catch (error) {
-      console.error("Failed to fetch start points:", error);
-      message.error(t("booking.search.errors.fetchFailed"));
-    }
-  };
+  useEffect(() => {
+    const fetchStartOptions = async () => {
+      try {
+        const response = await axios.get(
+          "https://boring-wiles.202-92-7-204.plesk.page/api/Trip/listStartPoint"
+        );
+        setStartOptions(response.data || []);
+        setFromInputValue(response.data?.[0]?.pointStart || ""); // Default start point
+      } catch (error) {
+        console.error("Failed to fetch start points:", error);
+        message.error(t("booking.search.errors.fetchFailed"));
+      }
+    };
 
-  fetchStartOptions();
-}, [t]);
+    fetchStartOptions();
+  }, [t]);
 
   // Fetch end points based on selected start point
   const handleStartPointChange = async (selectedStartPoint) => {
@@ -84,20 +84,16 @@ useEffect(() => {
               {t("booking.search.from")}
             </label>
             <select
-  className="block w-full pl-3 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-  value={fromInputValue}
-  onChange={(e) => handleStartPointChange(e.target.value)}
->
-  <option value="" disabled>
-    {t("booking.search.selectStartPoint")} {/* Placeholder text */}
-  </option>
-  {startOptions.map((option) => (
-    <option key={option.id} value={option.pointStart}>
-      {option.pointStart}
-    </option>
-  ))}
-</select>
-
+              className="block w-full pl-3 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              value={fromInputValue}
+              onChange={(e) => handleStartPointChange(e.target.value)}
+            >
+              {startOptions.map((option) => (
+                <option key={option.id} value={option.pointStart}>
+                  {option.pointStart}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* To Location */}

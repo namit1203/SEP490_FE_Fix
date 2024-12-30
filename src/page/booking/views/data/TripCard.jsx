@@ -7,13 +7,13 @@ import { FiChevronDown, FiChevronUp, FiClock, FiInfo, FiMapPin, FiStar } from 'r
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from "../../../../context/app.context";
 import {
-  getCountSeatDetailsById,
-  getEndTripDetailsById,
-  getStartTripDetailsById,
+  // getCountSeatDetailsById,
+  // getEndTripDetailsById,
+  // getStartTripDetailsById,
   getTripDetailsById,
   submitReview,
 } from "../../../../stores/BookingCar/action";
-import { useAppDispatch, useAppSelector } from "../../../../stores/hooks";
+import { useAppDispatch } from "../../../../stores/hooks";
 import { ImageGallery } from "./ImageGallery";
 import OptionTrip from "./OptionTrip";
 import { PickupDropInfo } from "./PickupDropInfo";
@@ -36,7 +36,7 @@ export const TripCard = ({
   const [showReviewModal, setShowReviewModal] = React.useState(false);
   const [reviewText, setReviewText] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
-  const DateTripStaion = useAppSelector((state) => state?.trips?.time);
+  // const DateTripStaion = useAppSelector((state) => state?.trips?.time);
 
   const handleOpenDetailsTrip = (id, index) => {
     if (activeCardIndex !== index) {
@@ -65,13 +65,13 @@ export const TripCard = ({
   const handleContinue = React.useCallback(async () => {
     try {
       setShowOptionTrip(true);
-      await Promise.all([
-        dispatch(getStartTripDetailsById({ id: data?.id })),
-        dispatch(getEndTripDetailsById({ id: data?.id })),
-        dispatch(
-          getCountSeatDetailsById({ id: data?.id, dateTime: DateTripStaion })
-        ),
-      ]);
+      // await Promise.all([
+      //   dispatch(getStartTripDetailsById({ id: data?.id })),
+      //   dispatch(getEndTripDetailsById({ id: data?.id })),
+      //   dispatch(
+      //     getCountSeatDetailsById({ id: data?.id, dateTime: DateTripStaion })
+      //   ),
+      // ]);
     } catch (error) {
       console.error("Error fetching trip details:", error);
     }
