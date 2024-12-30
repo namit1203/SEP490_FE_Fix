@@ -8,7 +8,7 @@ import BookingSort from "./sort/BookingSort";
 export default function DataViews() {
   const { t } = useTranslation();
   const DataTripStaion = useAppSelector((state) => state.trips?.data);
-  
+    
   // Add filter and sort states
   const [filters, setFilters] = useState({
     timeRange: [],

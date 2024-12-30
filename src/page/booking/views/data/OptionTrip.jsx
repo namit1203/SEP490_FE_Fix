@@ -12,12 +12,15 @@ export default function OptionTrip({ data }) {
   const navigate = useNavigate();
   const [selectedPickup, setSelectedPickup] = useState(null);
   const [selectedDropoff, setSelectedDropoff] = useState(null);
-  const [listTrip, setListTrip] = useState([]);
+  const [listTrip, setListTrip] = useState({});
 
-  const startPointArr = useAppSelector((state) => state.trips?.startPointArr);
-  const endPointArr = useAppSelector((state) => state.trips?.endPointArr);
+  console.log(data);
+  
+
+
   const countSeat = useAppSelector((state) => state.trips?.countseat);
   const quantity = localStorage.getItem("quantity");
+
 
   useEffect(() => {
     const fetchTripDetails = async () => {
@@ -30,7 +33,28 @@ export default function OptionTrip({ data }) {
             },
           }
         );
-        setListTrip(response.data);
+        // Transform the data
+        const result = response.data;
+
+        // Extract `start` and `end` lists
+        const startList = result.map((item) => ({
+          pointStartDetails: item.pointStartDetails,
+          timeStartDetils: item.timeStartDetils,
+        }));
+
+        // Assuming all trips have the same end point and time (as seen in the response)
+        const endList = [
+          {
+            pointEndDetails: result[0]?.pointEndDetails || "",
+            timeEndDetails: result[0]?.timeEndDetails || "",
+          },
+        ];
+        // Update state
+        setListTrip({
+          data: result,
+          start: startList,
+          end: endList,
+        });
       } catch (error) {
         console.error("API call error:", error.message);
         message.error("Failed to load trip details");
@@ -55,7 +79,7 @@ export default function OptionTrip({ data }) {
 
     localStorage.setItem("priceTrip", data?.listVehicle[0]?.price);
     const tripDetailId = getTripDetailId(
-      listTrip,
+      listTrip?.data,
       localStorage.getItem("startPoint"),
       localStorage.getItem("endPoint")
     );
@@ -112,15 +136,15 @@ export default function OptionTrip({ data }) {
             {t('booking.optionTrip.pickupPoints.title')}
           </h2>
           <div className="space-y-4">
-            {startPointArr?.map((item, index) => (
+            {listTrip?.start?.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.1 }}
                 className={`p-4 border rounded-lg transition-all duration-200 ${selectedPickup === item
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
                   }`}
               >
                 <label className="flex items-start gap-3 cursor-pointer">
@@ -138,7 +162,7 @@ export default function OptionTrip({ data }) {
                       <span className="text-sm text-gray-800">{item?.pointStartDetails}</span>
                     </div>
                     <p className="text-sm text-green-600 mt-2">
-                    
+
                     </p>
                   </div>
                 </label>
@@ -157,15 +181,15 @@ export default function OptionTrip({ data }) {
             {t('booking.optionTrip.dropoffPoints.title')}
           </h2>
           <div className="space-y-4">
-            {endPointArr?.map((item, index) => (
+            {listTrip?.end?.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.1 }}
                 className={`p-4 border rounded-lg transition-all duration-200 ${selectedDropoff === item
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-blue-200 hover:bg-gray-50'
                   }`}
               >
                 <label className="flex items-start gap-3 cursor-pointer">
@@ -183,7 +207,7 @@ export default function OptionTrip({ data }) {
                       <span className="text-sm text-gray-800">{item?.pointEndDetails}</span>
                     </div>
                     <p className="text-sm text-green-600 mt-2">
-                    
+
                     </p>
                   </div>
                 </label>
