@@ -203,7 +203,17 @@ export const TripCard = ({
                   <p className="text-sm text-gray-600">{data?.startTime}</p>
                 </div>
               </div>
-
+              <div className="flex items-start gap-3">
+                <div className="w-5 mt-1">
+                  <FiClock className="w-5 h-5 text-gray-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {t('booking.tripDetails.startDate')}
+                  </p>
+                  <p className="text-sm text-gray-600">{localStorage.bookingTime}</p>
+                </div>
+              </div>
               <div className="flex items-start gap-3">
                 <div className="w-5 mt-1">
                   <FiMapPin className="w-5 h-5 text-green-500" />
