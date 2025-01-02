@@ -84,6 +84,7 @@
     },
     "register": {
       "title": "Đăng ký",
+      "fullName": "Họ Tên",
       "email": "Email",
       "username": "Tên đăng nhập",
       "password": "Mật khẩu",
@@ -94,6 +95,7 @@
       "usernameRequired": "Vui lòng nhập tên đăng nhập",
       "passwordRequired": "Vui lòng nhập mật khẩu",
       "success": "Đăng ký thành công",
+      "fullNamePlaceholder":"Họ tên",
       "emailPlaceholder": "Nhập email của bạn",
       "usernamePlaceholder": "Nhập tên đăng nhập",
       "passwordPlaceholder": "Nhập mật khẩu",
@@ -332,6 +334,8 @@
       "date": "Ngày đi",
       "action": "Tìm kiếm",
       "button": "Tìm kiếm",
+      "selectStartPoint":"Vui lòng chọn điểm đón",
+      "noEndPoint":"Vui lòng chọn điểm đón",
       "errors": {
         "missingFields": "Vui lòng chọn điểm xuất phát, điểm đến và thời gian",
         "invalidTime": "Thời gian không hợp lệ"
@@ -382,6 +386,7 @@
     },
     "tripDetails": {
       "startTime": "Giờ khởi hành",
+      "startDate": "Ngày khởi hành",
       "startPoint": "Điểm đón",
       "endPoint": "Điểm đến",
       "price": "Giá vé",

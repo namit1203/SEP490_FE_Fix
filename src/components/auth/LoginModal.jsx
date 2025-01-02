@@ -20,13 +20,21 @@ const LoginModal = ({ isOpen, onClose }) => {
   });
 
   const [signupData, setSignupData] = useState({
-    username: "",
     email: "",
+    username: "",
     password: "",
     numberPhone: "",
     dob: "",
+    fullName: "",
   });
-
+  const handleChange = (e, setState) => {
+    const { name, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  
   const handleLogin = async () => {
     try {
       setIsLoading(true);
@@ -115,6 +123,7 @@ const LoginModal = ({ isOpen, onClose }) => {
       setIsLoading(false);
     }
   };
+
   const validatePassword = (password) => {
     // Biểu thức chính quy kiểm tra mật khẩu
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?=\S+$)[A-Za-z\d@$!%*?&]{8,}$/;
@@ -174,7 +183,6 @@ const LoginModal = ({ isOpen, onClose }) => {
     }
   };
 
-
   if (!isOpen) return null;
 
   return (
@@ -184,137 +192,125 @@ const LoginModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       />
       <div className="relative w-full max-w-md bg-white rounded-lg shadow-xl p-6">
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
         >
           <FiX className="w-6 h-6" />
         </button>
-
-        {/* Title */}
         <h2 className="text-2xl font-bold text-center mb-6">
           {isOtpMode
             ? t("auth.otp.title")
             : activeTab === "login"
-              ? t("auth.login.title")
-              : t("auth.register.title")}
+            ? t("auth.login.title")
+            : t("auth.register.title")}
         </h2>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {activeTab === "signup" && !isOtpMode && (
+          {activeTab === "signup" && (
             <>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  {t("auth.register.fullName")}
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={signupData.fullName}
+                  onChange={(e) => handleChange(e, setSignupData)}
+                  className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+                  placeholder={t("auth.register.fullNamePlaceholder")}
+                />
+              </div>
+
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   {t("auth.register.email")}
                 </label>
-                <div className="relative">
-                  <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="email"
-                    value={signupData.email}
-                    onChange={(e) =>
-                      setSignupData({ ...signupData, email: e.target.value })
-                    }
-                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={t("auth.register.emailPlaceholder")}
-                  />
-                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={signupData.email}
+                  onChange={(e) => handleChange(e, setSignupData)}
+                  className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+                  placeholder={t("auth.register.emailPlaceholder")}
+                />
               </div>
 
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                  {t('auth.register.phonenumber')}
+                  {t("auth.register.phonenumber")}
                 </label>
-                <div className="relative">
-                  <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    value={signupData.numberPhone}
-                    onChange={(e) =>
-                      setSignupData({
-                        ...signupData,
-                        numberPhone: e.target.value,
-                      })
-                    }
-                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={t('auth.register.phonenumberPlaceholder')}
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="numberPhone"
+                  value={signupData.numberPhone}
+                  onChange={(e) => handleChange(e, setSignupData)}
+                  className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+                  placeholder={t("auth.register.phonenumberPlaceholder")}
+                />
               </div>
 
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                  {t('auth.register.dob')}
+                  {t("auth.register.dob")}
                 </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={signupData.dob}
-                    onChange={(e) =>
-                      setSignupData({ ...signupData, dob: e.target.value })
-                    }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
+                <input
+                  type="date"
+                  name="dob"
+                  value={signupData.dob}
+                  onChange={(e) => handleChange(e, setSignupData)}
+                  className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+                />
               </div>
             </>
           )}
 
-          {!isOtpMode && (
-            <>
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  {t('auth.register.username')}
-                </label>
-                <div className="relative">
-                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    value={
-                      activeTab === "login"
-                        ? loginData.username
-                        : signupData.username
-                    }
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      activeTab === "login"
-                        ? setLoginData({ ...loginData, username: value })
-                        : setSignupData({ ...signupData, username: value });
-                    }}
-                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={t('auth.register.usernamePlaceholder')}
-                  />
-                </div>
-              </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              {t(activeTab === "login" ? "auth.login.username" : "auth.register.username")}
+            </label>
+            <input
+              type="text"
+              name="username"
+              value={
+                activeTab === "login" ? loginData.username : signupData.username
+              }
+              onChange={(e) =>
+                activeTab === "login"
+                  ? handleChange(e, setLoginData)
+                  : handleChange(e, setSignupData)
+              }
+              className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+              placeholder={t(
+                activeTab === "login"
+                  ? "auth.login.usernamePlaceholder"
+                  : "auth.register.usernamePlaceholder"
+              )}
+            />
+          </div>
 
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  {t("auth.login.password")}
-                </label>
-                <div className="relative">
-                  <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="password"
-                    value={
-                      activeTab === "login"
-                        ? loginData.password
-                        : signupData.password
-                    }
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      activeTab === "login"
-                        ? setLoginData({ ...loginData, password: value })
-                        : setSignupData({ ...signupData, password: value });
-                    }}
-                    className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={t("auth.register.passwordPlaceholder")}
-                  />
-                </div>
-              </div>
-            </>
-          )}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              {t("auth.login.password")}
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={
+                activeTab === "login"
+                  ? loginData.password
+                  : signupData.password
+              }
+              onChange={(e) =>
+                activeTab === "login"
+                  ? handleChange(e, setLoginData)
+                  : handleChange(e, setSignupData)
+              }
+              className="w-full px-4 py-2 border rounded focus:ring-blue-500"
+              placeholder={t("auth.login.passwordPlaceholder")}
+            />
+          </div>
 
           {isOtpMode && (
             <div className="space-y-2">
@@ -325,7 +321,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 type="text"
                 value={otpInput}
                 onChange={(e) => setOtpInput(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded focus:ring-blue-500"
                 placeholder={t("auth.otp.placeholder")}
               />
             </div>
@@ -334,20 +330,20 @@ const LoginModal = ({ isOpen, onClose }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors
-              ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
+            className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors ${
+              isLoading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
             {isLoading
               ? t("auth.login.processing")
               : isOtpMode
-                ? t("auth.otp.submit")
-                : activeTab === "login"
-                  ? t("auth.login.submit")
-                  : t("auth.register.submit")}
+              ? t("auth.otp.submit")
+              : activeTab === "login"
+              ? t("auth.login.submit")
+              : t("auth.register.submit")}
           </button>
         </form>
 
-        {/* Footer */}
         <div className="mt-6 text-center text-sm">
           <p className="text-gray-600">
             {activeTab === "login"
@@ -380,5 +376,6 @@ const LoginModal = ({ isOpen, onClose }) => {
     </div>
   );
 };
+
 
 export default LoginModal;
