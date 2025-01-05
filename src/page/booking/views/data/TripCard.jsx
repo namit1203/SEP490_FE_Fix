@@ -211,7 +211,10 @@ export const TripCard = ({
                   <p className="text-sm font-medium text-gray-900">
                     {t('booking.tripDetails.startDate')}
                   </p>
-                  <p className="text-sm text-gray-600">{localStorage.bookingTime}</p>
+                  <p className="text-sm text-gray-600">
+  {new Date(localStorage.bookingTime).toLocaleDateString('en-GB')}
+</p>
+
                 </div>
               </div>
               <div className="flex items-start gap-3">
