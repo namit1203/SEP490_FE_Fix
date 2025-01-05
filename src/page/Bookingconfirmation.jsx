@@ -517,31 +517,34 @@ const Bookingconfirmation = () => {
                     </div>
                   </div>
                 </label>
-
-                <label className="block">
-                  <div className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedPayment === "pay-on-bus" ? "border-green-500 bg-green-50" : "border-gray-200"
-                    }`}>
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="pay-on-bus"
-                        checked={selectedPayment === "pay-on-bus"}
-                        onChange={handlePaymentChange}
-                        className="mr-3"
-                      />
-                      <div>
-                        <div className="font-semibold flex items-center">
-                          <FaMoneyBillWave className="mr-2" />
-                          {t("bookingConfirmation.payment.cashOnBus.title")}
-                        </div>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {t("bookingConfirmation.payment.cashOnBus.description")}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </label>
+                {Number(quantity) < 2 && (
+        <label className="block">
+          <div
+            className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedPayment === "pay-on-bus" ? "border-green-500 bg-green-50" : "border-gray-200"
+              }`}
+          >
+            <div className="flex items-center">
+              <input
+                type="radio"
+                name="payment"
+                value="pay-on-bus"
+                checked={selectedPayment === "pay-on-bus"}
+                onChange={handlePaymentChange}
+                className="mr-3"
+              />
+              <div>
+                <div className="font-semibold flex items-center">
+                  <FaMoneyBillWave className="mr-2" />
+                  {t("bookingConfirmation.payment.cashOnBus.title")}
+                </div>
+                <p className="text-sm text-gray-600 mt-1">
+                  {t("bookingConfirmation.payment.cashOnBus.description")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </label>
+      )}
               </div>
             </div>
 
