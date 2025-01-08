@@ -30,7 +30,7 @@ const Forgotpassword = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://boring-wiles.202-92-7-204.plesk.page/api/User/ForgotPassword",
+        "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/ForgotPassword",
         { email }
       );
 
