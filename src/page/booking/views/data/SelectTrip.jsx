@@ -66,6 +66,7 @@ export default function SelectTrip({ data, onContinue }) {
                 placeholder={t('booking.selectTrip.seatQuantity.placeholder')}
                 onChange={handleQuantityChange}
                 className="w-full sm:w-48 focus:border-blue-500"
+                required
               />
               <label className="text-sm text-gray-600 whitespace-nowrap">
                 {t('booking.selectTrip.seatQuantity.label')}

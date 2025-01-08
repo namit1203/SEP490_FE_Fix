@@ -250,6 +250,7 @@
       "save": "Lưu",
       "updateSuccess":"Cập nhật thành công",
       "updateError":"Cập nhật xảy ra lỗi",  
+      "fullNameRequired":"Vui lòng nhập họ tên",
       
       "uploadSuccess":"Tải lên thành công"
     }
