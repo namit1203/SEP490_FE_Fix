@@ -193,10 +193,10 @@ const Bookingconfirmation = () => {
   // Get QR image source
   const getImgSrc = () => {
     const totalAmount = discountedPrice || totalPrice;
-    const accountNameTK = "Le Son Nam";
+    const accountNameTK = "Nguyen Duc Linh";
     const descriptionn = `${profile?.username}${randomCode || "000000"}`; // Fallback nếu randomCode null
-    const bankId = "970415";
-    const accountNo = "108881732352";
+    const bankId = "970448";
+    const accountNo = "0117100033002004";
     const template = "print";
   
     return {
