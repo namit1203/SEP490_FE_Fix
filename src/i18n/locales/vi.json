@@ -116,6 +116,15 @@
       "success": "Xác thực thành công",
       "error": "Mã OTP không chính xác"
     },
+    "resetPassword": {
+      "newPassword": "Nhập mật khẩu mới",
+      "confirmPassword": "Nhập lại mật khẩu",
+      "code": "Nhập mã OTP",
+      "submit": "Xác nhận",
+      "required": "Vui lòng nhập mã OTP",
+      "success": "Xác thực thành công",
+      "error": "Mã OTP không chính xác"
+    },
     "validation": {
       "required": "Vui lòng nhập thông tin này",
       "invalidEmail": "Email không hợp lệ",

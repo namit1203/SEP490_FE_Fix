@@ -2,14 +2,18 @@ import { message } from "antd";
 import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
-import { FiArrowLeft, FiMail } from 'react-icons/fi';
+import { FiArrowLeft, FiMail, FiKey } from 'react-icons/fi';
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
 const Forgotpassword = () => {
   const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isResetStage, setIsResetStage] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -19,7 +23,7 @@ const Forgotpassword = () => {
       .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
   };
 
-  const handleSubmit = async (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
@@ -36,16 +40,36 @@ const Forgotpassword = () => {
 
       if (response.status === 200) {
         message.success(t('auth.forgotPassword.success'));
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+        setIsResetStage(true);
       }
     } catch (err) {
-      if (err.response?.status === 404) {
-        message.error(t('auth.forgotPassword.notFound'));
-      } else {
-        message.error(t('auth.forgotPassword.error'));
+      message.error(t('auth.forgotPassword.error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      message.error(t('auth.validation.passwordMismatch'));
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://boring-wiles.202-92-7-204.plesk.page/api/Auth/ResetPassword",
+        { email, code, password, confirmPassword }
+      );
+
+      if (response.status === 200) {
+        message.success(t('auth.resetPassword.success'));
+        setTimeout(() => navigate('/login'), 2000);
       }
+    } catch (err) {
+      message.error(t('auth.resetPassword.error'));
     } finally {
       setLoading(false);
     }
@@ -57,16 +81,11 @@ const Forgotpassword = () => {
 
       <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
-          {/* Title */}
           <h2 className="text-2xl font-bold text-center mb-6">
-            {t('auth.forgotPassword.title')}
+            {isResetStage ? t('auth.resetPassword.title') : t('auth.forgotPassword.title')}
           </h2>
-          <p className="text-sm text-center text-gray-600 -mt-4">
-            {t('auth.forgotPassword.subtitle')}
-          </p>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={isResetStage ? handleResetPassword : handleForgotPassword} className="space-y-4">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 {t('auth.forgotPassword.email')}
@@ -75,14 +94,55 @@ const Forgotpassword = () => {
                 <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
-                  name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                   placeholder={t('auth.forgotPassword.emailPlaceholder')}
+                  required
                 />
               </div>
             </div>
+
+            {isResetStage && (
+              <>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t('auth.resetPassword.code')}
+                  </label>
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t('auth.resetPassword.newPassword')}
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {t('auth.resetPassword.confirmPassword')}
+                  </label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+              </>
+            )}
 
             <button
               type="submit"
@@ -90,7 +150,7 @@ const Forgotpassword = () => {
               className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors
                 ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
             >
-              {loading ? t('auth.validation.processing') : t('auth.forgotPassword.submit')}
+              {loading ? t('auth.validation.processing') : isResetStage ? t('auth.resetPassword.submit') : t('auth.forgotPassword.submit')}
             </button>
 
             <button
