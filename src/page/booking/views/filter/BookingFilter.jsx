@@ -65,7 +65,7 @@ export default function BookingFilter({ filters, onFilterChange, onClearFilters,
           >
             {availableGarages.map(garage => (
               <Checkbox key={garage} value={garage}>
-                {t(`booking.filter.operators.${garage}`) || garage}
+                {garage}
               </Checkbox>
             ))}
           </Checkbox.Group>
