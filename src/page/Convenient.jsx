@@ -196,7 +196,167 @@ const Convenient = () => {
     }
   };
 
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 mt-12">
+          {t('convenient.title')}
+        </h1>
+        
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-2/3">
+            <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+              {/* Service Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  {t('convenient.service.label')}
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+            
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="service"
+                      value="PrivateTrip"
+                      checked={selectedService === "PrivateTrip"}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-4 h-4 text-blue-600"
+                    />
+                    <span>{t('convenient.service.private')}</span>
+                  </label>
+                </div>
+              </div>
+              {/* Form Fields */}
+              <div className="grid gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.startPoint')}
+                  </label>
+                  <input
+                    type="text"
+                    value={dataDetail.startPoint}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, startPoint: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.endPoint')}
+                  </label>
+                  <input
+                    type="text"
+                    value={dataDetail.endPoint}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, endPoint: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.time')}
+                  </label>
+                  <input
+                    type="datetime-local"
+                    value={dataDetail.startTime}
+                    onChange={(e) =>
+                      setDataDetail({ ...dataDetail, startTime: e.target.value })
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('convenient.form.phone')}
+                  </label>
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+              </div>
+              {/* Search Button */}
+              <button
+                onClick={handelBookTrip}
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50"
+              >
+                {loading ? t('profile.rewards.loading') : t('convenient.form.searchButton')}
+              </button>
+            </div>
+          </div>
+          {/* Price and Promotion Section */}
+          <div className="w-full lg:w-1/3">
+            <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+              {/* Price Display */}
+              {price !== null && (
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-gray-600">
+                    {t('convenient.price.original')}:{' '}
+                    <span className={finalPrice ? 'line-through text-gray-400' : 'font-semibold'}>
+                      {price.toLocaleString()}{t('convenient.price.currency')}
+                    </span>
+                  </p>
+                  {finalPrice && (
+                    <p className="text-green-600 font-semibold mt-2">
+                      {t('convenient.price.discounted')}:{' '}
+                      {finalPrice.toLocaleString()}{t('convenient.price.currency')}
+                    </p>
+                  )}
+                </div>
+              )}
+              {/* Promotion Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('convenient.promotion.label')}
+                </label>
+                <select
+                  value={selectedPromotion}
+                  onChange={(e) => setSelectedPromotion(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none mb-3"
+                >
+                  <option value="">{t('convenient.promotion.placeholder')}</option>
+                  {promotions.map((promo) => (
+                    <option key={promo.codePromotion} value={promo.codePromotion}>
+                      {promo.codePromotion} - {t('convenient.promotion.discount', { percent: promo.discount })}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={handleApplyPromotion}
+                  disabled={!price || loading}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50"
+                >
+                  {t('convenient.promotion.apply')}
+                </button>
+              </div>
+
+              {/* Book Button */}
+              {finalPrice && (
+                <button
+                  onClick={handelResult}
+                  disabled={loading}
+                  className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50"
+                >
+                  {loading ? t('profile.rewards.loading') : t('convenient.form.bookButton')}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
   return <div>{/* JSX omitted for brevity */}</div>;
 };
+
 
 export default Convenient;
