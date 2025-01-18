@@ -123,12 +123,14 @@
       "submit": "Xác nhận",
       "required": "Vui lòng nhập mã OTP",
       "success": "Xác thực thành công",
-      "error": "Mã OTP không chính xác"
+      "error": "Mã OTP không chính xác",
+      "title":"Đổi mật khẩu"
     },
     "validation": {
       "required": "Vui lòng nhập thông tin này",
       "invalidEmail": "Email không hợp lệ",
-      "processing": "Đang xử lý..."
+      "processing": "Đang xử lý...",
+      "passwordMismatch":"Mật khẩu xác nhận không khớp"
     },
     "forgotPassword": {
       "title": "Quên Mật Khẩu",
@@ -138,7 +140,7 @@
       "submit": "Gửi Liên Kết Đặt Lại",
       "backToLogin": "Quay Lại Đăng Nhập",
       "success": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn",
-      "error": "Lỗi khi gửi liên kết đặt lại. Vui lòng thử lại",
+      "error": "Tài khoản không tồn tại ",
       "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
       "notFound": "Không tìm thấy địa chỉ email",
       "instructions": "Kiểm tra email của bạn để lấy liên kết đặt lại mật khẩu"
@@ -185,7 +187,8 @@
       "startPointRequired": "Vui lòng nhập điểm bắt đầu!",
     "endPointRequired": "Vui lòng nhập điểm kết thúc!",
     "timeRequired": "Vui lòng nhập thời gian!",
-    "phoneRequired": "Vui lòng nhập số điện thoại!"
+    "phoneRequired": "Vui lòng nhập số điện thoại!",
+    "pastDateError": "Ngày không hợp lệ"
   
     }
   },
@@ -209,7 +212,7 @@
       "tooShort": "Mật khẩu phải dài hơn 6 ký tự",
       "mismatch": "Mật khẩu xác nhận không khớp",
       "success": "Thay đổi mật khẩu thành công",
-      "error": "Đã xảy ra lỗi. Vui lòng thử lại",
+      "error": "Mật khẩu cũ không đúng",
       "current": "Mật khẩu hiện tại",
       "new": "Mật khẩu mới",
       "confirm": "Xác nhận mật khẩu",
@@ -335,6 +338,7 @@
     "nav": {
       "bus": "Xe khách"
     },
+   
     "search": {
       "title": "Tìm chuyến xe phù hợp cho hành trình của bạn",
       "from": "Điểm đi",
@@ -514,6 +518,10 @@
       },
       "alert": {
         "title": "Đảm bảo an toàn",
+        "message": "An tâm được đón đúng nơi, trả đúng chỗ đã chọn và dễ dàng thay đổi khi cần."
+      },
+      "errors": {
+        "selectBoth": "Vui lòng chọn điểm đón và điểm trả",
         "message": "An tâm được đón đúng nơi, trả đúng chỗ đã chọn và dễ dàng thay đổi khi cần."
       },
       "seatsAvailable": "Còn {{count}} chỗ",

@@ -87,13 +87,13 @@ export default function SelectTrip({ data, onContinue }) {
 
           <div className="flex flex-col items-end gap-3 w-full sm:w-auto">
             <div className="flex items-center gap-2">
-              <span className="text-gray-600">
+              {/* <span className="text-gray-600">
                 {t('booking.selectTrip.summary.total')}:
               </span>
               <span className="text-blue-600 font-bold">
                 {data?.listVehicle[0]?.price?.toLocaleString()}
                 {t('booking.selectTrip.summary.currency')}
-              </span>
+              </span> */}
             </div>
 
             <motion.button

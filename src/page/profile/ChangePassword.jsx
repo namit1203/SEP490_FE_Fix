@@ -65,13 +65,35 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Kiểm tra lỗi cho các trường
+    const newErrors = {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    };
+  
+    if (!formData.oldPassword) {
+      newErrors.oldPassword = t('profile.password.required');
+    }
+  
+    if (!passwordRegex.test(formData.newPassword)) {
+      newErrors.newPassword = t('profile.password.invalid');
+    }
+  
+    if (formData.newPassword !== formData.confirmPassword) {
+      newErrors.confirmPassword = t('profile.password.mismatch');
+    }
+  
+    setErrors(newErrors);
+  
+    // Kiểm tra nếu có lỗi, ngăn chặn việc gửi form
+    const hasErrors = Object.values(newErrors).some((error) => error !== "");
+    if (hasErrors) {
 
-    // Kiểm tra lỗi trước khi gửi
-    if (errors.newPassword || errors.confirmPassword) {
-      message.error(t('profile.password.fixErrors'));
       return;
     }
-
+  
     try {
       const response = await fetch(
         `https://boring-wiles.202-92-7-204.plesk.page/api/User/ChangePassword/`,
@@ -89,7 +111,7 @@ const ChangePassword = () => {
           }),
         }
       );
-
+  
       if (response.ok) {
         message.success(t('profile.password.success'));
         setFormData({
@@ -105,6 +127,7 @@ const ChangePassword = () => {
       message.error(t('profile.password.error'));
     }
   };
+  
 
   return (
     <div className="space-y-4">

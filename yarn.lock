@@ -1375,6 +1375,11 @@ dayjs@^1.11.11:
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.13.tgz"
   integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
 
+dayjs@^1.11.13:
+  version "1.11.13"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
+  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
+
 debug@^4.1.0, debug@^4.3.1, debug@^4.3.2:
   version "4.3.7"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz"
@@ -2495,7 +2500,7 @@ ms@^2.1.3:
     i18next-browser-languagedetector "^7.2.0"
     i18next-http-backend "^2.5.0"
     jwt-decode "^4.0.0"
-    my-project "file:../../AppData/Local/Yarn/Cache/v6/npm-my-project-0.0.0-6cc76c4d-8ab7-4116-aeaf-219dc6ead210-1733937042951/node_modules/my-project"
+    my-project "file:../../AppData/Local/Yarn/Cache/v6/npm-my-project-0.0.0-e74c8a89-6fc7-4a70-ac11-3bf1de2dd7ad-1737186112466/node_modules/my-project"
     react "^18.3.1"
     react-dom "^18.3.1"
     react-i18next "^14.1.0"
