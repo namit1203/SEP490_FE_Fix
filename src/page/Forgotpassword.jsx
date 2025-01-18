@@ -43,7 +43,12 @@ const Forgotpassword = () => {
         setIsResetStage(true);
       }
     } catch (err) {
-      message.error(t('auth.forgotPassword.error'));
+      const response = err.response;
+      if (response && response.status === 404 && response.data.message === "Not found account") {
+        message.error("Không tìm thấy tài khoản"); // Specific message for not found account
+      } else {
+        message.error(t('auth.forgotPassword.error'));
+      }
     } finally {
       setLoading(false);
     }
@@ -69,7 +74,12 @@ const Forgotpassword = () => {
         setTimeout(() => navigate('/login'), 2000);
       }
     } catch (err) {
-      message.error(t('auth.resetPassword.error'));
+      const response = err.response;
+      if (response && response.status === 404 && response.data.message === "Not found account") {
+        message.error("Không tìm thấy tài khoản"); // Specific message for not found account
+      } else {
+        message.error(t('auth.resetPassword.error'));
+      }
     } finally {
       setLoading(false);
     }
